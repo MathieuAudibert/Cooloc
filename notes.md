@@ -17,7 +17,7 @@
 
 # DevOps
 * [ ] Tests
-* [ ] Docker
+* [x] Docker
 * [ ] Virtual Env
 * [ ] Sonarqube
 * [ ] Github actions
