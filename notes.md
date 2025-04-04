@@ -2,23 +2,24 @@
 * [ ] Maquettes figma
     - [ ] Mobile
     - [ ] PC
-* [ ] UML
+    - [ ] Wireframes
+    - [ ] Zone
+* [ ] Merise
     - [x] MCD
     - [ ] MLD
     - [ ] MPP
     - [ ] Dictionnaire de données
-    - [ ] Merise
 * [ ] Diagrammes
     - [ ] Use case
-    - [ ] Classe
+    - [ ] Classe (si classe base)
     - [ ] Sequences
 * [ ] Swagger
-* [ ] Trello
+* [x] Trello
 
 # DevOps
 * [ ] Tests
 * [x] Docker
-* [ ] Virtual Env
+* [ ] Virtual Env (facultatif)
 * [ ] Sonarqube
 * [ ] Github actions
 
@@ -28,7 +29,7 @@
 * [ ] Apis
 * [ ] Mentions Légales
 * [ ] Logs
-* [ ] Interfacce adm
+* [ ] Interface adm
 
 # Securité
 * [ ] XSS
