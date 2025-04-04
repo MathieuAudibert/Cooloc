@@ -16,6 +16,7 @@ COPY package.json package-lock.json ./
 RUN npm install --production
 
 COPY vite.config.js ./
+RUN npm install vite
 
 EXPOSE 8080
 CMD ["npm", "run", "preview"]
