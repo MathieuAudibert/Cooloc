@@ -1,5 +1,5 @@
 FROM node:18-alpine AS build
-WORKDIR /app/cooloc
+WORKDIR /app
 
 COPY package.json package-lock.json ./
 RUN npm install
@@ -8,9 +8,9 @@ COPY . .
 RUN npm run build
 
 FROM node:18-alpine AS production
-WORKDIR /app/cooloc
+WORKDIR /app
 
-COPY --from=build /app/cooloc/dist ./dist
+COPY --from=build /app/dist ./dist
 
 COPY package.json package-lock.json ./
 RUN npm install --production
