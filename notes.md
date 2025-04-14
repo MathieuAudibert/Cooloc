@@ -6,9 +6,9 @@
     - [ ] Zone
 * [ ] Merise
     - [x] MCD
-    - [ ] MLD
+    - [x] MLD
     - [ ] MPP
-    - [ ] Dictionnaire de données
+    - [ ] Dictionnaire de données (optionnel)
 * [ ] Diagrammes
     - [ ] Use case
     - [ ] Classe (si classe base)
