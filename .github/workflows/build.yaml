@@ -23,11 +23,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests with Jest and generate coverage
-        run: |
-          npm test -- --coverage
-          npx jest --coverage --reporters=default --reporters=jest-junit
+      - name: Install Jest JUnit reporter
+        run: npm install --save-dev jest-junit
 
+      - name: Run tests with Jest and generate coverage
+        run: npm test -- --coverage
+        
       - name: List files in coverage directory
         run: ls -la coverage
 
