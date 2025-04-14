@@ -32,12 +32,11 @@
     "vite": "^6.2.0"
   },
   "jest": {
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "collectCoverage": true,
     "passWithNoTests": true,
     "coverageReporters": ["lcov", "text-summary"],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/"
-    ]
+    "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"],
+    "coveragePathIgnorePatterns": ["/node_modules/"]
   }
 }
