@@ -30,13 +30,5 @@
     "globals": "^15.15.0",
     "jest-environment-jsdom": "^29.7.0",
     "vite": "^6.2.0"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "collectCoverage": true,
-    "passWithNoTests": true,
-    "coverageReporters": ["lcov", "text-summary"],
-    "setupFilesAfterEnv": ["<rootDir>/node_modules/@testing-library/jest-dom/extend-expect"],
-    "coveragePathIgnorePatterns": ["/node_modules/"]
   }
 }
