@@ -20,9 +20,17 @@ jobs:
       - name: Test et couverture de code
         run: npm install jest --coverage
       
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
+      - name: Run SonarCloud Analysis
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}    
-          SONAR_HOST_URL: https://sonarcloud.io      
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          export PATH=$GITHUB_WORKSPACE/sonar-scanner-5.0.1.3006-linux/bin:$PATH
+          sonar-scanner \
+            -Dsonar.projectKey=MathieuAudibert_Cooloc \
+            -Dsonar.organization=mathieuaudibert \
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.sources=src \
+            -Dsonar.tests=src/tests \
+            -Dsonar.javascript.coverage.reportPaths=coverage.xml   
