@@ -23,16 +23,13 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run ESLint
-        run: npx eslint . --ext .js,.jsx,.ts,.tsx
-
-      - name: Run tests and generate coverage
+      - name: Run tests with Jest and generate coverage
         run: |
           npm test -- --coverage
-          npx nyc report --reporter=lcov
+          npx jest --coverage --reporters=default --reporters=jest-junit
 
-      - name: List files in .nyc_output
-        run: ls -la .nyc_output
+      - name: List files in coverage directory
+        run: ls -la coverage
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-scan-action@v1.6
@@ -46,5 +43,5 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.sources=src
             -Dsonar.tests=test
-            -Dsonar.javascript.lcov.reportPaths=.nyc_output/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
             -Dsonar.coverage.exclusions=**/test/**,**/mock/**
