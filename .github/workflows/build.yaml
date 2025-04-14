@@ -9,6 +9,7 @@ jobs:
   sonarcloud:
     name: SonarCloud Analysis
     runs-on: ubuntu-latest
+    environment: SONAR_TOKEN
     steps:
       - uses: actions/checkout@v4
         with:
@@ -18,16 +19,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'
           
       - name: Install dependencies
-        run: |
-          npm install
-          npm install --save-dev jest jest-sonar-reporter
+        run: npm install
           
-      - name: Run tests with coverage
+      - name: Run tests and generate coverage
         run: |
-          npm test -- --coverage --collectCoverage=true --coverageReporters=lcov --coverageDirectory=coverage
+          npm test -- --coverage
+          npx nyc report --reporter=cobertura
           
       - name: SonarCloud Scan
         uses: SonarSource/sonarqube-scan-action@v5
@@ -40,7 +39,6 @@ jobs:
             -Dsonar.organization=mathieuaudibert
             -Dsonar.host.url=https://sonarcloud.io
             -Dsonar.sources=src
-            -Dsonar.tests=src/tests
+            -Dsonar.tests=test
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-            -Dsonar.testExecutionReportPaths=test-report.xml
             -Dsonar.coverage.exclusions=**/test/**,**/mock/**
