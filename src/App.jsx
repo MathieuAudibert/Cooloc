@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <h1>Cooloc</h1>
-      <h2>Cooloc est une appli blabla</h2>
+      <h2>Cooloc est une appli blabla aeaeea</h2>
     </>
   )
 }
