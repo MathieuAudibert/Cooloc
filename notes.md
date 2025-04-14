@@ -20,8 +20,8 @@
 * [ ] Tests
 * [x] Docker
 * [ ] Virtual Env (facultatif)
-* [ ] Sonarqube
-* [ ] Github actions
+* [x] Sonarqube
+* [x] Github actions
 
 # Dev 
 * [ ] Front 
