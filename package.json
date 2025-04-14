@@ -30,8 +30,10 @@
     "vite": "^6.2.0"
   }, 
   "jest": {
+    "testEnvironment": "jsdom",
     "collectCoverage": true,
     "passWithNoTests": true,
-    "coverageReporters": ["lcov", "text-summary"]
+    "coverageReporters": ["lcov", "text-summary"],
+    "setupFilesAfterEnv": ["@testing-library/jest-dom/extend-expect"]
   }
 }
