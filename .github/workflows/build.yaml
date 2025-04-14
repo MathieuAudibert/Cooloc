@@ -5,6 +5,7 @@ on:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarQube
@@ -12,26 +13,34 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  
       
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
       
-      - name: Install dependencies
+      - name: Install project dependencies
         run: npm install
+      
+      - name: Install test dependencies
+        run: npm install --save-dev jest jest-environment-jsdom @testing-library/jest-dom
       
       - name: Build project
         run: npm run build
       
       - name: Run tests with coverage
         run: npm test -- --coverage --passWithNoTests
+        env:
+          CI: true  
       
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
         with:
           scanner-version: 7.1.0.4889
+          args: >
+            -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+            -Dsonar.testExecutionReportPaths=coverage/test-report.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
