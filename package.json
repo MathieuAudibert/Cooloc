@@ -36,7 +36,7 @@
     "collectCoverage": true,
     "passWithNoTests": true,
     "coverageReporters": ["lcov", "text-summary"],
-    "setupFilesAfterEnv": ["Cooloc/node_modules/@testing-library/jest-dom/extend-expect"],
+    "setupFilesAfterEnv": ["/node_modules/@testing-library/jest-dom/extend-expect"],
     "coveragePathIgnorePatterns": ["/node_modules/"]
   }
 }
