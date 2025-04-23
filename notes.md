@@ -7,7 +7,7 @@
 * [ ] Merise
     - [x] MCD
     - [x] MLD
-    - [ ] MPP
+    - [ ] MPD
     - [ ] Dictionnaire de données (optionnel)
 * [ ] Diagrammes
     - [x] Use case
