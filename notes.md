@@ -10,7 +10,7 @@
     - [ ] MPP
     - [ ] Dictionnaire de données (optionnel)
 * [ ] Diagrammes
-    - [ ] Use case
+    - [x] Use case
     - [ ] Classe (si classe base)
     - [ ] Sequences
 * [ ] Swagger
