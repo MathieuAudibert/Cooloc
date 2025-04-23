@@ -4,10 +4,10 @@
     - [ ] PC
     - [ ] Wireframes
     - [ ] Zone
-* [ ] Merise
+* [x] Merise
     - [x] MCD
     - [x] MLD
-    - [ ] MPD
+    - [x] MPD
     - [ ] Dictionnaire de données (optionnel)
 * [ ] Diagrammes
     - [x] Use case
