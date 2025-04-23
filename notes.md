@@ -13,6 +13,7 @@
     - [x] Use case
     - [ ] Classe (si classe base)
     - [ ] Sequences
+    - [ ] Activité
 * [ ] Swagger
 * [x] Trello
 
