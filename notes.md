@@ -43,5 +43,5 @@
 # Resume
 * [ ] Conception
     - [ ] Maquettes (Wireframe, zoning, chartre graphique, maquettes)
-    - [ ] MCD MLD MPD
-    - [ ] Usecase 
+    - [x] MCD MLD MPD
+    - [x] Usecase 
