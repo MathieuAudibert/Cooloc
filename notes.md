@@ -39,3 +39,9 @@
 * [ ] mdp hashé (bcrypt)
 * [ ] Jwt token
 * [ ] Transactions bdd
+
+# Resume
+* [ ] Conception
+    - [ ] Maquettes (Wireframe, zoning, chartre graphique, maquettes)
+    - [ ] MCD MLD MPD
+    - [ ] Usecase 
