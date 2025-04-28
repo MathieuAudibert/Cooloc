@@ -1,0 +1,2 @@
+class Bdd: 
+    instance = None
