@@ -1,0 +1,7 @@
+psycopg2
+
+
+# test
+pytest
+pytest-cov
+coverage
