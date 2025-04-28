@@ -40,8 +40,3 @@
 * [ ] Jwt token
 * [ ] Transactions bdd
 
-# Resume
-* [ ] Conception
-    - [ ] Maquettes (Wireframe, zoning, chartre graphique, maquettes)
-    - [x] MCD MLD MPD
-    - [x] Usecase 
