@@ -4,15 +4,16 @@
     - [ ] PC
     - [ ] Wireframes
     - [ ] Zone
-* [ ] Merise
+* [x] Merise
     - [x] MCD
     - [x] MLD
-    - [ ] MPP
+    - [x] MPD
     - [ ] Dictionnaire de données (optionnel)
 * [ ] Diagrammes
-    - [ ] Use case
+    - [x] Use case
     - [ ] Classe (si classe base)
     - [ ] Sequences
+    - [ ] Activité
 * [ ] Swagger
 * [x] Trello
 
@@ -38,3 +39,9 @@
 * [ ] mdp hashé (bcrypt)
 * [ ] Jwt token
 * [ ] Transactions bdd
+
+# Resume
+* [ ] Conception
+    - [ ] Maquettes (Wireframe, zoning, chartre graphique, maquettes)
+    - [x] MCD MLD MPD
+    - [x] Usecase 
