@@ -1,5 +1,5 @@
 psycopg2
-
+python-dotenv
 
 # test
 pytest
