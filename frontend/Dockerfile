@@ -1,22 +1,11 @@
-FROM node:18-alpine AS build
+FROM node:22-alpine
 WORKDIR /app
 
-COPY package.json package-lock.json ./
+COPY frontend/package*.json ./
 RUN npm install
 
-COPY . .
+COPY frontend/ .
 RUN npm run build
 
-FROM node:18-alpine AS production
-WORKDIR /app
-
-COPY --from=build /app/dist ./dist
-
-COPY package.json package-lock.json ./
-RUN npm install --production
-
-COPY vite.config.js ./
-RUN npm install vite
-
-EXPOSE 8080
-CMD ["npm", "run", "preview"]
+EXPOSE 3000
+CMD ["npm", "run", "serve"]
