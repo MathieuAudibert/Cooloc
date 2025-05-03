@@ -22,7 +22,7 @@
 # DevOps
 
 - [ ] Tests
-- [x] Docker
+- [ ] Docker (marche pr backend mais pas frontend)
 - [ ] Virtual Env (facultatif)
 - [x] Sonarqube
 - [x] Github actions
