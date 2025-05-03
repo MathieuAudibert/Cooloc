@@ -1,7 +1,5 @@
-psycopg2
+psycopg2-binary==2.9.9 
 python-dotenv
-
-# test
 pytest
 pytest-cov
 coverage
