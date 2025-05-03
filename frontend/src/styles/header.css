@@ -1,0 +1,12 @@
+ @import "./globals.css";
+
+header {
+    color: var(--color-darkgreen);
+}
+
+#ligneHeader {
+    background-color: var(--color-orange);
+    height: 5px;
+    border: 0;
+    border-radius: 5px;
+}
