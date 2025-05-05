@@ -42,15 +42,13 @@ def register(data):
 
         data_token = {"mail": data['mail'], "role": data['role']}
         token = create_token(data_token)
-
+        con.conn.close()
         return {'status': 200, 'message': 'Utilisateur créé', 'token': token}
 
     except Exception as e:
         con.conn.rollback()
+        con.conn.close()
         return {'status': 500, 'message': str(e)}
-
-    finally:
-        con.close()
 
 if __name__ == "__main__":
     test_user = {
