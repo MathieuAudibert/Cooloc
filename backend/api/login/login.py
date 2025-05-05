@@ -1,11 +1,13 @@
 import bcrypt
 import jwt
 import sys
+import json
 import os
 from pathlib import Path
 projet_root = Path(__file__).resolve().parents[2]
 sys.path.append(str(projet_root))
 from bdd.connexion import con
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
@@ -45,9 +47,26 @@ def login(data):
     con.conn.close()
     return {'status': 200, 'data': utilisateur, 'token': token} 
 
-    
-if __name__ == "__main__":
-    test_user = {"mail": "cacaman@c.com", "mdp": "cacacacacaca"}
+class RequestHandler(BaseHTTPRequestHandler):
+    def do_POST(self): 
+        if self.path == '/login':
+            longueur = int(self.headers['Content-Length'])
+            post = self.rfile.read(longueur)
+            data = json.loads(post)
 
-    result = login(test_user)
-    print(result)
+            res = login(data)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.end_headers()
+def run(sever_class=HTTPServer, handler_class=RequestHandler, port=8000):
+    server_adress = ('', port)
+    httpd = sever_class(server_adress, handler_class)
+    print('Port:  {port}')
+    httpd.serve_forever()
+
+if __name__ == '__main__':
+    run()
