@@ -35,8 +35,8 @@ def register(data):
         return {'status': 400, 'message': 'Mail existant'}
     
     mdp_hashe = mdp_hash(data['mdp'])
-    requete = """INSERT INTO Utilisateurs (mail, nom, prenom, role, mdp, date_creation, num_telephone, id_coloc)VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
-    param = (data['mail'], data['nom'], data['prenom'], data['role'], mdp_hashe, datetime.now(), data.get('num_telephone'), data.get('id_coloc'))
+    requete = """INSERT INTO Utilisateurs (mail, nom, prenom, role, mdp, date_creation, num_telephone)VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+    param = (data['mail'], data['nom'], data['prenom'], data['role'], mdp_hashe, datetime.now(), data['num_telephone'])
     con.cursor.execute(requete, param)
     con.conn.commit()
     
@@ -45,10 +45,3 @@ def register(data):
     
     con.conn.close()
     return {'status': 200, 'token': token}
-
-
-if __name__ == "__main__":
-    test_user = {"mail": "cacaman@c.com","nom": "Doe","prenom": "John","role": "colocataire","mdp": "cacacacacaca","num_telephone": "0123456789","id_coloc": None}
-
-    result = register(test_user)
-    print(result)
