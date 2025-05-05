@@ -43,4 +43,4 @@ def login(data):
     
     token = create_token({'mail': utilisateur[0], 'role': utilisateur[2]})
     con.conn.close()
-    return {'status': 200, 'data': utilisateur, 'token': token} 
+    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2]}, 'token': token} 
