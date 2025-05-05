@@ -1,8 +1,10 @@
 import os
 import sys
+import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from api.login.login import login
 
-HOST = "192.168.1.71"
+HOST = "localhost"
 PORT = 8000
 
 class Serveur(BaseHTTPRequestHandler):
@@ -14,10 +16,15 @@ class Serveur(BaseHTTPRequestHandler):
         self.wfile.write(b"OK")
 
     def do_POST(self):
+        post_data = self.rfile.read(int(self.headers['Content-Length']))
+        data = json.loads(post_data)
+        
         if self.path == '/login':
+            res = login(data)
+            self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
-            
             self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
 
         elif self.path == '/register':
             self.send_header('Content-type', 'application/json')
