@@ -1,12 +1,6 @@
 import '../styles/header.css'
-import { useNavigate } from 'react-router-dom'
 
 const Header = () => {
-    const navigate = useNavigate()
-
-    const handleLoginClick = () => {
-        navigate('/login')
-    }
 
     return (
         <header className="header">
@@ -15,7 +9,7 @@ const Header = () => {
                 <h1 className="title">Cooloc</h1>
             </div>
             <div className="droite">
-                <button className="login" onClick={handleLoginClick}>Login</button>
+                <button className="login">Login</button>
                 <a href="/register" className="register">Register</a>
             </div>
             <hr id="ligneHeader"></hr>

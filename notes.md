@@ -22,7 +22,7 @@
 # DevOps
 
 - [ ] Tests
-- [ ] Docker (marche pr backend mais pas frontend)
+- [x] Docker
 - [ ] Virtual Env (facultatif)
 - [x] Sonarqube
 - [x] Github actions
@@ -40,7 +40,7 @@
 
 - [ ] XSS
 - [ ] Csrf token
-- [ ] Requetes préparées
-- [ ] mdp hashé (bcrypt)
-- [ ] Jwt token
+- [x] Requetes préparées
+- [x] mdp hashé (bcrypt)
+- [x] Jwt token
 - [ ] Transactions bdd

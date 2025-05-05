@@ -1,14 +1,15 @@
-import React from 'react';
-import '../../styles/login/style.css'
-import AuthForm from "../../components/AuthForm.jsx"
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../../styles/login/style.css';
+
 
 const Login = () => {
   return (
     <div>
       <h1>Login</h1>
-      <AuthForm />
+      <AuthForm mode="login" />
     </div>
   );
 };
 
-export default Login
+export default Login;
