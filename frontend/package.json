@@ -32,5 +32,10 @@
     "jest-junit": "^16.0.0",
     "vite": "^6.2.0",
     "esbuild": "0.25.3"
+  }, 
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
   }
 }

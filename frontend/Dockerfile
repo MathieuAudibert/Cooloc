@@ -1,8 +1,9 @@
-FROM node:20-bullseye 
+FROM node:20-alpine
 WORKDIR /app
 
 COPY frontend/package*.json ./
-RUN npm install
+RUN rm -rf node_modules
+RUN npm install 
 
 COPY frontend/ .
 RUN npm run build
