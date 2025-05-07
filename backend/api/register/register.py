@@ -16,7 +16,7 @@ def create_token(data):
 
 def mdp_hash(mdp):
     mdp_propre = mdp.encode('utf-8')
-    salt = bcrypt.gensalt(12) # 12 --> eviter le bruteforce en ralentissant l'algo
+    salt = bcrypt.gensalt(12) # 12 --> eviter bruteforce ralentir l'algo
     mdp_hashe = bcrypt.hashpw(mdp_propre, salt)
     return mdp_hashe
 
