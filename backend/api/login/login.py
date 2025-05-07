@@ -11,7 +11,7 @@ jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
 
 def create_token(data):
-    return jwt.encode(data, jwt_secret, algorithm=jwt_algo)
+    return jwt.encode({'mail': data['mail']}, jwt_secret, algorithm=jwt_algo)
 
 def mdp_hash(mdp):
     mdp_propre = mdp.encode('utf-8')
@@ -27,7 +27,7 @@ def login(data):
     
     con.connexion()
     
-    requete = """SELECT mail, mdp, role FROM Utilisateurs WHERE mail = %s LIMIT 1"""
+    requete = """SELECT mail, mdp, role, prenom, nom FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (data['mail'],))
     utilisateur = con.cursor.fetchone()
     
@@ -41,6 +41,6 @@ def login(data):
     if not bcrypt.checkpw(mdp_fourni, mdp):
         return {'status': 400, 'message': 'Mot de passe incorrect'}
     
-    token = create_token({'mail': utilisateur[0], 'role': utilisateur[2]})
+    token = create_token({'mail': utilisateur[0]})
     con.conn.close()
-    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2]}, 'token': token} 
+    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2]}, "prenom": utilisateur[3], "nom": utilisateur[4] ,'token': token} 

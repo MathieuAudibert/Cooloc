@@ -1,18 +1,10 @@
-import os
 import sys
 from pathlib import Path
-import jwt
 import bcrypt
 from datetime import datetime
 projet_root = Path(__file__).resolve().parents[2]
 sys.path.append(str(projet_root))
 from bdd.connexion import con
-
-jwt_secret = os.getenv("JWT")
-jwt_algo = 'HS256'
-
-def create_token(data):
-    return jwt.encode(data, jwt_secret, algorithm=jwt_algo)
 
 def mdp_hash(mdp):
     mdp_propre = mdp.encode('utf-8')
@@ -34,14 +26,14 @@ def register(data):
     if con.cursor.fetchone():
         return {'status': 400, 'message': 'Mail existant'}
     
+    role = data.get('role', 'aucun')
+    num_tel = data.get('num_telephone', None)
     mdp_hashe = mdp_hash(data['mdp'])
+    
     requete = """INSERT INTO Utilisateurs (mail, nom, prenom, role, mdp, date_creation, num_telephone)VALUES (%s, %s, %s, %s, %s, %s, %s)"""
-    param = (data['mail'], data['nom'], data['prenom'], data['role'], mdp_hashe, datetime.now(), data['num_telephone'])
+    param = (data['mail'], data['nom'], data['prenom'], role, mdp_hashe, datetime.now(), num_tel)
     con.cursor.execute(requete, param)
     con.conn.commit()
-    
-    data_token = {"mail": data['mail'], "role": data['role']}
-    token = create_token(data_token)
-    
+        
     con.conn.close()
-    return {'status': 200, 'token': token}
+    return {'status': 200}
