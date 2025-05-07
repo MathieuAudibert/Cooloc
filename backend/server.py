@@ -4,7 +4,7 @@ import json
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from api.login.login import login
 from api.register.register import register
-from api.candidature.envoi.route import candidature
+from api.candidature.envoi.route import envoi_candidature
 
 HOST = "localhost"
 PORT = 8000
@@ -36,7 +36,7 @@ class Serveur(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(res).encode('utf-8'))
 
         elif self.path == '/demander/candidature':
-            res = candidature(data, data['token'])
+            res = envoi_candidature(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()

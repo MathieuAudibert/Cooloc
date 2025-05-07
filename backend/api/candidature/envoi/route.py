@@ -27,7 +27,7 @@ def recup_id(data) :
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
 
-def candidature(data, token):
+def envoi_candidature(data, token):
     con.connexion()
 
     id_utilisateur = recup_id(data)
