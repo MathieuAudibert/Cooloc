@@ -26,7 +26,7 @@ def recup_infos(utilisateur_id):
     utilisateur = con.cursor.fetchone()
     return utilisateur
 
-"""
+""" a faire quand la colloc sera OK
 def voir_candidatures(data, token):
     con.connexion()
 
