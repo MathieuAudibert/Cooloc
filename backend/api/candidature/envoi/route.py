@@ -13,7 +13,7 @@ def verifier_token(data, token):
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
-        return {'status': 400, 'message': 'Token invalide'}
+        return {'status': 403, 'message': 'Token invalide'}
 
     if token_decode['role'] != 'aucun':
         return {'status': 403, 'message': 'Role invalide'}
