@@ -27,7 +27,7 @@ def recup_id(data) :
 
 def changer_role(data, token):
     con.connexion()
-    print(data)
+
     id_utilisateur = recup_id(data)
     if not id_utilisateur:
         return {'status': 400, 'message': 'Utilisateur non trouvé'}
