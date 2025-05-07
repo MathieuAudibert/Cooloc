@@ -18,3 +18,28 @@ def verifier_token(data, token):
     
     return {'status': 200, 'message': 'Token valide'}
 
+def recup_id(data) : 
+    mail = data['mail']
+    requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
+    con.cursor.execute(requete, (mail,))
+    id_utilisateur = con.cursor.fetchone()
+    return id_utilisateur
+
+def changer_role(data, token):
+    con.connexion()
+    print(data)
+    id_utilisateur = recup_id(data)
+    if not id_utilisateur:
+        return {'status': 400, 'message': 'Utilisateur non trouvé'}
+    
+    token_verif = verifier_token(data, token)
+    if token_verif['status'] != 200:
+        return token_verif
+    
+    requete = """UPDATE Utilisateurs SET role = %s WHERE id = %s"""
+    param = (data['role'], id_utilisateur)
+    con.cursor.execute(requete, param)
+    con.conn.commit()
+
+    con.conn.close()
+    return {'status': 200, 'message': 'Role changé'}
