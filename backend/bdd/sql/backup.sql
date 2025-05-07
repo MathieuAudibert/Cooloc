@@ -59,6 +59,11 @@ CREATE TABLE IF NOT EXISTS Candidatures (
     id_utilisateur INT REFERENCES Utilisateurs(id)
 );
 
+CREATE TABLE IF NOT EXISTS Colocs_Candidatures(
+    id_colocs INT REFERENCES Colocs(id),
+    id_candidatures INT REFERENCES Candidatures(id),
+);
+
 ALTER TABLE Colocs
 ADD CONSTRAINT fk_responsable
 FOREIGN KEY (responsable) REFERENCES Utilisateurs(id),

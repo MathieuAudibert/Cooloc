@@ -15,9 +15,6 @@ def verifier_token(data, token):
     
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 400, 'message': 'Token invalide'}
-
-    if token_decode['role'] != 'proprietaire' or 'responsable':
-        return {'status': 403, 'message': 'Role invalide'}
     
     return {'status': 200, 'message': 'Token valide'}
 

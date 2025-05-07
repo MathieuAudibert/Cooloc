@@ -44,6 +44,10 @@ def envoi_candidature(data, token):
     param = (description, 'en-attente', id_utilisateur)
     con.cursor.execute(requete, param)
     con.conn.commit()
-    con.conn.close()
 
+    requete2 = """INSERT INTO Colocs_Candidatures (id_colocs, id_candidatures) VALUES (%s, %s)"""
+    param2 = (data['id_coloc'], con.cursor.lastrowid)
+    con.cursor.execute(requete2, param2)
+
+    con.conn.close()
     return {'status': 200, 'message': 'Candidature envoyée avec succès'}
