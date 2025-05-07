@@ -11,11 +11,11 @@ jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
 
 def verifier_token(data, token):
-    token_decode = token.decode(token, jwt_secret, algorithms=[jwt_algo])
+    token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail']:
         return {'status': 400, 'message': 'Token invalide'}
-    
+
     return {'status': 200, 'message': 'Token valide'}
 
 def recup_id(data) : 
@@ -36,7 +36,7 @@ def candidature(data, token):
     if token_verif['status'] != 200:
         return token_verif
     
-    description = data['description'] or ''
+    description = data.get('description', '')
 
     requete = """INSERT INTO Candidatures (description, statut, id_utilisateur) VALUES (%s, %s, %s)"""
     param = (description, 'en-attente', id_utilisateur)
