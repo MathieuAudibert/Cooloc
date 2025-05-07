@@ -11,7 +11,7 @@ jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
 
 def create_token(data):
-    return jwt.encode({'mail': data['mail']}, jwt_secret, algorithm=jwt_algo)
+    return jwt.encode({'mail': data['mail'], 'role': data['role']}, jwt_secret, algorithm=jwt_algo)
 
 def mdp_hash(mdp):
     mdp_propre = mdp.encode('utf-8')
@@ -41,6 +41,6 @@ def login(data):
     if not bcrypt.checkpw(mdp_fourni, mdp):
         return {'status': 400, 'message': 'Mot de passe incorrect'}
     
-    token = create_token({'mail': utilisateur[0]})
+    token = create_token({'mail': utilisateur[0], 'role': utilisateur[2]})
     con.conn.close()
-    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2]}, "prenom": utilisateur[3], "nom": utilisateur[4] ,'token': token} 
+    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2], "prenom": utilisateur[3], "nom": utilisateur[4] }, 'token': token} 
