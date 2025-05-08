@@ -20,6 +20,14 @@ def verifier_token(data, token):
     
     return {'status': 200, 'message': 'Token OK'}
 
+def verifier_csrf(data):
+    csrf = data['csrf']
+
+    if not csrf:
+        return {'status': 403, 'message': 'CSRF KO'}
+
+    return {'status': 200, 'message': 'CSRF OK'}
+
 def recup_infos(utilisateur_id):
     requete = """SELECT mail, prenom, nom FROM Utilisateurs WHERE id = %s LIMIT 1"""
     con.cursor.execute(requete, (utilisateur_id,))

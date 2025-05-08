@@ -12,6 +12,14 @@ def mdp_hash(mdp):
     mdp_hashe = bcrypt.hashpw(mdp_propre, salt)
     return mdp_hashe
 
+def verifier_csrf(data):
+    csrf = data['csrf']
+
+    if not csrf:
+        return {'status': 403, 'message': 'CSRF KO'}
+
+    return {'status': 200, 'message': 'CSRF OK'}
+
 def register(data):
     champs = ['nom', 'prenom', 'mail', 'mdp']
     

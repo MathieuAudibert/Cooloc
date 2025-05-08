@@ -21,6 +21,14 @@ def verifier_token(data, token):
     
     return {'status': 200, 'message': 'Token OK'}
 
+def verifier_csrf(data):
+    csrf = data['csrf']
+
+    if not csrf:
+        return {'status': 403, 'message': 'CSRF KO'}
+
+    return {'status': 200, 'message': 'CSRF OK'}
+
 def recup_id(data) :
     mail = data['mail']
     requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""

@@ -13,12 +13,20 @@ def verifier_token(data, token):
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
-        return {'status': 403, 'message': 'Token invalide'}
+        return {'status': 403, 'message': 'Token KO'}
 
     if token_decode['role'] != 'aucun':
-        return {'status': 403, 'message': 'Role invalide'}
+        return {'status': 403, 'message': 'Role KO'}
     
-    return {'status': 200, 'message': 'Token valide'}
+    return {'status': 200, 'message': 'Token OK'}
+
+def verifier_csrf(data):
+    csrf = data['csrf']
+
+    if not csrf:
+        return {'status': 403, 'message': 'CSRF KO'}
+
+    return {'status': 200, 'message': 'CSRF OK'}
 
 def recup_id(data) : 
     mail = data['mail']

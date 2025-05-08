@@ -13,6 +13,14 @@ jwt_algo = 'HS256'
 def create_token(data):
     return jwt.encode({'mail': data['mail'], 'role': data['role']}, jwt_secret, algorithm=jwt_algo)
 
+def verifier_csrf(data):
+    csrf = data['csrf']
+
+    if not csrf:
+        return {'status': 403, 'message': 'CSRF KO'}
+
+    return {'status': 200, 'message': 'CSRF OK'}
+
 def mdp_hash(mdp):
     mdp_propre = mdp.encode('utf-8')
     salt = bcrypt.gensalt(12) # 12 --> eviter bruteforce ralentir l'algo
