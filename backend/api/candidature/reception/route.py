@@ -33,7 +33,10 @@ def recup_infos(utilisateur_id):
     con.cursor.execute(requete, (utilisateur_id,))
     utilisateur = con.cursor.fetchone()
     return utilisateur
-
+    
+    csrf_verif = verifier_csrf(data)
+    if csrf_verif['status'] != 200:
+        return csrf_verif
 """ a faire quand la colloc sera OK
 def voir_candidatures(data, token):
     con.connexion()

@@ -47,6 +47,10 @@ def creer_coloc(data, token):
     if token_verif['status'] != 200:
         return token_verif
     
+    csrf_verif = verifier_csrf(data)
+    if csrf_verif['status'] != 200:
+        return csrf_verif
+
     nom = data['nom']
     date_creation = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 

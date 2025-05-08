@@ -46,6 +46,10 @@ def envoi_candidature(data, token):
     if token_verif['status'] != 200:
         return token_verif
     
+    csrf_verif = verifier_csrf(data)
+    if csrf_verif['status'] != 200:
+        return csrf_verif
+
     description = data.get('description', '')
 
     requete = """INSERT INTO Candidatures (description, statut, id_utilisateur) VALUES (%s, %s, %s)"""

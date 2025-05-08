@@ -26,6 +26,9 @@ def register(data):
     if not all(champ in data for champ in champs):
         return {'status': 400, 'message': 'Champs manquants'}
 
+    csrf_verif = verifier_csrf(data)
+    if csrf_verif['status'] != 200:
+        return csrf_verif
     con.connexion()
     
     mail_existant = "SELECT mail FROM Utilisateurs WHERE mail = %s"
@@ -33,7 +36,7 @@ def register(data):
     
     if con.cursor.fetchone():
         return {'status': 400, 'message': 'Mail existant'}
-    
+
     role = data.get('role', 'aucun')
     num_tel = data.get('num_telephone', None)
     mdp_hashe = mdp_hash(data['mdp'])

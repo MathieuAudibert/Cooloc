@@ -42,6 +42,10 @@ def login(data):
     if not utilisateur:
         return {'status': 400, 'message': 'Utilisateur KO'}
     
+    csrf_verif = verifier_csrf(data)
+    if csrf_verif['status'] != 200:
+        return csrf_verif
+
     mdp_fourni = data['mdp'].encode('utf-8')
 
     mdp = bytes.fromhex(utilisateur[1][2:])

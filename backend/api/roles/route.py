@@ -44,6 +44,10 @@ def changer_role(data, token):
     if token_verif['status'] != 200:
         return token_verif
     
+    csrf_verif = verifier_csrf(data)
+    if csrf_verif['status'] != 200:
+        return csrf_verif
+
     requete = """UPDATE Utilisateurs SET role = %s WHERE id = %s"""
     param = (data['role'], id_utilisateur)
     con.cursor.execute(requete, param)
