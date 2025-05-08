@@ -15,8 +15,8 @@ def verifier_token(data, token):
     
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 403, 'message': 'Token invalide'}
-
-    if token_decode['role'] != 'proprietaire' or 'responsable':
+    
+    if token_decode['role'] not in ['proprietaire', 'responsable']:
         return {'status': 403, 'message': 'Role invalide'}
     
     return {'status': 200, 'message': 'Token valide'}
@@ -42,12 +42,13 @@ def creer_coloc(data, token):
     nom = data['nom']
     date_creation = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
-    requete = """INSERT INTO Colocs (nom, date_creation, responsable, proprietaire) VALUES (%s, %s, %s)"""
-    
+    requete = """INSERT INTO Colocs (nom, date_crea, responsable, proprietaire) VALUES (%s, %s, %s, %s)"""
+    print (data['role'])
+    print(data)
     if data['role'] == 'proprietaire':
-        param = (nom, date_creation, '', id_utilisateur)
+        param = (nom, date_creation, None, id_utilisateur)
     elif data['role'] == 'responsable': 
-        param = (nom, date_creation, id_utilisateur , '')
+        param = (nom, date_creation, id_utilisateur , None)
     else :
         return {'status': 401, 'message': 'Role invalide'}
     
