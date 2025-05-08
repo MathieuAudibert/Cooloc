@@ -41,7 +41,7 @@ def creer_coloc(data, token):
 
     id_utilisateur = recup_id(data)
     if not id_utilisateur:
-        return {'status': 404, 'message': 'Utilisateur non trouvé'}
+        return {'status': 404, 'message': 'Utilisateur KO'}
     
     token_verif = verifier_token(data, token)
     if token_verif['status'] != 200:
@@ -51,17 +51,14 @@ def creer_coloc(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    nom = data['nom']
-    date_creation = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
     requete = """INSERT INTO Colocs (nom, date_crea, responsable, proprietaire) VALUES (%s, %s, %s, %s)"""
 
     if data['role'] == 'proprietaire':
-        param = (nom, date_creation, None, id_utilisateur)
+        param = (data['nom'], datetime.now(), None, id_utilisateur)
     elif data['role'] == 'responsable': 
-        param = (nom, date_creation, id_utilisateur , None)
+        param = (data['nom'], datetime.now(), id_utilisateur , None)
     else :
-        return {'status': 401, 'message': 'Role invalide'}
+        return {'status': 401, 'message': 'Role KO'}
     
     con.cursor.execute(requete, param)
     
