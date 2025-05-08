@@ -39,8 +39,10 @@
 # Securité
 
 - [ ] XSS
-- [ ] Csrf token
+- [x] Csrf token
 - [x] Requetes préparées
 - [x] mdp hashé (bcrypt)
 - [x] Jwt token
 - [x] Transactions bdd
+- [ ] Injections sql
+ 
