@@ -64,7 +64,11 @@ def creer_coloc(data, token):
         return {'status': 401, 'message': 'Role invalide'}
     
     con.cursor.execute(requete, param)
-    con.conn.commit()
+    
+    requete2 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
+    params = (datetime.now(), 'creation coloc', id_utilisateur, con.cursor.lastrowid)
+    con.cursor.execute(requete2, params)
 
+    con.conn.commit()
     con.conn.close()
     return {'status': 200, 'message': 'coloc crée'}

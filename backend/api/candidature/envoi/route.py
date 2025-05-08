@@ -1,6 +1,7 @@
 import jwt
 import sys
 import os
+from datetime import datetime
 from pathlib import Path
 racine = Path(__file__).resolve().parents[2]
 sys.path.append(str(racine))
@@ -55,11 +56,15 @@ def envoi_candidature(data, token):
     requete = """INSERT INTO Candidatures (description, statut, id_utilisateur) VALUES (%s, %s, %s)"""
     param = (description, 'en-attente', id_utilisateur)
     con.cursor.execute(requete, param)
-    con.conn.commit()
 
     requete2 = """INSERT INTO Colocs_Candidatures (id_colocs, id_candidatures) VALUES (%s, %s)"""
     param2 = (data['id_coloc'], con.cursor.lastrowid)
     con.cursor.execute(requete2, param2)
 
+    requete3 = """INSERT INTO Logs (date, action, id_utilisateur, id_candidature) VALUES (%s, %s, %s, %s)"""
+    params = (datetime.now(), 'creation candidature', id_utilisateur, con.cursor.lastrowid)
+    con.cursor.execute(requete3, params)
+    
+    con.conn.commit()
     con.conn.close()
     return {'status': 200, 'message': 'Candidature envoyée avec succès'}

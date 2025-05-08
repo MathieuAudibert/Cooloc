@@ -78,4 +78,6 @@ CREATE TABLE IF NOT EXiSTS Logs (
     id_coloc INT REFERENCES Colocs(id),
     id_depense INT REFERENCES Depenses(id),
     id_tache INT REFERENCES Taches(id),
+    id_absence INT REFERENCES Absences(id),
+    id_candidature INT REFERENCES Candidatures(id)
 )

@@ -52,9 +52,14 @@ def supprimer_coloc(data, token):
         return csrf_verif
 
     id_coloc = data['id_coloc']
+
     requete = """DELETE FROM Colocs WHERE id = %s"""
-    
     con.cursor.execute(requete, (id_coloc,))
-    con.conn.commit()
     
+    requete2 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
+    params = (datetime.now(), 'suppression coloc', id_utilisateur, id_coloc)
+    con.cursor.execute(requete2, params)
+    
+    con.conn.commit()
+    con.conn.close()    
     return {'status': 200, 'message': 'Colocation supprimée avec succès'}

@@ -7,6 +7,7 @@ from api.register.register import register
 from api.candidature.envoi.route import envoi_candidature
 from api.roles.route import changer_role
 from api.colocations.creation import creer_coloc
+from api.colocations.suppression import supprimer_coloc
 
 HOST = "localhost"
 PORT = 8000
@@ -53,6 +54,13 @@ class Serveur(BaseHTTPRequestHandler):
 
         elif self.path == '/coloc/creer':
             res = creer_coloc(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/coloc/supprimer':
+            res = supprimer_coloc(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
