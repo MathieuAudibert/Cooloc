@@ -53,9 +53,12 @@ def creer_coloc(data, token):
 
     requete = """INSERT INTO Colocs (nom, date_crea, responsable, proprietaire) VALUES (%s, %s, %s, %s)"""
 
-    if data['role'] == 'proprietaire':
+    token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
+    role = token_decode['role']
+
+    if role == 'proprietaire':
         param = (data['nom'], datetime.now(), None, id_utilisateur)
-    elif data['role'] == 'responsable': 
+    elif role == 'responsable': 
         param = (data['nom'], datetime.now(), id_utilisateur , None)
     else :
         return {'status': 401, 'message': 'Role KO'}
