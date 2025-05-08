@@ -59,6 +59,6 @@ def modifier_coloc(data, token):
     params = (datetime.now(), 'modification nom coloc', id_utilisateur, data['id_coloc'])
     con.cursor.execute(requete2, params)
 
-    con.commit()
-    con.cursor.close()
+    con.conn.commit()
+    con.conn.close()
     return {'status': 200, 'message': 'Coloc modifiée avec succès'}
