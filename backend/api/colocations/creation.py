@@ -52,7 +52,8 @@ def creer_coloc(data, token):
         return csrf_verif
 
     requete = """INSERT INTO Colocs (nom, date_crea, responsable, proprietaire) VALUES (%s, %s, %s, %s)"""
-
+    requete2 = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
+    
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     role = token_decode['role']
 
@@ -64,11 +65,15 @@ def creer_coloc(data, token):
         return {'status': 401, 'message': 'Role KO'}
     
     con.cursor.execute(requete, param)
-    
-    requete2 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
-    params = (datetime.now(), 'creation coloc', id_utilisateur, con.cursor.lastrowid)
-    con.cursor.execute(requete2, params)
+    con.conn.commit()
 
+    if role == "responsable":
+        con.cursor.execute(requete2, (con.cursor.lastrowid, id_utilisateur))
+
+    requete3 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
+    params = (datetime.now(), 'creation coloc', id_utilisateur, con.cursor.lastrowid)
+    con.cursor.execute(requete3, params)
+    
     con.conn.commit()
     con.conn.close()
     return {'status': 200, 'message': 'coloc crée'}
