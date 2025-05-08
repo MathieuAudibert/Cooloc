@@ -69,3 +69,13 @@ ADD CONSTRAINT fk_responsable
 FOREIGN KEY (responsable) REFERENCES Utilisateurs(id),
 ADD CONSTRAINT fk_proprietaire
 FOREIGN KEY (proprietaire) REFERENCES Utilisateurs(id);
+
+CREATE TABLE IF NOT EXiSTS Logs (
+    id SERIAL PRIMARY KEY,
+    date TIMESTAMP,
+    action VARCHAR(50),
+    id_utilisateur INT REFERENCES Utilisateurs(id),
+    id_coloc INT REFERENCES Colocs(id),
+    id_depense INT REFERENCES Depenses(id),
+    id_tache INT REFERENCES Taches(id),
+)
