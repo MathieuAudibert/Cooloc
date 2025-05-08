@@ -14,9 +14,9 @@ def verifier_token(data, token):
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
-        return {'status': 403, 'message': 'Token invalide'}
+        return {'status': 403, 'message': 'Token KO'}
     
-    return {'status': 200, 'message': 'Token valide'}
+    return {'status': 200, 'message': 'Token OK'}
 
 def recup_id(data) : 
     mail = data['mail']
@@ -30,7 +30,7 @@ def changer_role(data, token):
 
     id_utilisateur = recup_id(data)
     if not id_utilisateur:
-        return {'status': 400, 'message': 'Utilisateur non trouvé'}
+        return {'status': 400, 'message': 'Utilisateur KO'}
     
     token_verif = verifier_token(data, token)
     if token_verif['status'] != 200:

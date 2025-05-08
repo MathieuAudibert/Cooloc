@@ -32,7 +32,7 @@ def login(data):
     utilisateur = con.cursor.fetchone()
     
     if not utilisateur:
-        return {'status': 400, 'message': 'Utilisateur non trouvé'}
+        return {'status': 400, 'message': 'Utilisateur KO'}
     
     mdp_fourni = data['mdp'].encode('utf-8')
 

@@ -13,12 +13,12 @@ def verifier_token(data, token):
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
-        return {'status': 400, 'message': 'Token invalide'}
+        return {'status': 400, 'message': 'Token KO'}
 
     if token_decode['role'] != 'responsable' or 'proprietaire':
-        return {'status': 403, 'message': 'Role invalide'}
+        return {'status': 403, 'message': 'Role KO'}
     
-    return {'status': 200, 'message': 'Token valide'}
+    return {'status': 200, 'message': 'Token OK'}
 
 def recup_infos(utilisateur_id):
     requete = """SELECT mail, prenom, nom FROM Utilisateurs WHERE id = %s LIMIT 1"""
