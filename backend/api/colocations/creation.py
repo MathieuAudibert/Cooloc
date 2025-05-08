@@ -43,8 +43,7 @@ def creer_coloc(data, token):
     date_creation = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
     requete = """INSERT INTO Colocs (nom, date_crea, responsable, proprietaire) VALUES (%s, %s, %s, %s)"""
-    print (data['role'])
-    print(data)
+
     if data['role'] == 'proprietaire':
         param = (nom, date_creation, None, id_utilisateur)
     elif data['role'] == 'responsable': 
