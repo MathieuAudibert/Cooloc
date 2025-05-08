@@ -24,11 +24,6 @@ class Bdd:
         except Exception as e:
             print(f"[ERREUR]: Bdd KO : {e}")
 
-    def req(self, requete):
-        self.cursor.execute(requete)
-        self.conn.commit()
-        return self.cursor
-
     def close(self):
         self.conn.close()
         self.cursor.close()
