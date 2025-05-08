@@ -43,4 +43,4 @@
 - [x] Requetes préparées
 - [x] mdp hashé (bcrypt)
 - [x] Jwt token
-- [ ] Transactions bdd
+- [x] Transactions bdd
