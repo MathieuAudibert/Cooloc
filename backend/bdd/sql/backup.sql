@@ -75,9 +75,9 @@ CREATE TABLE IF NOT EXiSTS Logs (
     date TIMESTAMP,
     action VARCHAR(50),
     id_utilisateur INT REFERENCES Utilisateurs(id),
-    id_coloc INT REFERENCES Colocs(id),
-    id_depense INT REFERENCES Depenses(id),
-    id_tache INT REFERENCES Taches(id),
-    id_absence INT REFERENCES Absences(id),
-    id_candidature INT REFERENCES Candidatures(id)
+    id_coloc INT,
+    id_depense INT ,
+    id_tache INT,
+    id_absence INT,
+    id_candidature INT 
 )
