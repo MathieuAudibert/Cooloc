@@ -43,12 +43,13 @@
     - [x] Update
     - [x] Delete
     - [ ] Voir les candidatures pour chaque coloc
-    - [ ] Update statut de la coloc
+    - [x] Update statut de la coloc
   - [ ] Colocs
     - [x] Create
     - [ ] Read
     - [ ] Update
     - [x] Delete
+    - [x] Infos de la coloc
   - [ ] Depenses
     - [ ] Create 
     - [ ] Read
