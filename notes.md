@@ -18,6 +18,8 @@
   - [ ] Activité
 - [ ] Swagger
 - [x] Trello
+- [ ] Document technique (50 pages mini sans images)
+- [ ] Document professionnel 
 
 # DevOps
 
@@ -34,12 +36,14 @@
 - [ ] Apis
   - [x] Login
   - [x] Register
-  - [ ] Role
+  - [x] Role
   - [ ] Candidature
     - [x] Create
     - [x] Read
-    - [ ] Update
-    - [ ] Delelte
+    - [x] Update
+    - [x] Delete
+    - [ ] Voir les candidatures pour chaque coloc
+    - [ ] Update statut de la coloc
   - [ ] Colocs
     - [x] Create
     - [ ] Read
@@ -56,7 +60,7 @@
     - [ ] Update
     - [ ] Delete
 - [ ] Mentions Légales
-- [ ] Logs
+- [x] Logs
 - [ ] Interface adm
 
 # Securité
