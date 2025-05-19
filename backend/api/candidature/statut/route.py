@@ -16,7 +16,7 @@ def verifier_token(data, token):
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 403, 'message': 'Token KO'}
 
-    if token_decode['role'] not in ['colocataire', 'proprietaire', 'responsable', 'admin']:
+    if token_decode['role'] not in ['proprietaire', 'responsable', 'admin']:
         return {'status': 403, 'message': 'Role KO'}
     
     return {'status': 200, 'message': 'Token OK'}
@@ -51,10 +51,8 @@ def statut_candidature(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    description = data.get('description', '')
-
-    requete = """UPDATE Candidatures (statut) SET (%s) WHERE id = %s"""
-    param = (description, data['statut'])
+    requete = """UPDATE Candidatures SET statut = %s WHERE id = %s"""
+    param = (data['statut'], data['id_candidature'])
     con.cursor.execute(requete, param)
 
     requete3 = """INSERT INTO Logs (date, action, id_utilisateur, id_candidature) VALUES (%s, %s, %s, %s)"""
