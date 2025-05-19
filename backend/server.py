@@ -28,10 +28,21 @@ PORT = 8000
 class Serveur(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        self.send_response(200)
-        self.send_header("Content-type", "text/html")
-        self.end_headers()
-        self.wfile.write(b"OK")
+        get_data = self.rfile.read(int(self.headers['Content-Length']))
+        data = json.loads(get_data)
+        
+        if self.path == '/candidature/voir':
+            res = voir_candidatures(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        else:
+            self.send_response(404)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(b'{"erreur": "pas trouve"}')
 
     def do_POST(self):
         post_data = self.rfile.read(int(self.headers['Content-Length']))
