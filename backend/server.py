@@ -50,16 +50,23 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
-
+        
+        elif self.path == '/role/modifier':
+            res = changer_role(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+            
         elif self.path == '/candidature/creer':
             res = envoi_candidature(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
-
-        elif self.path == '/role/modifier':
-            res = changer_role(data, data['token'])
+        
+        elif self.path == '/candidature/supprimer':
+            res = supprimer_candidatures(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()

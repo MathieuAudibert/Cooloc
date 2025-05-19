@@ -51,12 +51,15 @@ def supprimer_candidatures(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    requete = """DELETE FROM Candidatures WHERE id = %s"""
+    requete = """DELETE FROM Colocs_Candidatures WHERE id_candidatures = %s"""
     con.cursor.execute(requete, (data['id_candidature'],))
+
+    requete2 = """DELETE FROM Candidatures WHERE id = %s"""
+    con.cursor.execute(requete2, (data['id_candidature'],))
     
-    requete2 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
+    requete3 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
     params = (datetime.now(), 'suppression candidature', id_utilisateur, data['id_candidature'])
-    con.cursor.execute(requete2, params)
+    con.cursor.execute(requete3, params)
     
     con.conn.commit()
     con.conn.close()    
