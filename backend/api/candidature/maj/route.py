@@ -53,7 +53,7 @@ def maj_candidature(data, token):
 
     description = data.get('description', '')
 
-    requete = """UPDATE Candidatures (description) SET (%s) WHERE id = %s"""
+    requete = """UPDATE Candidatures SET description = %s WHERE id = %s"""
     param = (description, data['id_candidature'])
     con.cursor.execute(requete, param)
 
