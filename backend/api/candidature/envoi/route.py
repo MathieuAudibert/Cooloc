@@ -16,7 +16,7 @@ def verifier_token(data, token):
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 403, 'message': 'Token KO'}
 
-    if token_decode['role'] != 'aucun':
+    if token_decode['role'] not in ['colocataire', 'proprietaire', 'responsable', 'admin']:
         return {'status': 403, 'message': 'Role KO'}
     
     return {'status': 200, 'message': 'Token OK'}
@@ -53,12 +53,13 @@ def envoi_candidature(data, token):
 
     description = data.get('description', '')
 
-    requete = """INSERT INTO Candidatures (description, statut, id_utilisateur) VALUES (%s, %s, %s)"""
+    requete = """INSERT INTO Candidatures (description, statut, id_utilisateur) VALUES (%s, %s, %s) RETURNING id"""
     param = (description, 'en-attente', id_utilisateur)
     con.cursor.execute(requete, param)
+    c_id = con.cursor.fetchone()
 
     requete2 = """INSERT INTO Colocs_Candidatures (id_colocs, id_candidatures) VALUES (%s, %s)"""
-    param2 = (data['id_coloc'], con.cursor.lastrowid)
+    param2 = (data['id_coloc'], c_id)
     con.cursor.execute(requete2, param2)
 
     requete3 = """INSERT INTO Logs (date, action, id_utilisateur, id_candidature) VALUES (%s, %s, %s, %s)"""
