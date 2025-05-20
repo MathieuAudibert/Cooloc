@@ -37,9 +37,9 @@
   - [x] Login
   - [x] Register
   - [x] Role
-  - [ ] Candidature
+  - [ ] Candidatures
     - [x] Create
-    - [x] Read
+    - [ ] Read
     - [x] Update
     - [x] Delete
     - [ ] Voir les candidatures pour chaque coloc
