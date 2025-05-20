@@ -35,7 +35,7 @@ def recup_id(data) :
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
 
-def voir_candidatures(utilisateur_id, data, token):
+def voir_candidatures(data, token):
     con.connexion()
 
     id_utilisateur = recup_id(data)

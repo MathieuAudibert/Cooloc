@@ -1,7 +1,9 @@
 import os
 import sys
 import json
+import mimetypes
 from http.server import HTTPServer, BaseHTTPRequestHandler
+from swagger_spec import swagger_spec
 
 #Login/register
 from api.login.login import login
@@ -28,10 +30,39 @@ PORT = 8000
 class Serveur(BaseHTTPRequestHandler):
 
     def do_GET(self):
-        get_data = self.rfile.read(int(self.headers['Content-Length']))
-        data = json.loads(get_data)
+        if self.path == '/swagger.json':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(swagger_spec).encode('utf-8'))
         
-        if self.path == '/candidature/voir':
+        elif self.path.startswith('/swagger-ui/'): 
+            path = self.path[12:]
+
+            if '../' in path: 
+                self.send_response(403)
+                self.send_header('Content-type', 'application/json')
+                self.end_headers()
+                self.wfile.write(b'{"erreur": "pas trouve"}')
+                return
+
+            pathc = os.path.join('swagger-ui', path)
+
+            with open(pathc, 'rb') as fich:
+                content = fich.read()
+
+            mime_type = mimetypes.guess_type(pathc)[0] or 'application/octet-stream'
+            self.send_response(200)
+            self.send_header('Content-type', mime_type)
+            self.end_headers()
+            self.wfile.write(content)
+
+        elif self.path == '/docs':
+            self.send_response(302)
+            self.send_header('Location', '/swagger-ui/index.html')
+            self.end_headers()
+
+        elif self.path == '/candidature/voir':
             res = voir_candidatures(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')

@@ -16,10 +16,10 @@
   - [ ] Classe (si classe base)
   - [ ] Sequences
   - [ ] Activité
-- [ ] Swagger
+- [x] Swagger
 - [x] Trello
 - [ ] Document technique (50 pages mini sans images)
-- [ ] Document professionnel 
+- [ ] Document professionnel
 
 # DevOps
 
@@ -51,11 +51,11 @@
     - [x] Delete
     - [x] Infos de la coloc
   - [ ] Depenses
-    - [ ] Create 
+    - [ ] Create
     - [ ] Read
-    - [ ] Update 
+    - [ ] Update
     - [ ] Delete
-  - [ ] Taches 
+  - [ ] Taches
     - [ ] Create
     - [ ] Read
     - [ ] Update
@@ -74,4 +74,3 @@
 - [x] Transactions bdd
 - [x] Injections sql
 - [x] .env
- 
