@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import mimetypes
+import urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from swagger_spec import swagger_spec
 
@@ -28,8 +29,21 @@ HOST = "localhost"
 PORT = 8000
 
 class Serveur(BaseHTTPRequestHandler):
+    def recuperer_parametres(self):
+        url = urllib.parse.urlparse(self.path)
+        path = url.path
+
+        parametres = {}
+        if url.query:
+            req_parametres = urllib.parse.parse_qs(url.query)
+
+            for cle, valeur in req_parametres.items():
+                parametres[cle] = valeur[0]
+        return path, parametres
 
     def do_GET(self):
+        path, parametres = self.recuperer_parametres()
+
         if self.path == '/swagger.json':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
@@ -62,8 +76,11 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Location', '/swagger-ui/index.html')
             self.end_headers()
 
-        elif self.path == '/candidature/voir':
-            res = voir_candidatures(data, data['token'])
+        elif path == '/candidature/voir':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = voir_candidatures(data, token)
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
