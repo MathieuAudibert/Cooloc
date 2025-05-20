@@ -47,7 +47,7 @@
   - [ ] Colocs
     - [x] Create
     - [x] Infos des utilisateurs
-    - [ ] Update le nom de la coloc
+    - [x] Update le nom de la coloc
     - [ ] Ajouter membres
     - [ ] Supprimer membres
     - [x] Delete
