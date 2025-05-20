@@ -39,7 +39,7 @@
   - [x] Role
   - [ ] Candidatures
     - [x] Create
-    - [ ] Read
+    - [x] Read
     - [x] Update
     - [x] Delete
     - [ ] Voir les candidatures pour chaque coloc

@@ -36,7 +36,7 @@ def recup_id(data) :
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
 
-def supprimer_candidatures(data, token):
+def voir_coloc_candidatures(data, token):
     con.connexion()
 
     id_utilisateur = recup_id(data)
@@ -51,10 +51,13 @@ def supprimer_candidatures(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    requete = """SELECT * FROM"""
-    con.cursor.execute(requete, (data['id_candidature'],))
+    requete = """SELECT u.nom, u.prenom, u.mail, c.description, c.statut 
+    FROM Colocs_Candidatures AS cc JOIN  Candidatures AS c ON cc.id_candidatures = c.id
+    JOIN Utilisateurs AS u ON c.id_utilisateur = u.id
+    WHERE cc.id_colocs = %s"""
+    con.cursor.execute(requete, (data['id_colocs'],))
     candidature = con.cursor.fetchone()
 
     con.conn.commit()
     con.conn.close()    
-    return {'status': 200, 'message': 'Candidature supprimée avec succès', 'candidature': {'description': candidature[0], 'statut': candida}}
+    return {'status': 200, 'candidatures': candidature}

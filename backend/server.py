@@ -10,12 +10,13 @@ from swagger_spec import swagger_spec
 from api.login.login import login
 from api.register.register import register
 
-# candidature
+# candidatures
 from api.candidature.envoi.route import envoi_candidature
 from api.candidature.maj.route import maj_candidature
 from api.candidature.statut.route import statut_candidature
 from api.candidature.suppression.route import supprimer_candidatures
 from api.candidature.voir.route import voir_candidatures
+from api.candidature.reception.route import voir_coloc_candidatures
 
 # Coloc 
 from api.colocations.creation import creer_coloc
@@ -44,7 +45,13 @@ class Serveur(BaseHTTPRequestHandler):
     def do_GET(self):
         path, parametres = self.recuperer_parametres()
 
-        if self.path == '/swagger.json':
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'text/html')
+            self.end_headers()
+            self.wfile.write('Serveur OK'.encode('utf-8'))
+
+        elif self.path == '/swagger.json':
             self.send_response(200)
             self.send_header('Content-type', 'application/json')
             self.end_headers()
@@ -81,6 +88,16 @@ class Serveur(BaseHTTPRequestHandler):
             data = parametres.copy()
 
             res = voir_candidatures(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif path == '/coloc/voir/candidature':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = voir_coloc_candidatures(data, token)
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
