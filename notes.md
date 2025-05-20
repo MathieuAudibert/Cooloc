@@ -37,7 +37,7 @@
   - [x] Login
   - [x] Register
   - [x] Role
-  - [ ] Candidatures
+  - [x] Candidatures
     - [x] Create
     - [x] Read
     - [x] Update
