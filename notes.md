@@ -42,7 +42,7 @@
     - [x] Read
     - [x] Update
     - [x] Delete
-    - [ ] Voir les candidatures pour chaque coloc
+    - [x] Voir les candidatures pour chaque coloc
     - [x] Update statut de la coloc
   - [ ] Colocs
     - [x] Create
