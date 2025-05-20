@@ -72,6 +72,6 @@
 - [x] mdp hashé (bcrypt)
 - [x] Jwt token
 - [x] Transactions bdd
-- [ ] Injections sql
+- [x] Injections sql
 - [x] .env
  
