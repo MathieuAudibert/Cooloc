@@ -22,6 +22,8 @@ from api.candidature.reception.route import voir_coloc_candidatures
 from api.colocations.creation import creer_coloc
 from api.colocations.suppression import supprimer_coloc
 from api.colocations.gestion.renommer import modifier_coloc
+from api.colocations.utilisateurs import details_colocs
+from api.colocations.voir import infos_coloc
 
 # autre
 from api.roles.route import changer_role
@@ -103,6 +105,26 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
 
+        elif path == '/coloc/voir/utilisateurs':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = details_colocs(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif path == '/coloc/voir':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = infos_coloc(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+        
         else:
             self.send_response(404)
             self.send_header('Content-type', 'application/json')

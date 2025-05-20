@@ -36,28 +36,16 @@ def recup_id(data) :
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
 
-def recup_infos_proprio(data) :
-    coloc = data['id_colocs']
-    requete = """SELECT u.nom, u.prenom, u.mail, u.num_telephone FROM Utilisateurs AS u JOIN Colocs AS c ON c.proprietaire = u.id WHERE mail = %s AND c.id = %s"""
-    con.cursor.execute(requete, (data['mail'], coloc))
-    id_utilisateur = con.cursor.fetchone()
-    return id_utilisateur
-
-def recup_infos(data): 
-    coloc = data['id_colocs']
-    requete = """SELECT u.nom, u.prenom FROM Utilisateurs AS u JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s"""
-    con.cursor.execute(requete, (coloc,))
-    infos = con.cursor.fetchall()
-    return infos
-
 def recup_infos_coloc(data):
     coloc = data['id_colocs']
-    requete = """SELECT c.nom, c.date_crea, u.prenom, u.nom FROM Colocs AS c JOIN Utilisateurs AS u ON c.responsable = u.id WHERE id = %s"""
+    requete = """SELECT nom, date_crea FROM Colocs WHERE id = %s"""
     con.cursor.execute(requete, (coloc,))
     infos = con.cursor.fetchone()
+    if infos and isinstance(infos[1], datetime):
+        infos = (infos[0], infos[1].isoformat())
     return infos
 
-def details_colocs(data, token):
+def infos_coloc(data, token):
     con.connexion()
 
     id_utilisateur = recup_id(data)
@@ -72,8 +60,6 @@ def details_colocs(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    infos_proprio = recup_infos_proprio(data['id_colocs'])
-    infos_coloc = recup_infos_coloc(data['id_colocs'])
-    infos = recup_infos(data['id_colocs'])
+    infos_coloc = recup_infos_coloc(data)
 
-    return {'status': 200, 'message': 'OK', 'infos_proprio': infos_proprio, 'infos_coloc': infos_coloc, 'infos': infos}
+    return {'status': 200, 'message': 'OK', 'infos': infos_coloc}
