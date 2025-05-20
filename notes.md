@@ -73,4 +73,5 @@
 - [x] Jwt token
 - [x] Transactions bdd
 - [ ] Injections sql
+- [x] .env
  
