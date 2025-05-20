@@ -1,14 +1,14 @@
 swagger_spec = {
     "openapi": "3.0.0",
     "info": {
-        "title": "API de Colocation",
+        "title": "Cooloc API",
         "description": "API REST de gestion de collocations",
         "version": "1.0.0"
     },
     "servers": [
         {
             "url": "http://localhost:8000",
-            "description": "Server"
+            "description": "API Python locale"
         }
     ],
     "paths": {
@@ -99,7 +99,7 @@ swagger_spec = {
         },
         "/candidature/voir": {
             "get": {
-                "summary": "Voir ses propres candidatures",
+                "summary": "Voir les candidatures pour une coloc en particulier",
                 "requestBody": {
                     "required": True,
                     "content": {
