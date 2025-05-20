@@ -47,7 +47,9 @@
   - [ ] Colocs
     - [x] Create
     - [ ] Read
-    - [ ] Update
+    - [ ] Update le nom de la coloc
+    - [ ] Ajouter membres
+    - [ ] Supprimer membres
     - [x] Delete
     - [x] Infos de la coloc
   - [ ] Depenses

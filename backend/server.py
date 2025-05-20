@@ -21,7 +21,7 @@ from api.candidature.reception.route import voir_coloc_candidatures
 # Coloc 
 from api.colocations.creation import creer_coloc
 from api.colocations.suppression import supprimer_coloc
-from api.colocations.modifications import modifier_coloc
+from api.colocations.gestion.renommer import modifier_coloc
 
 # autre
 from api.roles.route import changer_role
@@ -126,13 +126,6 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
-        
-        elif self.path == '/role/modifier':
-            res = changer_role(data, data['token'])
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
             
         elif self.path == '/candidature/creer':
             res = envoi_candidature(data, data['token'])
@@ -172,7 +165,7 @@ class Serveur(BaseHTTPRequestHandler):
         post_data = self.rfile.read(int(self.headers['Content-Length']))
         data = json.loads(post_data)
 
-        if self.path == '/coloc/modifier':
+        if self.path == '/coloc/maj/nom':
             res = modifier_coloc(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
@@ -193,6 +186,13 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
         
+        elif self.path == '/role/modifier':
+            res = changer_role(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
         else:   
             self.send_response(404)
             self.send_header('Content-type', 'application/json')
