@@ -46,7 +46,7 @@
     - [x] Update statut de la coloc
   - [ ] Colocs
     - [x] Create
-    - [ ] Read
+    - [x] Infos des utilisateurs
     - [ ] Update le nom de la coloc
     - [ ] Ajouter membres
     - [ ] Supprimer membres
