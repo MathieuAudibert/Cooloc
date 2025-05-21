@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS Candidatures (
 
 CREATE TABLE IF NOT EXISTS Colocs_Candidatures(
     id_colocs INT REFERENCES Colocs(id),
-    id_candidatures INT REFERENCES Candidatures(id),
+    id_candidatures INT REFERENCES Candidatures(id)
 );
 
 ALTER TABLE Colocs
