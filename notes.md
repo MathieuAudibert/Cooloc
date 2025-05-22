@@ -24,6 +24,8 @@
 # DevOps
 
 - [ ] Tests
+  - [x] API (collections postman)
+  - [ ] Unitaires 
 - [x] Docker
 - [ ] Virtual Env (facultatif)
 - [x] Sonarqube
