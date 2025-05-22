@@ -6,7 +6,7 @@ import urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from swagger_spec import swagger_spec
 
-#Login/register
+# inscription connexion 
 from api.login.login import login
 from api.register.register import register
 
@@ -18,7 +18,7 @@ from api.candidature.suppression.route import supprimer_candidatures
 from api.candidature.voir.route import voir_candidatures
 from api.candidature.reception.route import voir_coloc_candidatures
 
-# Coloc 
+# coloc 
 from api.colocations.creation import creer_coloc
 from api.colocations.suppression import supprimer_coloc
 from api.colocations.gestion.renommer import modifier_coloc
@@ -32,6 +32,7 @@ HOST = "localhost"
 PORT = 8000
 
 class Serveur(BaseHTTPRequestHandler):
+    # FIX: elif pue du cul utiliser match?
     def recuperer_parametres(self):
         url = urllib.parse.urlparse(self.path)
         path = url.path
