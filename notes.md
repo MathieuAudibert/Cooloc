@@ -20,6 +20,7 @@
 - [x] Trello
 - [ ] Document technique (50 pages mini sans images)
 - [ ] Document professionnel
+- [ ] PowerPoint
 
 # DevOps
 
