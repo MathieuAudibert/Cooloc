@@ -69,7 +69,7 @@
 - [ ] Interface adm
 - [ ] Page profil
 
-# Securité
+# Securité [ ]
 
 - [ ] XSS
 - [x] Csrf token
