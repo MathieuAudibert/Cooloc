@@ -67,6 +67,7 @@
 - [ ] Mentions Légales
 - [x] Logs
 - [ ] Interface adm
+- [ ] page profil
 
 # Securité
 
