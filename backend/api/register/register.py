@@ -20,6 +20,13 @@ def verifier_csrf(data):
 
     return {'status': 200, 'message': 'CSRF OK'}
 
+def car_spe(mdp):
+    caracteres = "!@#$%^&*(),.?\":{}|<>"
+    for c in caracteres:
+        if c in mdp:
+            return True
+    return False
+
 def register(data):
     champs = ['nom', 'prenom', 'mail', 'mdp']
     
@@ -30,6 +37,9 @@ def register(data):
     if csrf_verif['status'] != 200:
         return csrf_verif
     con.connexion()
+
+    if not car_spe(data['mdp']):
+        return {'status': 400, 'message': 'Car speciaux KO'}
     
     mail_existant = "SELECT mail FROM Utilisateurs WHERE mail = %s"
     con.cursor.execute(mail_existant, (data['mail'],))
