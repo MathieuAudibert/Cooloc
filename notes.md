@@ -15,7 +15,7 @@
   - [x] Use case
   - [ ] Classe (si classe base)
   - [ ] Sequences
-  - [ ] Activité
+  - [x] Activité
 - [x] Swagger
 - [x] Trello
 - [ ] Document technique (50 pages mini sans images)
