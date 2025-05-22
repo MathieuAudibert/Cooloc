@@ -19,7 +19,7 @@
     - [ ] Candidature CRUD
     - [ ] Absences CRUD
     - [ ] Depenses CRUD
-    - [ ] Taches CRUD
+    - [x] Taches CRUD
     - [x] Profil
     - [x] A propos
     - [x] Footer 
