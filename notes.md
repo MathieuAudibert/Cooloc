@@ -2,9 +2,9 @@
 
 - [ ] Maquettes figma
   - [ ] Mobile
-  - [ ] PC
+  - [x] PC
   - [ ] Wireframes
-  - [ ] Zone
+  - [x] Zone
   - [x] Chartre graphique
 - [x] Merise
   - [x] MCD
