@@ -3,7 +3,6 @@ CREATE TABLE IF NOT EXISTS Colocs (
     nom VARCHAR(50),
     date_crea TIMESTAMP,
     responsable INT,
-    proprietaire INT
 );
 
 CREATE TABLE IF NOT EXISTS Utilisateurs (
@@ -52,13 +51,6 @@ CREATE TABLE IF NOT EXISTS Taches (
     atribue_a INT REFERENCES Utilisateurs(id)
 );
 
-CREATE TABLE IF NOT EXISTS Candidatures (
-    id SERIAL PRIMARY KEY,
-    description VARCHAR(100),
-    statut VARCHAR(50),
-    id_utilisateur INT REFERENCES Utilisateurs(id)
-);
-
 CREATE TABLE IF NOT EXISTS Colocs_Candidatures(
     id_colocs INT REFERENCES Colocs(id),
     id_candidatures INT REFERENCES Candidatures(id)
@@ -67,8 +59,6 @@ CREATE TABLE IF NOT EXISTS Colocs_Candidatures(
 ALTER TABLE Colocs
 ADD CONSTRAINT fk_responsable
 FOREIGN KEY (responsable) REFERENCES Utilisateurs(id),
-ADD CONSTRAINT fk_proprietaire
-FOREIGN KEY (proprietaire) REFERENCES Utilisateurs(id);
 
 CREATE TABLE IF NOT EXiSTS Logs (
     id SERIAL PRIMARY KEY,
