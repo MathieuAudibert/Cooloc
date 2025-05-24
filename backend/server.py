@@ -10,14 +10,6 @@ from swagger_spec import swagger_spec
 from api.login.login import login
 from api.register.register import register
 
-# candidatures
-from api.candidature.envoi.route import envoi_candidature
-from api.candidature.maj.route import maj_candidature
-from api.candidature.statut.route import statut_candidature
-from api.candidature.suppression.route import supprimer_candidatures
-from api.candidature.voir.route import voir_candidatures
-from api.candidature.reception.route import voir_coloc_candidatures
-
 # coloc 
 from api.colocations.creation import creer_coloc
 from api.colocations.suppression import supprimer_coloc
@@ -86,26 +78,6 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Location', '/swagger-ui/index.html')
             self.end_headers()
 
-        elif path == '/candidature/voir':
-            token = parametres.get('token')
-            data = parametres.copy()
-
-            res = voir_candidatures(data, token)
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
-
-        elif path == '/coloc/voir/candidature':
-            token = parametres.get('token')
-            data = parametres.copy()
-
-            res = voir_coloc_candidatures(data, token)
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
-
         elif path == '/coloc/voir/utilisateurs':
             token = parametres.get('token')
             data = parametres.copy()
@@ -149,20 +121,6 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
-            
-        elif self.path == '/candidature/creer':
-            res = envoi_candidature(data, data['token'])
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
-        
-        elif self.path == '/candidature/supprimer':
-            res = supprimer_candidatures(data, data['token'])
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
 
         elif self.path == '/coloc/creer':
             res = creer_coloc(data, data['token'])
@@ -190,20 +148,6 @@ class Serveur(BaseHTTPRequestHandler):
 
         if self.path == '/coloc/maj/nom':
             res = modifier_coloc(data, data['token'])
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
-        
-        elif self.path == '/candidature/maj/description':
-            res = maj_candidature(data, data['token'])
-            self.send_response(res['status'])
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(res).encode('utf-8'))
-
-        elif self.path == '/candidature/maj/statut':
-            res = statut_candidature(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
