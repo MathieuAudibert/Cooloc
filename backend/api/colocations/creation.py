@@ -5,7 +5,7 @@ from datetime import datetime
 import jwt
 projet_root = Path(__file__).resolve().parents[2]
 sys.path.append(str(projet_root))
-from bdd.connexion import con
+from bdd.connexion import con, logs
 
 jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
@@ -68,9 +68,8 @@ def creer_coloc(data, token):
     if role == "responsable":
         con.cursor.execute(requete2, (con.cursor.lastrowid, id_utilisateur))
 
-    requete3 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
-    params = (datetime.now(), 'creation coloc', id_utilisateur, con.cursor.lastrowid)
-    con.cursor.execute(requete3, params)
+    log = {'date': datetime.now(), 'action': 'creation coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': con.cursor.lastrowid}
+    logs.db.collection('Logs').add(log)
     
     con.conn.commit()
     con.conn.close()

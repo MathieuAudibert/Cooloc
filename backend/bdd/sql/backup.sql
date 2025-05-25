@@ -51,10 +51,6 @@ CREATE TABLE IF NOT EXISTS Taches (
     atribue_a INT REFERENCES Utilisateurs(id)
 );
 
-CREATE TABLE IF NOT EXISTS Colocs_Candidatures(
-    id_colocs INT REFERENCES Colocs(id),
-    id_candidatures INT REFERENCES Candidatures(id)
-);
 
 ALTER TABLE Colocs
 ADD CONSTRAINT fk_responsable

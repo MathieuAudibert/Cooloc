@@ -5,7 +5,7 @@ from datetime import datetime
 import jwt
 projet_root = Path(__file__).resolve().parents[2]
 sys.path.append(str(projet_root))
-from bdd.connexion import con
+from bdd.connexion import con, logs
 
 jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
@@ -54,9 +54,8 @@ def supprimer_coloc(data, token):
     requete = """DELETE FROM Colocs WHERE id = %s"""
     con.cursor.execute(requete, (data['id_coloc'],))
     
-    requete2 = """INSERT INTO Logs (date, action, id_utilisateur, id_coloc) VALUES (%s, %s, %s, %s)"""
-    params = (datetime.now(), 'suppression coloc', id_utilisateur, data['id_coloc'])
-    con.cursor.execute(requete2, params)
+    log = {'date': datetime.now(), 'action': 'suppression coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': data['id_coloc']}
+    logs.db.collection('Logs').add(log)
     
     con.conn.commit()
     con.conn.close()    
