@@ -51,24 +51,18 @@ def creer_coloc(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    requete = """INSERT INTO Colocs (nom, date_crea, responsable) VALUES (%s, %s, %s)"""
-    requete2 = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
-    
-    token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
-    role = token_decode['role']
-
-    if role == 'responsable': 
-        param = (data['nom'], datetime.now(), id_utilisateur , None)
-    else :
-        return {'status': 401, 'message': 'Role KO'}
-    
+    requete = """INSERT INTO Colocs (nom, date_crea, responsable) VALUES (%s, %s, %s) RETURNING id"""
+    param = (data['nom'], datetime.now(), id_utilisateur)
     con.cursor.execute(requete, param)
-    con.conn.commit()
+    id_coloc = con.cursor.fetchone()
 
-    if role == "responsable":
-        con.cursor.execute(requete2, (con.cursor.lastrowid, id_utilisateur))
+    if not id_coloc:
+        return {'status': 500, 'message': 'Erreur lors de la création de la coloc'}
+    
+    requete2 = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
+    con.cursor.execute(requete2, (id_coloc, id_utilisateur))
 
-    log = {'date': datetime.now(), 'action': 'creation coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': con.cursor.lastrowid}
+    log = {'date': datetime.now(), 'action': 'creation coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': id_coloc}
     logs.db.collection('Logs').add(log)
     
     con.conn.commit()
