@@ -4,7 +4,7 @@ import json
 import mimetypes
 import urllib.parse
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from swagger_spec import swagger_spec
+from swagger import swagger_spec
 
 # inscription connexion 
 from api.login.login import login
