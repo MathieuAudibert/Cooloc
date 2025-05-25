@@ -17,6 +17,10 @@ from api.colocations.gestion.renommer import modifier_coloc
 from api.colocations.utilisateurs import details_colocs
 from api.colocations.voir import infos_coloc
 
+# admin 
+from api.adm.logi.supprimer import supprimer_logs
+from api.adm.logi.voir import voir_logs
+
 # autre
 from api.roles.route import changer_role
 
@@ -97,7 +101,17 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Content-type', 'application/json')
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
-        
+
+        elif path == '/adm/logs':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = voir_logs(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+            
         else:
             self.send_response(404)
             self.send_header('Content-type', 'application/json')
@@ -131,6 +145,13 @@ class Serveur(BaseHTTPRequestHandler):
 
         elif self.path == '/coloc/supprimer':
             res = supprimer_coloc(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+        
+        elif self.path == '/adm/supprimer/logs':
+            res = supprimer_logs(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
