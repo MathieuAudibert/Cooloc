@@ -2,20 +2,18 @@
 
 - [ ] Maquettes figma
   - [ ] Mobile
-<<<<<<< HEAD
   - [x] PC
-=======
-      - [x] Homepage
-      - [ ] Colocs CRUD
-      - [ ] Candidature CRUD
-      - [ ] Absences CRUD
-      - [ ] Depenses CRUD
-      - [ ] Taches CRUD
-      - [ ] Profil
-      - [ ] A propos
-      - [x] Footer 
-      - [x] Login/Register
-      - [ ] Admin
+    - [x] Homepage
+    - [ ] Colocs CRUD
+    - [ ] Candidature CRUD
+    - [ ] Absences CRUD
+    - [ ] Depenses CRUD
+    - [ ] Taches CRUD
+    - [ ] Profil
+    - [ ] A propos
+    - [x] Footer
+    - [x] Login/Register
+    - [ ] Admin
   - [ ] PC
     - [x] Homepage
     - [ ] Colocs CRUD
@@ -25,10 +23,9 @@
     - [x] Taches CRUD
     - [x] Profil
     - [x] A propos
-    - [x] Footer 
+    - [x] Footer
     - [x] Login/Register
     - [ ] Admin
->>>>>>> e386b79c7197b79d4eb7556ae758c0b69344c467
   - [ ] Wireframes
   - [x] Zone
   - [x] Chartre graphique
@@ -52,7 +49,7 @@
 
 - [ ] Tests
   - [x] API (collections postman)
-  - [ ] Unitaires 
+  - [ ] Unitaires
   - [ ] End-to-End (test d'une fonctionnalité du Login jusqu'a la fin de la feature)
 - [x] Docker
 - [ ] Virtual Env (facultatif)
@@ -89,6 +86,7 @@
 - [x] Logs
 - [ ] Interface adm
 - [ ] Page profil
+- [x] Nosql
 
 # Securité
 

@@ -16,7 +16,7 @@ def verifier_token(data, token):
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 403, 'message': 'Token KO'}
     
-    if token_decode['role'] not in ['proprietaire', 'responsable', 'admin']:
+    if token_decode['role'] not in ['responsable', 'admin']:
         return {'status': 403, 'message': 'Role KO'}
     
     return {'status': 200, 'message': 'Token OK'}

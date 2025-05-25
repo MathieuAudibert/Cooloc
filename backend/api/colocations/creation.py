@@ -16,7 +16,7 @@ def verifier_token(data, token):
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 403, 'message': 'Token KO'}
     
-    if token_decode['role'] not in ['proprietaire', 'responsable', 'admin']:
+    if token_decode['role'] not in ['responsable', 'admin']:
         return {'status': 403, 'message': 'Role KO'}
     
     return {'status': 200, 'message': 'Token OK'}
@@ -51,15 +51,13 @@ def creer_coloc(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    requete = """INSERT INTO Colocs (nom, date_crea, responsable, proprietaire) VALUES (%s, %s, %s, %s)"""
+    requete = """INSERT INTO Colocs (nom, date_crea, responsable) VALUES (%s, %s, %s)"""
     requete2 = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
     
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     role = token_decode['role']
 
-    if role == 'proprietaire':
-        param = (data['nom'], datetime.now(), None, id_utilisateur)
-    elif role == 'responsable': 
+    if role == 'responsable': 
         param = (data['nom'], datetime.now(), id_utilisateur , None)
     else :
         return {'status': 401, 'message': 'Role KO'}

@@ -16,7 +16,7 @@ def verifier_token(data, token):
     if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
         return {'status': 403, 'message': 'Token KO'}
     
-    if token_decode['role'] not in ['colocataire', 'proprietaire', 'responsable', 'admin']:
+    if token_decode['role'] not in ['colocataire', 'responsable', 'admin']:
         return {'status': 403, 'message': 'Role KO'}
     
     return {'status': 200, 'message': 'Token OK'}
@@ -35,17 +35,6 @@ def recup_id(data):
     con.cursor.execute(requete, (mail,))
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
-
-def recup_infos_proprio(data):
-    coloc = data['id_colocs']
-    if data['role'] not in ['responsable', 'proprietaire', 'admin']:
-        requete = """SELECT u.nom, u.prenom FROM Utilisateurs AS u JOIN Colocs AS c ON c.proprietaire = u.id AND c.id = %s"""
-        con.cursor.execute(requete, (coloc))
-    else:
-        requete = """SELECT u.nom, u.prenom, u.mail, u.num_telephone FROM Utilisateurs AS u JOIN Colocs AS c ON c.proprietaire = u.id AND c.id = %s"""
-        con.cursor.execute(requete, (coloc))
-    infos_proprio = con.cursor.fetchone()
-    return infos_proprio
 
 def recup_infos_responsable(data):
     coloc = data['id_colocs']
@@ -80,8 +69,7 @@ def details_colocs(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    infos_proprio = recup_infos_proprio(data)
     infos = recup_infos(data)
     infos_responsable = recup_infos_responsable(data)
 
-    return {'status': 200, 'message': 'OK', 'infos_proprio': infos_proprio, 'infos': infos, 'infos_responsable': infos_responsable}
+    return {'status': 200, 'message': 'OK', 'infos': infos, 'infos_responsable': infos_responsable}
