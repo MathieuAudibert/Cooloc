@@ -5,3 +5,4 @@ pytest-cov
 coverage
 bcrypt
 pyjwt
+firebase-admin

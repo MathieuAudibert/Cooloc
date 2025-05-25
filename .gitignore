@@ -27,3 +27,5 @@ dist-ssr
 .pytest_cache
 
 notes-docker.txt
+
+cle.json

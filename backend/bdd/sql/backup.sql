@@ -59,15 +59,3 @@ CREATE TABLE IF NOT EXISTS Colocs_Candidatures(
 ALTER TABLE Colocs
 ADD CONSTRAINT fk_responsable
 FOREIGN KEY (responsable) REFERENCES Utilisateurs(id),
-
-CREATE TABLE IF NOT EXiSTS Logs (
-    id SERIAL PRIMARY KEY,
-    date TIMESTAMP,
-    action VARCHAR(50),
-    id_utilisateur INT REFERENCES Utilisateurs(id),
-    id_coloc INT,
-    id_depense INT ,
-    id_tache INT,
-    id_absence INT,
-    id_candidature INT 
-)

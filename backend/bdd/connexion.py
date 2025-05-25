@@ -1,6 +1,9 @@
 import psycopg2
 import os
 from dotenv import load_dotenv
+import firebase_admin
+from firebase_admin import firestore
+from firebase_admin import credentials
 
 class Bdd:
     def __init__(self, user, mdp, nom, host, port):
@@ -29,6 +32,12 @@ class Bdd:
         self.cursor.close()
         print("[INFO]: Bdd close")
 
+class Logs: 
+    def __init__(self, cle):
+        self.cle = credentials.Certificate(cle)
+        self.app = firebase_admin.initialize_app(self.cle)
+        self.db = firestore.client()
+
 load_dotenv()
 con = Bdd(user=os.getenv("BDD_USER"), mdp=os.getenv("BDD_MDP"), nom=os.getenv("BDD_NOM"), host=os.getenv("BDD_HOST"), port=os.getenv("BDD_PORT"))
-
+logs = Logs(cle="bdd/cle.json")
