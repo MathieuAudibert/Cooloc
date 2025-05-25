@@ -5,7 +5,7 @@ from datetime import datetime
 import jwt
 projet_root = Path(__file__).resolve().parents[2]
 sys.path.append(str(projet_root))
-from bdd.connexion import con
+from bdd.connexion import con,logs
 
 jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
@@ -52,6 +52,9 @@ def changer_role(data, token):
     param = (data['role'], id_utilisateur)
     con.cursor.execute(requete, param)
     con.conn.commit()
+
+    log = {'date': datetime.now(), 'action': 'changement role', 'id_utilisateur': id_utilisateur, 'role': data['role']}
+    logs.db.collection('Logs').add(log)
 
     con.conn.close()
     return {'status': 200, 'message': 'Role changé'}

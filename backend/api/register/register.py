@@ -4,7 +4,7 @@ import bcrypt
 from datetime import datetime
 projet_root = Path(__file__).resolve().parents[2]
 sys.path.append(str(projet_root))
-from bdd.connexion import con
+from bdd.connexion import con, logs
 
 def mdp_hash(mdp):
     mdp_propre = mdp.encode('utf-8')
@@ -55,6 +55,9 @@ def register(data):
     param = (data['mail'], data['nom'], data['prenom'], role, mdp_hashe, datetime.now(), num_tel)
     con.cursor.execute(requete, param)
     con.conn.commit()
+
+    log = {'date': datetime.now(), 'action': 'inscription', 'mail': data['mail']}
+    logs.db.collection('Logs').add(log)
         
     con.conn.close()
     return {'status': 200}
