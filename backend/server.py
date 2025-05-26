@@ -21,6 +21,7 @@ from api.colocations.voir import infos_coloc
 from api.adm.logi.supprimer import supprimer_logs
 from api.adm.logi.voir import voir_logs
 from api.adm.utilisateurs.voir import voir_utilisateurs
+from api.adm.utilisateurs.maj import maj_utilisateurs
 
 # autre
 from api.roles.route import changer_role
@@ -187,6 +188,13 @@ class Serveur(BaseHTTPRequestHandler):
         
         elif self.path == '/role/modifier':
             res = changer_role(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/adm/utilisateurs/maj':
+            res = maj_utilisateurs(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
