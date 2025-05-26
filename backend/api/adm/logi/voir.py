@@ -56,10 +56,13 @@ def voir_logs(data, token):
     for l in logs_bdd:
         log.append({
             'id': l.id,
-            'mail': l.to_dict().get('mail'),
-            'role': l.to_dict().get('role'),
+            'date': l.to_dict().get('date').strftime('%Y-%m-%d %H:%M:%S'),
             'action': l.to_dict().get('action'),
-            'date': l.to_dict().get('date').strftime('%Y-%m-%d %H:%M:%S')
+            'infos': {
+                'id_coloc': l.to_dict().get('id_coloc'),
+                'id_utilisateur': l.to_dict().get('id_utilisateur'),
+                'id_logs': l.to_dict().get('id_logs')
+            }
         })
     con.conn.commit()
     con.close()
