@@ -22,6 +22,7 @@ from api.adm.logi.supprimer import supprimer_logs
 from api.adm.logi.voir import voir_logs
 from api.adm.utilisateurs.voir import voir_utilisateurs
 from api.adm.utilisateurs.maj import maj_utilisateurs
+from api.adm.utilisateurs.supprimer import supprimer_utilisateurs
 
 # autre
 from api.roles.route import changer_role
@@ -164,6 +165,13 @@ class Serveur(BaseHTTPRequestHandler):
         
         elif self.path == '/adm/supprimer/logs':
             res = supprimer_logs(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/adm/utilisateurs/supprimer':
+            res = supprimer_utilisateurs(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
