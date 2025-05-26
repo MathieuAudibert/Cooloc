@@ -51,7 +51,17 @@ def voir_logs(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    log = logs.db.collection('Logs').get()
+    logs_bdd = logs.db.collection('Logs').stream()
+    log = []
+    for l in logs_bdd:
+        log.append({
+            'id': l.id,
+            'mail': l.to_dict().get('mail'),
+            'role': l.to_dict().get('role'),
+            'action': l.to_dict().get('action'),
+            'date': l.to_dict().get('date').strftime('%Y-%m-%d %H:%M:%S')
+        })
     con.conn.commit()
     con.close()
     return {'status': 200, 'logs': log}
+
