@@ -51,6 +51,9 @@ def supprimer_coloc(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
+    coloc = """UPDATE Utilisateurs SET id_coloc = NULL WHERE id_coloc = %s"""
+    con.cursor.execute(coloc, (data['id_coloc'],))
+
     requete = """DELETE FROM Colocs WHERE id = %s"""
     con.cursor.execute(requete, (data['id_coloc'],))
     
