@@ -711,7 +711,7 @@ swagger_spec = {
             "Profil": {
                 "type": "object",
                 "properties": {
-                    {"$ref": "#/components/schemas/Utilisateurs"}
+                    "": {"$ref": "#/components/schemas/Utilisateurs"}
                 }
             },
             "Logs": {
