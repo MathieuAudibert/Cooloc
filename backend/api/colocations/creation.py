@@ -51,13 +51,19 @@ def creer_coloc(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
+    coloc = """SELECT id_coloc FROM Utilisateurs WHERE id = %s"""
+    a_coloc = con.cursor.execute(coloc, (id_utilisateur,))
+    
+    if a_coloc:
+        return {'status': 403, 'message': 'Utilisateur déjà dans une coloc'}
+
     requete = """INSERT INTO Colocs (nom, date_crea, responsable) VALUES (%s, %s, %s) RETURNING id"""
     param = (data['nom'], datetime.now(), id_utilisateur)
     con.cursor.execute(requete, param)
     id_coloc = con.cursor.fetchone()
 
     if not id_coloc:
-        return {'status': 500, 'message': 'Erreur lors de la création de la coloc'}
+        return {'status': 500, 'message': 'Erreur interne'}
     
     requete2 = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
     con.cursor.execute(requete2, (id_coloc, id_utilisateur))
