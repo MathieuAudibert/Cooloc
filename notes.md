@@ -85,6 +85,8 @@
 - [ ] Mentions Légales
 - [x] Logs
 - [ ] Interface adm
+  - [x] Back
+  - [ ] Front
 - [ ] Page profil
 - [x] Nosql
 
