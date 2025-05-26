@@ -87,7 +87,7 @@ class Serveur(BaseHTTPRequestHandler):
             self.send_header('Location', '/swagger-ui/index.html')
             self.end_headers()
 
-        elif path == '/coloc/voir/utilisateurs':
+        elif path == '/coloc/utilisateurs/voir':
             token = parametres.get('token')
             data = parametres.copy()
 
@@ -175,7 +175,7 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
         
-        elif self.path == '/adm/supprimer/logs':
+        elif self.path == '/adm/logs/supprimer':
             res = supprimer_logs(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
@@ -206,7 +206,7 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
         
-        elif self.path == '/role/modifier':
+        elif self.path == '/role/maj':
             res = changer_role(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
