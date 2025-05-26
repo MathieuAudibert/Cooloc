@@ -50,11 +50,8 @@ def recup_id(data) :
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
 
-def maj_utilisateurs(data, token):
+def maj_profil(data, token):
     con.connexion()
-
-    if not data.get('id_utilisateur'):
-        return {'status': 400, 'message': 'Utilisateur KO'}
 
     id_utilisateur = recup_id(data)
     if not id_utilisateur:
@@ -93,14 +90,14 @@ def maj_utilisateurs(data, token):
         champs.append('num_telephone')
         val.append(data['num_telephone'])
     
-    val.append(data['id_utilisateur_modifie'])
+    val.append(data['id_utilisateur'])
     requete = f"""UPDATE Utilisateurs SET {', '.join([f"{champ} = %s" for champ in champs])} WHERE id = %s"""
     con.cursor.execute(requete, val)
 
-    log = {'date': datetime.now(), 'action': 'maj utilisateur', 'id_utilisateur': id_utilisateur, 'id_utilisateur_modifié': data['id_utilisateur_modifie'], 'champs': val}
+    log = {'date': datetime.now(), 'action': 'maj utilisateur', 'id_utilisateur': id_utilisateur, 'champs': val}
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
     con.close()
-    return {'status': 200, 'message': 'MAJ Utilisateurs OK'}
+    return {'status': 200, 'message': 'Utilisateur mis à jour avec succès'}
 

@@ -26,12 +26,13 @@ from api.adm.utilisateurs.supprimer import supprimer_utilisateurs
 
 # autre
 from api.roles.route import changer_role
+from api.profil.route import maj_profil
 
 HOST = "localhost"
 PORT = 8000
 
 class Serveur(BaseHTTPRequestHandler):
-    # FIX: elif pue du cul utiliser match?
+    # FIX: elif ==> match case?
     def recuperer_parametres(self):
         url = urllib.parse.urlparse(self.path)
         path = url.path
@@ -196,6 +197,13 @@ class Serveur(BaseHTTPRequestHandler):
         
         elif self.path == '/role/modifier':
             res = changer_role(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/profil/maj':
+            res = maj_profil(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
