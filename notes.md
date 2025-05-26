@@ -88,6 +88,8 @@
   - [x] Back
   - [ ] Front
 - [ ] Page profil
+  - [x] Back
+  - [ ] Front
 - [x] Nosql
 
 # Securité
