@@ -20,6 +20,7 @@ from api.colocations.voir import infos_coloc
 # admin 
 from api.adm.logi.supprimer import supprimer_logs
 from api.adm.logi.voir import voir_logs
+from api.adm.utilisateurs.voir import voir_utilisateurs
 
 # autre
 from api.roles.route import changer_role
@@ -107,6 +108,16 @@ class Serveur(BaseHTTPRequestHandler):
             data = parametres.copy()
 
             res = voir_logs(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif path == '/adm/utilisateurs/voir':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = voir_utilisateurs(data, token)
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
