@@ -97,7 +97,7 @@ def maj_utilisateurs(data, token):
     requete = f"""UPDATE Utilisateurs SET {', '.join([f"{champ} = %s" for champ in champs])} WHERE id = %s"""
     con.cursor.execute(requete, val)
 
-    log = {'date': datetime.now(), 'action': 'maj coloc', 'id_utilisateur': id_utilisateur, 'id_utilisateur_modifié': data['id_utilisateur']}
+    log = {'date': datetime.now(), 'action': 'maj utilisateur', 'id_utilisateur': id_utilisateur, 'id_utilisateur_modifié': data['id_utilisateur'], 'champs': val}
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
