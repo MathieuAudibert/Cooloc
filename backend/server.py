@@ -16,6 +16,7 @@ from api.colocations.suppression import supprimer_coloc
 from api.colocations.gestion.renommer import modifier_coloc
 from api.colocations.utilisateurs import details_colocs
 from api.colocations.voir import infos_coloc
+from api.colocations.gestion.ajouter_membres import ajouter_colocataires
 
 # admin 
 from api.adm.logi.supprimer import supprimer_logs
@@ -201,6 +202,13 @@ class Serveur(BaseHTTPRequestHandler):
 
         if self.path == '/coloc/maj/nom':
             res = modifier_coloc(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/coloc/utilisateurs/ajouter':
+            res = ajouter_colocataires(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
