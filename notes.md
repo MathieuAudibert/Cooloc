@@ -68,8 +68,8 @@
     - [x] Create
     - [x] Infos des utilisateurs
     - [x] Update le nom de la coloc
-    - [ ] Ajouter membres
-    - [ ] Supprimer membres
+    - [x] Ajouter membres
+    - [x] Supprimer membres
     - [x] Delete
     - [x] Infos de la coloc
   - [ ] Depenses
