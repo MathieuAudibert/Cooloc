@@ -20,6 +20,7 @@ from api.colocations.gestion.ajouter_membres import ajouter_colocataires
 from api.colocations.gestion.supprimer_membre import supprimer_membres
 from api.colocations.taches.creation import creer_tache
 from api.colocations.taches.suppression import supprimer_tache
+from api.colocations.taches.voir import voir_tache
 
 # admin 
 from api.adm.logi.supprimer import supprimer_logs
@@ -106,6 +107,16 @@ class Serveur(BaseHTTPRequestHandler):
             data = parametres.copy()
 
             res = infos_coloc(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif path == '/coloc/taches/voir':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = voir_tache(data, token)
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
