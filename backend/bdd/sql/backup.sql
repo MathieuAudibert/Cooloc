@@ -54,4 +54,4 @@ CREATE TABLE IF NOT EXISTS Taches (
 
 ALTER TABLE Colocs
 ADD CONSTRAINT fk_responsable
-FOREIGN KEY (responsable) REFERENCES Utilisateurs(id),
+FOREIGN KEY (responsable) REFERENCES Utilisateurs(id)
