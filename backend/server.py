@@ -22,6 +22,7 @@ from api.colocations.taches.creation import creer_tache
 from api.colocations.taches.suppression import supprimer_tache
 from api.colocations.taches.voir import voir_tache
 from api.colocations.taches.attribue import attribuer_tache
+from api.colocations.taches.modifications import modifier_tache
 
 # admin 
 from api.adm.logi.supprimer import supprimer_logs
@@ -252,6 +253,13 @@ class Serveur(BaseHTTPRequestHandler):
 
         elif self.path == '/coloc/taches/attribuer':
             res = attribuer_tache(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/coloc/taches/maj/nom':
+            res = modifier_tache(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
