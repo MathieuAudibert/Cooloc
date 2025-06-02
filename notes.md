@@ -63,7 +63,7 @@
   - [x] Login
   - [x] Register
   - [x] Role
-  - [ ] Colocs
+  - [x] Colocs
     - [x] Create
     - [x] Infos des utilisateurs
     - [x] Update le nom de la coloc
