@@ -112,7 +112,7 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json.dumps(res).encode('utf-8'))
 
-        elif path == '/coloc/taches/voir':
+        elif path == '/coloc/taches/voir-disponibles':
             token = parametres.get('token')
             data = parametres.copy()
 
