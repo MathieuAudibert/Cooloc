@@ -84,6 +84,7 @@
     - [x] Update
     - [x] Delete
     - [x] S'attribuer
+    - [x] cloturer
 - [ ] Mentions Légales
 - [x] Logs
 - [ ] Interface adm
