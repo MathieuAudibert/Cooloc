@@ -18,6 +18,8 @@ from api.colocations.utilisateurs import details_colocs
 from api.colocations.voir import infos_coloc
 from api.colocations.gestion.ajouter_membres import ajouter_colocataires
 from api.colocations.gestion.supprimer_membre import supprimer_membres
+from api.colocations.taches.creation import creer_tache
+
 
 # admin 
 from api.adm.logi.supprimer import supprimer_logs
@@ -172,6 +174,13 @@ class Serveur(BaseHTTPRequestHandler):
 
         elif self.path == '/coloc/supprimer':
             res = supprimer_coloc(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/coloc/taches/creer':
+            res = creer_tache(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
