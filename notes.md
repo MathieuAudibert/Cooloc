@@ -81,7 +81,7 @@
     - [x] Voir les disponibles
     - [ ] Voir les dernieres complétées
     - [ ] Voir les miennes
-    - [ ] Update
+    - [x] Update
     - [x] Delete
     - [x] S'attribuer
 - [ ] Mentions Légales
