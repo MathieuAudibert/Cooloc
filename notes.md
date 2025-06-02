@@ -52,7 +52,7 @@
   - [ ] End-to-End (test d'une fonctionnalité du Login jusqu'a la fin de la feature)
 - [x] Docker
 - [ ] Virtual Env (facultatif)
-- [x] Sonarqube
+- [ ] Sonarqube
 - [x] Github actions
 
 # Dev
