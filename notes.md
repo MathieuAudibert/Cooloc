@@ -83,7 +83,7 @@
     - [ ] Voir les miennes
     - [ ] Update
     - [x] Delete
-    - [ ] S'attribuer
+    - [x] S'attribuer
 - [ ] Mentions Légales
 - [x] Logs
 - [ ] Interface adm
