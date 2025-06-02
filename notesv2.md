@@ -1,7 +1,7 @@
 # Notes V2
 
 - [ ] Activité a revoir
-- [ ] CRUD tache(s)
+- [x] CRUD tache(s)
 - [ ] wireframes/maquettes mobiles
 - [ ] commencer front :
 
