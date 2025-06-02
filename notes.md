@@ -1,8 +1,7 @@
 # Conception
 
 - [ ] Maquettes figma
-  - [ ] Mobile
-  - [x] PC
+  - [x] Mobile
     - [x] Homepage
     - [ ] Colocs CRUD
     - [ ] Candidature CRUD
