@@ -77,10 +77,11 @@
     - [ ] Update
     - [ ] Delete
   - [ ] Taches
-    - [ ] Create
+    - [x] Create
     - [ ] Read
     - [ ] Update
-    - [ ] Delete
+    - [x] Delete
+    - [ ] S'attribuer
 - [ ] Mentions Légales
 - [x] Logs
 - [ ] Interface adm
