@@ -59,7 +59,7 @@
 
 - [ ] Front
 - [x] Back
-- [ ] Apis
+- [x] Apis
   - [x] Login
   - [x] Register
   - [x] Role
@@ -76,11 +76,11 @@
     - [ ] Read
     - [ ] Update
     - [ ] Delete
-  - [ ] Taches
+  - [x] Taches
     - [x] Create
     - [x] Voir les disponibles
     - [x] Voir les dernieres complétées
-    - [ ] Voir les miennes
+    - [x] Voir les miennes
     - [x] Update
     - [x] Delete
     - [x] S'attribuer
