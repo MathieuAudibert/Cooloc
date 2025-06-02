@@ -25,6 +25,7 @@ from api.colocations.taches.attribue import attribuer_tache
 from api.colocations.taches.modifications import modifier_tache
 from api.colocations.taches.cloturer import cloturer_tache
 from api.colocations.taches.voir_complete import voir_tache_completer
+from api.colocations.taches.miennes import voir_tache_miennes
 
 # admin 
 from api.adm.logi.supprimer import supprimer_logs
@@ -131,6 +132,16 @@ class Serveur(BaseHTTPRequestHandler):
             data = parametres.copy()
 
             res = voir_tache_completer(data, token)
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif path == '/coloc/taches/voir-miennes':
+            token = parametres.get('token')
+            data = parametres.copy()
+
+            res = voir_tache_miennes(data, token)
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
