@@ -79,7 +79,7 @@
   - [ ] Taches
     - [x] Create
     - [x] Voir les disponibles
-    - [ ] Voir les dernieres complétées
+    - [x] Voir les dernieres complétées
     - [ ] Voir les miennes
     - [x] Update
     - [x] Delete
