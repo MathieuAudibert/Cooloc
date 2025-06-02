@@ -78,7 +78,9 @@
     - [ ] Delete
   - [ ] Taches
     - [x] Create
-    - [ ] Read
+    - [x] Voir les disponibles
+    - [ ] Voir les dernieres complétées
+    - [ ] Voir les miennes
     - [ ] Update
     - [x] Delete
     - [ ] S'attribuer

@@ -36,15 +36,6 @@ def recup_id(data) :
     id_utilisateur = con.cursor.fetchone()
     return id_utilisateur
 
-def recup_infos_coloc(data):
-    coloc = data['id_colocs']
-    requete = """SELECT nom, date_crea FROM Colocs WHERE id = %s"""
-    con.cursor.execute(requete, (coloc,))
-    infos = con.cursor.fetchone()
-    if infos and isinstance(infos[1], datetime):
-        infos = (infos[0], infos[1].isoformat())
-    return infos
-
 def infos_coloc(data, token):
     con.connexion()
 
@@ -60,6 +51,14 @@ def infos_coloc(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
-    infos_coloc = recup_infos_coloc(data)
+    coloc = data['id_colocs']
+    requete = """SELECT nom, date_crea FROM Colocs WHERE id = %s"""
+    con.cursor.execute(requete, (coloc,))
+    infos_coloc = [
+        {
+            'nom': row[0],
+            'date_crea': row[1].strftime('%Y-%m-%d %H:%M:%S')
+        } for row in con.cursor.fetchall()
+    ]
 
     return {'status': 200, 'message': 'OK', 'infos': infos_coloc}
