@@ -34,7 +34,7 @@ swagger_spec = {
                 },
                 "responses": {
                     "200": {
-                        "description": "Login OK",
+                        "description": "Connexion réussie",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -57,10 +57,10 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "CSRF KO"
+                        "description": "CSRF invalide"
                     },
                     "400": {
-                        "description": "Champs manquants ou Utilisateurs KO ou MDP incorrect"
+                        "description": "Champs manquants ou identifiants incorrects"
                     }
                 }
             }
@@ -88,24 +88,25 @@ swagger_spec = {
                     }
                 },
                 "responses": {
-                    "200": {},
+                    "200": {
+                        "description": "Inscription réussie"
+                    },
                     "400": {
-                        "description": "Champs manquants ou mail existant ou car spéciaux KO"
+                        "description": "Champs manquants ou email déjà existant ou caractères spéciaux non autorisés"
                     },
                     "403": {
-                        "description": "CSRF KO"
+                        "description": "CSRF invalide"
                     }
                 }
             }
         },
-        
-        "/Colocs/voir/Utilisateurss": {
+        "/coloc/utilisateurs/voir": {
             "get": {
-                "tags": ["Colocs"],
-                "summary": "Utilisateurss Colocs",
+                "tags": ["Colocation"],
+                "summary": "Voir les utilisateurs d'une colocation",
                 "parameters": [
                     {
-                        "name": "id_Colocss",
+                        "name": "id_coloc",
                         "in": "query",
                         "required": True,
                         "schema": {"type": "integer"}
@@ -114,7 +115,7 @@ swagger_spec = {
                         "name": "role",
                         "in": "query",
                         "required": True,
-                        "schema": {"type": "string", "enum": ["Colocsataire", "responsable", "admin"]}
+                        "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}
                     },
                     {
                         "name": "mail",
@@ -137,7 +138,7 @@ swagger_spec = {
                 ],
                 "responses": {
                     "200": {
-                        "description": "Utilisateurss Ok",
+                        "description": "Liste des utilisateurs récupérée",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -148,13 +149,13 @@ swagger_spec = {
                                         "infos": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Utilisateurs"
+                                                "$ref": "#/components/schemas/Utilisateur"
                                             }
                                         },
                                         "infos_responsable": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Utilisateurs"
+                                                "$ref": "#/components/schemas/Utilisateur"
                                             }
                                         }
                                     }
@@ -163,21 +164,21 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     },
                     "404": {
-                        "description": "Colocs KO"
+                        "description": "Colocation non trouvée"
                     }
                 }
             }
         },
-        "/Colocs/voir": {
+        "/coloc/voir": {
             "get": {
-                "tags": ["Colocs"],
-                "summary": "Infos Colocs",
+                "tags": ["Colocation"],
+                "summary": "Voir les informations d'une colocation",
                 "parameters": [
                     {
-                        "name": "id_Colocss",
+                        "name": "id_coloc",
                         "in": "query",
                         "required": True,
                         "schema": {"type": "integer"}
@@ -204,33 +205,33 @@ swagger_spec = {
                         "name": "role",
                         "in": "query",
                         "required": True,
-                        "schema": {"type": "string", "enum": ["Colocsataire", "responsable", "admin"]}
+                        "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "infos",
+                        "description": "Informations de la colocation",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/Colocs"
+                                    "$ref": "#/components/schemas/Colocation"
                                 }
                             }
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     },
                     "404": {
-                        "description": "Colocs KO"
+                        "description": "Colocation non trouvée"
                     }
                 }
             }
         },
-        "/Colocs/creer": {
+        "/coloc/creer": {
             "post": {
-                "tags": ["Colocs"],
-                "summary": "Creer Colocs",
+                "tags": ["Colocation"],
+                "summary": "Créer une colocation",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -242,7 +243,7 @@ swagger_spec = {
                                     "token": {"type": "string"},
                                     "csrf": {"type": "string"},
                                     "nom": {"type": "string"},
-                                    "role": {"type": "string", "enum": ["Colocsataire", "responsable", "admin"]},
+                                    "role": {"type": "string", "enum": ["colocataire", "responsable", "admin"]},
                                 },
                                 "required": ["nom", "mail", "token", "csrf", "role"]
                             }
@@ -251,7 +252,7 @@ swagger_spec = {
                 },
                 "responses": {
                     "201": {
-                        "description": "creation Colocs OK",
+                        "description": "Colocation créée avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -265,21 +266,21 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO ou Colocs a deja Colocs"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant ou utilisateur déjà dans une colocation"
                     },
                     "400": {
-                        "description": "Champs manquants ou car spéciaux KO"
+                        "description": "Champs manquants ou caractères spéciaux non autorisés"
                     },
                     "500": {
-                        "description": "Erreur interne"
+                        "description": "Erreur interne du serveur"
                     }
                 }
             }
         },
-        "/Colocs/supprimer": {
+        "/coloc/supprimer": {
             "post": {
-                "tags": ["Colocs"],
-                "summary": "Supprimer Colocs",
+                "tags": ["Colocation"],
+                "summary": "Supprimer une colocation",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -287,19 +288,19 @@ swagger_spec = {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "id_Colocs": {"type": "integer"},
+                                    "id_coloc": {"type": "integer"},
                                     "mail": {"type": "string"},
                                     "token": {"type": "string"},
                                     "csrf": {"type": "string"}
                                 },
-                                "required": ["id_Colocs", "mail", "token", "csrf"]
+                                "required": ["id_coloc", "mail", "token", "csrf"]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "suppression Colocs OK",
+                        "description": "Colocation supprimée avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -313,18 +314,18 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     },
                     "404": {
-                        "description": "Colocs KO"
+                        "description": "Colocation non trouvée"
                     }
                 }
             }
         },
-        "/Colocs/maj/nom": {
+        "/coloc/maj/nom": {
             "put": {
-                "tags": ["Colocs"],
-                "summary": "Maj (mise a jour) nom Colocs",
+                "tags": ["Colocation"],
+                "summary": "Modifier le nom d'une colocation",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -332,20 +333,20 @@ swagger_spec = {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "id_Colocs": {"type": "integer"},
+                                    "id_coloc": {"type": "integer"},
                                     "nom": {"type": "string"},
                                     "mail": {"type": "string"},
                                     "token": {"type": "string"},
                                     "csrf": {"type": "string"}
                                 },
-                                "required": ["nom", "id_Colocs", "mail", "token", "csrf"]
+                                "required": ["nom", "id_coloc", "mail", "token", "csrf"]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Maj nom OK",
+                        "description": "Nom modifié avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -359,22 +360,139 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     },
                     "404": {
-                        "description": "Colocs KO"
+                        "description": "Colocation non trouvée"
                     }
                 }
             }
         },
-        
-        "/profil/voir": {
-            "get": {
-                "tags": ["Utilisateurs"],
-                "summary": "Voir profil",
+        "/coloc/utilisateurs/ajouter": {
+            "put": {
+                "tags": ["Colocation"],
+                "summary": "Ajouter des utilisateurs à une colocation",
+                "requestBody": {
+                    "required": True,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_coloc": {"type": "integer"},
+                                    "utilisateurs": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    },
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"}
+                                },
+                                "required": ["id_coloc", "utilisateurs", "mail", "token", "csrf"]
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Profil Utilisateurs OK",
+                        "description": "Utilisateurs ajoutés avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {"type": "integer"},
+                                        "message": {"type": "string"}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
+                    },
+                    "404": {
+                        "description": "Colocation ou utilisateurs non trouvés"
+                    }
+                }
+            }
+        },
+        "/coloc/utilisateurs/supprimer": {
+            "put": {
+                "tags": ["Colocation"],
+                "summary": "Supprimer des utilisateurs d'une colocation",
+                "requestBody": {
+                    "required": True,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_coloc": {"type": "integer"},
+                                    "utilisateurs": {
+                                        "type": "array",
+                                        "items": {"type": "string"}
+                                    },
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"}
+                                },
+                                "required": ["id_coloc", "utilisateurs", "mail", "token", "csrf"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Utilisateurs supprimés avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {"type": "integer"},
+                                        "message": {"type": "string"}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
+                    },
+                    "404": {
+                        "description": "Colocation ou utilisateurs non trouvés"
+                    }
+                }
+            }
+        },
+        "/profil/voir": {
+            "get": {
+                "tags": ["Utilisateur"],
+                "summary": "Voir son profil",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string"}
+                    },
+                    {
+                        "name": "csrf",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string"}
+                    },
+                    {
+                        "name": "mail",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string"}
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Profil récupéré avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -382,14 +500,17 @@ swagger_spec = {
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Token invalide ou CSRF invalide"
                     }
                 }
             }
         },
         "/role/maj": {
             "put": {
-                "tags": ["Utilisateurs"],
-                "summary": "Modifier role",
+                "tags": ["Utilisateur"],
+                "summary": "Modifier son rôle",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -397,10 +518,10 @@ swagger_spec = {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "role": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["colocataire", "responsable", "admin"]},
                                     "mail": {"type": "string"},
                                     "token": {"type": "string"},
-                                    "csrf": {"type": "string"},
+                                    "csrf": {"type": "string"}
                                 },
                                 "required": ["role", "mail", "token", "csrf"]
                             }
@@ -409,7 +530,7 @@ swagger_spec = {
                 },
                 "responses": {
                     "200": {
-                        "description": "Maj role OK",
+                        "description": "Rôle modifié avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -423,18 +544,18 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     },
                     "400": {
-                        "description": "Champs manquant"
+                        "description": "Champs manquants"
                     }
                 }
             }
         },
         "/profil/maj": {
             "put": {
-                "tags": ["Utilisateurs"],
-                "summary": "Modifier profil",
+                "tags": ["Utilisateur"],
+                "summary": "Modifier son profil",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -447,21 +568,21 @@ swagger_spec = {
                                     "mail": {"type": "string"},
                                     "token": {"type": "string"},
                                     "csrf": {"type": "string"},
-                                    "role": {"type": "string", "enum": ["Colocsataire", "responsable", "admin"]},
-                                    "id_Utilisateurs": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["colocataire", "responsable", "admin"]},
+                                    "id_utilisateur": {"type": "integer"},
                                     "mail_modifie": {"type": "string"},
                                     "mdp": {"type": "string"},
                                     "role_modifie": {"type": "string"},
                                     "num_telephone": {"type": "string"}
                                 },
-                                "required": ["nom", "prenom", "mail", "token", "csrf", "id_Utilisateurs", "mail_modifie", "mdp", "role_modifie", "num_telephone"]
+                                "required": ["nom", "prenom", "mail", "token", "csrf", "id_utilisateur", "mail_modifie", "mdp", "role_modifie", "num_telephone"]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Maj profil OK",
+                        "description": "Profil modifié avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -475,19 +596,18 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     },
                     "400": {
-                        "description": "Champs manquants ou car spéciaux KO"
+                        "description": "Champs manquants ou caractères spéciaux non autorisés"
                     }
                 }
             }
         },
-        
-        "/adm/Utilisateurss/voir": {
+        "/adm/utilisateurs/voir": {
             "get": {
-                "tags": ["Adm"],
-                "summary": "voir Utilisateurss",
+                "tags": ["Administration"],
+                "summary": "Voir tous les utilisateurs",
                 "parameters": [
                     {
                         "name": "token",
@@ -505,7 +625,7 @@ swagger_spec = {
                         "name": "role",
                         "in": "query",
                         "required": True,
-                        "schema": {"type": "string", "enum": ["admin", "responsable"]}
+                        "schema": {"type": "string", "enum": ["admin"]}
                     },
                     {
                         "name": "mail",
@@ -516,7 +636,7 @@ swagger_spec = {
                 ],
                 "responses": {
                     "200": {
-                        "description": "liste Utilisateurss OK",
+                        "description": "Liste des utilisateurs récupérée",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -526,7 +646,7 @@ swagger_spec = {
                                         "data": {
                                             "type": "array",
                                             "items": {
-                                                "$ref": "#/components/schemas/Utilisateurs"
+                                                "$ref": "#/components/schemas/Utilisateur"
                                             }
                                         }
                                     }
@@ -535,15 +655,15 @@ swagger_spec = {
                         }
                     },
                     "403": {
-                        "description": "Token KO ou CSRF KO ou Role KO"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     }
                 }
             }
         },
-        "/adm/Utilisateurss/maj": {
+        "/adm/utilisateurs/maj": {
             "put": {
-                "tags": ["Adm"],
-                "summary": "Maj Utilisateurs",
+                "tags": ["Administration"],
+                "summary": "Modifier un utilisateur",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -554,9 +674,9 @@ swagger_spec = {
                                     "mail": {"type": "string"},
                                     "token": {"type": "string"},
                                     "csrf": {"type": "string"},
-                                    "role": {"type": "string", "enum": ["Colocsataire", "responsable", "admin"]},
-                                    "id_Utilisateurs": {"type": "integer"},
-                                    "id_Utilisateurs_modifie": {"type": "integer"},
+                                    "role": {"type": "string", "enum": ["colocataire", "responsable", "admin"]},
+                                    "id_utilisateur": {"type": "integer"},
+                                    "id_utilisateur_modifie": {"type": "integer"},
                                     "nom": {"type": "string"},
                                     "prenom": {"type": "string"},
                                     "mail_modifie": {"type": "string"},
@@ -564,14 +684,14 @@ swagger_spec = {
                                     "role_modifie": {"type": "string"},
                                     "num_telephone": {"type": "string"}
                                 },
-                                "required": ["mail", "token", "csrf", "role", "id_Utilisateurs", "id_Utilisateurs_modifie", "nom", "prenom", "mail_modifie", "mdp", "role_modifie", "num_telephone"]
+                                "required": ["mail", "token", "csrf", "role", "id_utilisateur", "id_utilisateur_modifie", "nom", "prenom", "mail_modifie", "mdp", "role_modifie", "num_telephone"]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Utilisateurs maj OK",
+                        "description": "Utilisateur modifié avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -584,13 +704,16 @@ swagger_spec = {
                             }
                         }
                     },
+                    "403": {
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
+                    }
                 }
             }
         },
-        "/adm/Utilisateurss/supprimer": {
+        "/adm/utilisateurs/supprimer": {
             "post": {
-                "tags": ["Adm"],
-                "summary": "Supprimer Utilisateurs",
+                "tags": ["Administration"],
+                "summary": "Supprimer un utilisateur",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -598,20 +721,20 @@ swagger_spec = {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "id_Utilisateurs_supprime": {"type": "integer"},
-                                    "role": {"type": "string", "enum": ["Colocsataire", "responsable", "admin"]},
+                                    "id_utilisateur_supprime": {"type": "integer"},
+                                    "role": {"type": "string", "enum": ["admin"]},
                                     "token": {"type": "string"},
                                     "csrf": {"type": "string"},
                                     "mail": {"type": "string"}
                                 },
-                                "required": ["user_id"]
+                                "required": ["id_utilisateur_supprime", "role", "token", "csrf", "mail"]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "suppression Utilisateurs OK",
+                        "description": "Utilisateur supprimé avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -624,16 +747,45 @@ swagger_spec = {
                             }
                         }
                     },
+                    "403": {
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
+                    }
                 }
             }
         },
         "/adm/logs": {
             "get": {
-                "tags": ["Adm"],
-                "summary": "logs de l'app",
+                "tags": ["Administration"],
+                "summary": "Voir les logs de l'application",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string"}
+                    },
+                    {
+                        "name": "csrf",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string"}
+                    },
+                    {
+                        "name": "role",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string", "enum": ["admin"]}
+                    },
+                    {
+                        "name": "mail",
+                        "in": "query",
+                        "required": True,
+                        "schema": {"type": "string"}
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "list logs",
+                        "description": "Liste des logs récupérée",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -650,14 +802,17 @@ swagger_spec = {
                                 }
                             }
                         }
+                    },
+                    "403": {
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     }
                 }
             }
         },
         "/adm/logs/supprimer": {
             "post": {
-                "tags": ["Adm"],
-                "summary": "Supprimer une log",
+                "tags": ["Administration"],
+                "summary": "Supprimer un log",
                 "requestBody": {
                     "required": True,
                     "content": {
@@ -665,19 +820,34 @@ swagger_spec = {
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "log_id": {"type": "integer"}
+                                    "id_log": {"type": "integer"},
+                                    "role": {"type": "string", "enum": ["admin"]},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"},
+                                    "mail": {"type": "string"}
                                 },
-                                "required": ["log_id"]
+                                "required": ["id_log", "role", "token", "csrf", "mail"]
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Log supprimée"
+                        "description": "Log supprimé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {"type": "integer"},
+                                        "message": {"type": "string"}
+                                    }
+                                }
+                            }
+                        }
                     },
                     "403": {
-                        "description": "Droits insuffisants"
+                        "description": "Token invalide ou CSRF invalide ou rôle insuffisant"
                     }
                 }
             }
@@ -685,7 +855,7 @@ swagger_spec = {
     },
     "components": {
         "schemas": {
-            "Utilisateurs": {
+            "Utilisateur": {
                 "type": "object",
                 "properties": {
                     "id": {"type": "integer"},
@@ -696,25 +866,25 @@ swagger_spec = {
                     "mdp": {"type": "string"},
                     "date_creation": {"type": "string", "format": "date-time"},
                     "num_telephone": {"type": "string"},
-                    "id_Colocs": {"type": "integer", "nullable": True}
+                    "id_coloc": {"type": "integer", "nullable": True}
                 }
             },
-            "Colocs": {
+            "Colocation": {
                 "type": "object",
                 "properties": {
                     "id": {"type": "integer"},
                     "nom": {"type": "string"},
-                    "date_crea": {"type": "string", "format": "date-time"},
-                    "responsable": {"$ref": "#/components/schemas/Utilisateurs"}
+                    "date_creation": {"type": "string", "format": "date-time"},
+                    "responsable": {"$ref": "#/components/schemas/Utilisateur"}
                 }
             },
             "Profil": {
                 "type": "object",
                 "properties": {
-                    "": {"$ref": "#/components/schemas/Utilisateurs"}
+                    "utilisateur": {"$ref": "#/components/schemas/Utilisateur"}
                 }
             },
-            "Logs": {
+            "Log": {
                 "type": "object",
                 "properties": {
                     "id": {"type": "integer"},
@@ -722,7 +892,7 @@ swagger_spec = {
                     "date": {"type": "string", "format": "date-time"},
                     "id_utilisateur": {"type": "integer"},
                     "champs": {"type": "object", "additionalProperties": True},
-                    "id_utilisateur_modifie": {"type": "integer", "nullable": True},
+                    "id_utilisateur_modifie": {"type": "integer", "nullable": True}
                 }
             }
         }
