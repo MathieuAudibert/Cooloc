@@ -41,7 +41,7 @@
 - [x] Swagger
 - [x] Trello
 - [ ] Document technique (50 pages mini sans images)
-- [ ] Document professionnel (Résumé useless de ma vie)
+- [ ] Document professionnel (Document rose)
 - [ ] PowerPoint
 
 # DevOps
