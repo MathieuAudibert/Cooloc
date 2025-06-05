@@ -92,7 +92,7 @@
 
 # Securité
 
-- [ ] XSS
+- [x] XSS (react)
 - [x] Csrf token
 - [x] Requetes préparées
 - [x] mdp hashé (bcrypt)
