@@ -1,6 +1,6 @@
 # Notes V2
 
-- [ ] Activité a revoir
+- [x] Activité a revoir
 - [x] CRUD tache(s)
 - [ ] wireframes/maquettes mobiles
 - [ ] commencer front :
@@ -13,8 +13,8 @@
   - creer une tache --> se l'attribuer --> la modifier --> la supprimer
   - pannel admin
 
-- [ ] commencer rapport 50 pages :
-  - Introduction
+- [x] commencer rapport 50 pages :
+  - [] Introduction
   - Remerciements
   - Sommaire
   - Presentation de l'entreprise
