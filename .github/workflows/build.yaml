@@ -23,14 +23,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
       - name: Setup Firebase credentials
-        env:
-          FIREBASE_KEY: ${{ secrets.FIREBASE_CREDENTIALS }}
         working-directory: backend
         run: |
           mkdir -p bdd
-          echo "$FIREBASE_KEY" > bdd/cle.json
-          ls -la bdd/cle.json
+          cat << 'EOF' > bdd/cle.json
+          ${{ secrets.FIREBASE_CREDENTIALS }}
+          EOF
+          # Verify JSON is valid
+          python -c "import json; json.load(open('bdd/cle.json'))"
 
       - name: Run tests with coverage
         working-directory: backend
