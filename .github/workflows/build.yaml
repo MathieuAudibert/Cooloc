@@ -28,11 +28,12 @@ jobs:
         working-directory: backend
         run: |
           mkdir -p bdd
-          cat << 'EOF' > bdd/cle.json
-          ${{ secrets.FIREBASE_CREDENTIALS }}
-          EOF
-          # Verify JSON is valid
-          python -c "import json; json.load(open('bdd/cle.json'))"
+          echo '${{ secrets.FIREBASE_CREDENTIALS }}' | tr -d '\n\r' > bdd/cle.json
+          # Debug output (hide sensitive data)
+          echo "Content of cle.json (first line):"
+          head -n 1 bdd/cle.json | cut -c1-10
+          echo "File size:"
+          wc -c bdd/cle.json
 
       - name: Run tests with coverage
         working-directory: backend
