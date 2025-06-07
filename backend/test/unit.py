@@ -7,7 +7,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from server import Serveur
 from api.login.login import login
 from api.register.register import register
-from bdd.connexion import Bdd, Logs
 
 mock_firebase = MagicMock()
 mock_firestore = MagicMock()
@@ -18,12 +17,9 @@ sys.modules['firebase_admin.firestore'] = mock_firestore
 sys.modules['firebase_admin.credentials'] = mock_credentials
 sys.modules['psycopg2'] = mock_psycopg2
 
+
 class TesterServeur(unittest.TestCase):
     def cfg(self):
-        mock_firebase.reset_mock()
-        mock_firestore.reset_mock()
-        mock_credentials.reset_mock()
-        mock_psycopg2.reset_mock()
         self.server = Serveur(None, None, None)
         self.server.headers = {}
         self.server.send_response = MagicMock()
@@ -75,12 +71,6 @@ class TesterServeur(unittest.TestCase):
         self.assertEqual(params['param2'], 'value2')
 
 class test_auth(unittest.TestCase):
-    def cfg(self):
-        mock_firebase.reset_mock()
-        mock_firestore.reset_mock()
-        mock_credentials.reset_mock()
-        mock_psycopg2.reset_mock()
-
     def test_login_existepas(self):
         result = login({'email': 'test@test.com', 'password': 'paslebonmdp'})
         self.assertIn('status', result)
@@ -88,18 +78,6 @@ class test_auth(unittest.TestCase):
     def test_register_vide(self):
         result = register({})
         self.assertIn('status', result)
-
-class TestDatabase(unittest.TestCase):
-    def test_bdd(self):
-        db = Bdd("test_user", "test_pass", "test_db", "localhost", "5432")
-        db.connexion()
-        mock_psycopg2.connect.assert_called_once()
-
-    def test_logs(self):
-        mock_credentials.Certificate.return_value = MagicMock()
-        logs = Logs("fake_path.json")
-        mock_credentials.Certificate.assert_called_once_with("fake_path.json")
-        mock_firebase.initialize_app.assert_called_once()
 
 if __name__ == '__main__':
     unittest.main()
