@@ -23,17 +23,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
-      - name: Setup Firebase credentials
-        working-directory: backend
-        run: |
-          mkdir -p bdd
-          echo '${{ secrets.FIREBASE_CREDENTIALS }}' | tr -d '\n\r' > bdd/cle.json
-          # Debug output (hide sensitive data)
-          echo "Content of cle.json (first line):"
-          head -n 1 bdd/cle.json | cut -c1-10
-          echo "File size:"
-          wc -c bdd/cle.json
+          pip install pytest pytest-cov
 
       - name: Run tests with coverage
         working-directory: backend

@@ -8,18 +8,6 @@ from server import Serveur
 from api.login.login import login
 from api.register.register import register
 
-mock_firebase = MagicMock()
-mock_firestore = MagicMock()
-mock_credentials = MagicMock()
-mock_psycopg2 = MagicMock()
-mock_cert = MagicMock()
-mock_credentials.Certificate.return_value = mock_cert
-
-sys.modules['firebase_admin'] = mock_firebase
-sys.modules['firebase_admin.firestore'] = mock_firestore
-sys.modules['firebase_admin.credentials'] = mock_credentials
-sys.modules['psycopg2'] = mock_psycopg2
-
 class TesterServeur(unittest.TestCase):
     def cfg(self):
         self.server = Serveur(None, None, None)
@@ -46,7 +34,7 @@ class TesterServeur(unittest.TestCase):
         self.server.send_header.assert_called_with('Content-type', 'application/json')
 
     def test_404(self):
-        self.cfg() 
+        self.cfg()
         self.server.path = '/caca'
         self.server.do_GET()
         
@@ -55,7 +43,7 @@ class TesterServeur(unittest.TestCase):
 
     @patch('api.login.login.login')
     def test_login(self, mock_login):
-        self.cfg() 
+        self.cfg()
         mock_login.return_value = {'status': 200, 'message': 'Login successful'}
         
         self.server.path = '/login'
