@@ -28,6 +28,12 @@ jobs:
           pip install -r requirements.txt
           pip install pytest pytest-cov
 
+      - name: Setup Firebase credentials
+        working-directory: backend
+        run: |
+          mkdir -p bdd
+          echo '${{ secrets.FIREBASE_CREDENTIALS }}' > bdd/cle.json
+
       - name: Run tests with coverage
         working-directory: backend
         run: |
