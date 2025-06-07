@@ -1,12 +1,137 @@
- @import "./globals.css";
+@import "./globals.css";
 
-header {
-    color: var(--color-darkgreen);
+.header {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: var(--color-bg);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
 }
 
-#ligneHeader {
-    background-color: var(--color-orange);
-    height: 5px;
-    border: 0;
-    border-radius: 5px;
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.logo-image {
+  height: 80px;
+  width: auto;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--color-darkgreen);
+}
+
+.header-center {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  color: var(--color-darkgreen);
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-orange);
+}
+
+.header-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-login {
+  color: var(--color-darkgreen);
+  background-color: transparent;
+  border: 2px solid var(--color-darkgreen);
+}
+
+.btn-login:hover {
+  background-color: var(--color-darkgreen);
+  color: white;
+}
+
+.btn-register {
+  color: white;
+  background-color: var(--color-darkgreen);
+  border: 2px solid var(--color-darkgreen);
+}
+
+.btn-register:hover {
+  background-color: var(--color-bg);
+  color: var(--color-darkgreen);
+}
+
+.header-divider {
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-orange);
+  margin-top: 1rem;
+  border-radius: 1.5px;
+}
+
+@media (max-width: 1024px) {
+  .header-center {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0.5rem;
+  }
+
+  .logo-image {
+    height: 60px;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
 }
