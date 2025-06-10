@@ -3,7 +3,7 @@ import '../styles/header.css'
 const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
     const handleAuthClick = (action) => {
         const cookieAccepter = localStorage.getItem('cookieAccepter');
-        if (cookieAccepter !== 'accepted') {
+        if (cookieAccepter !== 'accepte') {
             alert('Veuillez accepter les cookies pour accéder à cette fonctionnalité.');
             return;
         }

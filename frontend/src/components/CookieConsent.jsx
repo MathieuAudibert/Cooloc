@@ -12,12 +12,12 @@ const CookieConsent = () => {
   }, []);
 
   const handleAccept = () => {
-    localStorage.setItem('cookieAccepter', 'accepted');
+    localStorage.setItem('cookieAccepter', 'accepte');
     setIsVisible(false);
   };
 
   const handleDecline = () => {
-    localStorage.setItem('cookieAccepter', 'declined');
+    localStorage.setItem('cookieAccepter', 'refuse');
     setIsVisible(false);
     const currentPath = window.location.pathname.replace('/', '');
     if (currentPath === 'login' || currentPath === 'register') {

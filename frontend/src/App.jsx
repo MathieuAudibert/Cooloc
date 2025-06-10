@@ -22,7 +22,7 @@ function App() {
   const navigate = (path) => {
     const cookieAccepter = localStorage.getItem('cookieAccepter');
     
-    if ((path === 'login' || path === 'register') && cookieAccepter !== 'accepted') {
+    if ((path === 'login' || path === 'register') && cookieAccepter !== 'accepte') {
       alert('Veuillez accepter les cookies pour accéder à cette fonctionnalité.');
       return;
     }
@@ -34,7 +34,7 @@ function App() {
   const renderPage = () => {
     const cookieAccepter = localStorage.getItem('cookieAccepter');
     
-    if ((currentPage === 'login' || currentPage === 'register') && cookieAccepter !== 'accepted') {
+    if ((currentPage === 'login' || currentPage === 'register') && cookieAccepter !== 'accepte') {
       window.history.pushState({}, '', '/');
       return <Home />;
     }
