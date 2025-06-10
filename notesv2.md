@@ -5,16 +5,16 @@
 - [ ] wireframes/maquettes mobiles
 - [ ] commencer front :
 
-  - homepage (pas co)
-  - cookies & mentions legales
-  - login/register
-  - homepage (co)
-  - creer coloc --> voir les infos --> ajouter/supprimer colocataire
-  - creer une tache --> se l'attribuer --> la modifier --> la supprimer
-  - pannel admin
+  - [x] homepage (pas co)
+  - [x] cookies & mentions legales
+  - [x] login/register
+  - [ ] homepage (co)
+  - [ ] creer coloc --> voir les infos --> ajouter/supprimer colocataire
+  - [ ] creer une tache --> se l'attribuer --> la modifier --> la supprimer
+  - [ ] pannel admin
 
 - [x] commencer rapport 50 pages :
-  - [] Introduction
+  - Introduction
   - Remerciements
   - Sommaire
   - Presentation de l'entreprise
