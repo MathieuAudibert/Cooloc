@@ -3,7 +3,6 @@ import '../styles/home.css';
 const Home = () => {
   return (
     <div className="home">
-      {/* Landing Section */}
       <section className="landing-section">
         <div className="content-container">
           <h1>
@@ -22,7 +21,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Tasks Section */}
       <section className="tasks-section">
         <div className="content-container">
           <div className="section-grid">
@@ -54,7 +52,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Management Section */}
       <section className="management-section">
         <div className="content-container">
           <div className="section-grid">

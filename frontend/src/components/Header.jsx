@@ -1,6 +1,15 @@
 import '../styles/header.css'
 
 const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
+    const handleAuthClick = (action) => {
+        const cookieAccepter = localStorage.getItem('cookieAccepter');
+        if (cookieAccepter !== 'accepted') {
+            alert('Veuillez accepter les cookies pour accéder à cette fonctionnalité.');
+            return;
+        }
+        action();
+    };
+
     return (
         <header className="header">
             <div className="header-content">
@@ -16,8 +25,8 @@ const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
                     <button className="nav-link">Contact</button>
                 </nav>
                 <div className="header-right">
-                    <button onClick={onLoginClick} className="btn btn-login">Se connecter</button>
-                    <button onClick={onRegisterClick} className="btn btn-register">S'inscrire</button>
+                    <button onClick={() => handleAuthClick(onLoginClick)} className="btn btn-login">Se connecter</button>
+                    <button onClick={() => handleAuthClick(onRegisterClick)} className="btn btn-register">S'inscrire</button>
                 </div>
             </div>
             <div className="header-divider"></div>

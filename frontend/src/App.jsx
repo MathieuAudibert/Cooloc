@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import CookieConsent from './components/CookieConsent';
 import './styles/auth.css';
 
 function App() {
@@ -19,11 +20,25 @@ function App() {
   }, []);
 
   const navigate = (path) => {
+    const cookieAccepter = localStorage.getItem('cookieAccepter');
+    
+    if ((path === 'login' || path === 'register') && cookieAccepter !== 'accepted') {
+      alert('Veuillez accepter les cookies pour accéder à cette fonctionnalité.');
+      return;
+    }
+    
     window.history.pushState({}, '', `/${path}`);
     setCurrentPage(path);
   };
 
   const renderPage = () => {
+    const cookieAccepter = localStorage.getItem('cookieAccepter');
+    
+    if ((currentPage === 'login' || currentPage === 'register') && cookieAccepter !== 'accepted') {
+      window.history.pushState({}, '', '/');
+      return <Home />;
+    }
+
     switch (currentPage) {
       case 'home':
         return <Home />;
@@ -44,6 +59,7 @@ function App() {
         onHomeClick={() => navigate('home')}
       />
       {renderPage()}
+      <CookieConsent />
     </div>
   );
 }

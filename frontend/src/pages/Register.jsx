@@ -11,7 +11,7 @@ const Register = ({ onLoginClick }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: Implement registration logic
+    // TODO: register a faire
   };
 
   return (
