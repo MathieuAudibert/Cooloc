@@ -6,9 +6,9 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-top">
         <nav className="footer-nav">
-          <a href="#donnees-personnelles" className="footer-link">Données personnelles</a>
+          <a href="/a-propos" className="footer-link">Données personnelles</a>
           <a href="https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi" className="footer-link" target="_blank" rel="noopener noreferrer">Gestion des cookies</a>
-          <a href="#mentions-legales" className="footer-link">Mentions légales &amp; CGU</a>
+          <a href="/a-propos" className="footer-link">Mentions légales &amp; CGU</a>
           <a href="http://localhost:8000/docs" className="footer-link" target="_blank" rel="noopener noreferrer">Documentation technique</a>
           <a href="#aide" className="footer-link">Aide</a>
         </nav>
