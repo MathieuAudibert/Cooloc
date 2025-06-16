@@ -103,12 +103,44 @@
   color: var(--color-darkgreen);
 }
 
+.btn-logout {
+  color: var(--color-orange);
+  background-color: transparent;
+  border: 2px solid var(--color-orange);
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+}
+
+.btn-logout:hover {
+  background-color: var(--color-orange);
+  color: white;
+}
+
 .header-divider {
   width: 100%;
   height: 3px;
   background-color: var(--color-orange);
   margin-top: 1rem;
   border-radius: 1.5px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.welcome-text {
+  color: var(--color-darkgreen);
+  font-size: 1rem;
+  font-weight: 500;
 }
 
 @media (max-width: 1024px) {
@@ -133,5 +165,9 @@
   .btn {
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
+  }
+
+  .welcome-text {
+    display: none;
   }
 }

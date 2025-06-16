@@ -56,6 +56,17 @@ class Serveur(BaseHTTPRequestHandler):
                 parametres[cle] = valeur[0]
         return path, parametres
 
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', 'http://localhost:3000')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        self.send_header('Access-Control-Allow-Credentials', 'true')
+        super().end_headers()
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
+
     def do_GET(self):
         path, parametres = self.recuperer_parametres()
 

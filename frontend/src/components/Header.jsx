@@ -1,6 +1,22 @@
+import { useState, useEffect } from 'react';
 import '../styles/header.css'
 
 const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('user');
+        if (storedUser) {
+            setUser(JSON.parse(storedUser));
+        }
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+        window.location.href = '/';
+    };
+
     const handleAuthClick = (action) => {
         const cookieAccepter = localStorage.getItem('cookieAccepter');
         if (cookieAccepter !== 'accepte') {
@@ -25,8 +41,18 @@ const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
                     <button className="nav-link">Contact</button>
                 </nav>
                 <div className="header-right">
-                    <button onClick={() => handleAuthClick(onLoginClick)} className="btn btn-login">Se connecter</button>
-                    <button onClick={() => handleAuthClick(onRegisterClick)} className="btn btn-register">S'inscrire</button>
+                    {user ? (
+                        <div className="user-info">
+                            <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
+                            <span className="welcome-text">Bienvenue, {user.firstName}</span>
+                            <button onClick={handleLogout} className="btn btn-logout">Déconnexion</button>
+                        </div>
+                    ) : (
+                        <>
+                            <button onClick={() => handleAuthClick(onLoginClick)} className="btn btn-login">Se connecter</button>
+                            <button onClick={() => handleAuthClick(onRegisterClick)} className="btn btn-register">S'inscrire</button>
+                        </>
+                    )}
                 </div>
             </div>
             <div className="header-divider"></div>

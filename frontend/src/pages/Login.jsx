@@ -4,15 +4,51 @@ import '../styles/auth.css';
 const Login = ({ onRegisterClick }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    try {
+      const response = await fetch('http://localhost:8000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mail: email,
+          mdp: password,
+          csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+        }),
+        credentials: 'include'
+      });
+
+      const data = await response.json();
+
+      if (data.status === 200) {
+        localStorage.setItem('user', JSON.stringify({
+          email: data.data.mail,
+          role: data.data.role,
+          firstName: data.data.prenom,
+          lastName: data.data.nom,
+          token: data.token
+        }));
+        
+        window.location.href = '/';
+      } else {
+        setError(data.message || 'Une erreur est survenue');
+      }
+    } catch (err) {
+      setError('Erreur de connexion au serveur');
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1>Heureux de vous revoir ! <span role="img" aria-label="wave">👍</span></h1>
+        {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email</label>

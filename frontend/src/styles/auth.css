@@ -25,6 +25,17 @@
   font-weight: 600;
 }
 
+.error-message {
+  background-color: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-size: 0.9rem;
+  border: 1px solid #ffcdd2;
+}
+
 .form-group {
   margin-bottom: 1.5rem;
 }
