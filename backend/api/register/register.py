@@ -41,6 +41,9 @@ def register(data):
     if not car_spe(data['mdp']):
         return {'status': 400, 'message': 'Car speciaux KO'}
     
+    if len(data['mdp']) < 14:
+        return {'status': 400, 'message': 'Mdp court'}
+
     mail_existant = "SELECT mail FROM Utilisateurs WHERE mail = %s"
     con.cursor.execute(mail_existant, (data['mail'],))
     
