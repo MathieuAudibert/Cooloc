@@ -4,6 +4,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import CookieConsent from './components/CookieConsent';
+import Footer from './components/Footer';
+import APropos from './pages/APropos';
 import './styles/auth.css';
 
 function App() {
@@ -46,6 +48,8 @@ function App() {
         return <Login onRegisterClick={() => navigate('register')} />;
       case 'register':
         return <Register onLoginClick={() => navigate('login')} />;
+      case 'a-propos':
+        return <APropos />;
       default:
         return <Home />;
     }
@@ -60,6 +64,7 @@ function App() {
       />
       {renderPage()}
       <CookieConsent />
+      <Footer />
     </div>
   );
 }
