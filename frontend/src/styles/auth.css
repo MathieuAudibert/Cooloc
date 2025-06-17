@@ -28,12 +28,21 @@
 .error-message {
   background-color: #ffebee;
   color: #c62828;
-  padding: 1rem;
-  border-radius: 10px;
-  margin-bottom: 1.5rem;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
   text-align: center;
-  font-size: 0.9rem;
-  border: 1px solid #ffcdd2;
+  border: 1px solid #ef9a9a;
+}
+
+.success-message {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #a5d6a7;
 }
 
 .form-group {

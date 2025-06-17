@@ -8,16 +8,74 @@ const Register = ({ onLoginClick }) => {
   const [firstName, setFirstName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // TODO: register a faire
+    setError('');
+    setSuccess('');
+    if (email !== confirmEmail) {
+      setError('Les adresses email ne correspondent pas');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Les mots de passe ne correspondent pas');
+      return;
+    }
+
+    if (password.length < 14) {
+      setError('Le mot de passe doit contenir au moins 14 caractères');
+      return;
+    }
+
+    const specialChars = /[!@#$%^&*(),.?":{}|<>]/;
+    if (!specialChars.test(password)) {
+      setError('Le mot de passe doit contenir au moins un caractère spécial');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:8000/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          mail: email,
+          nom: lastName,
+          prenom: firstName,
+          mdp: password,
+          csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y' 
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess('Inscription réussie ! Vous pouvez maintenant vous connecter.');
+        // Clear form
+        setEmail('');
+        setConfirmEmail('');
+        setLastName('');
+        setFirstName('');
+        setPassword('');
+        setConfirmPassword('');
+      } else {
+        setError(data.message || 'Une erreur est survenue lors de l\'inscription');
+      }
+    } catch (err) {
+      setError('Erreur de connexion au serveur');
+    }
   };
 
   return (
     <div className="auth-container">
       <div className="auth-card">
         <h1>Bienvenue ! <span role="img" aria-label="wave">👋</span></h1>
+        {error && <div className="error-message">{error}</div>}
+        {success && <div className="success-message">{success}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">Email <b class="etoile">*</b></label>
