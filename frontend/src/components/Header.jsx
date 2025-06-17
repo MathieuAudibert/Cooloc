@@ -36,21 +36,29 @@ const Header = ({ onLoginClick, onRegisterClick, onHomeClick, onProfileClick, on
                     </button>
                 </div>
                 <nav className="header-center">
-                    <button onClick={onHomeClick} className="nav-link">Accueil</button>
-                    <button className="nav-link">Qui sommes nous</button>
-                    <button className="nav-link">Contact</button>
+                    {localUser && localUser.role === 'admin' ? (
+                        null
+                    ) : (
+                        <>
+                            <button onClick={onHomeClick} className="nav-link">Accueil</button>
+                            <button className="nav-link">Qui sommes nous</button>
+                            <button className="nav-link">Contact</button>
+                        </>
+                    )}
                 </nav>
                 <div className="header-right">
                     {localUser ? (
                         <div className="user-info">
                             {localUser.role === 'admin' && (
                                 <button onClick={onAdminClick} className="btn btn-admin">
-                                    Admin Dashboard
+                                    Tableau de Bord Admin
                                 </button>
                             )}
-                            <button onClick={onProfileClick} className="profile-button">
-                                <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
-                            </button>
+                            {localUser.role !== 'admin' && (
+                                <button onClick={onProfileClick} className="profile-button">
+                                    <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
+                                </button>
+                            )}
                             <span className="welcome-text">Bienvenue, {localUser.firstName}</span>
                             <button onClick={handleLogout} className="btn btn-logout">Déconnexion</button>
                         </div>

@@ -27,7 +27,13 @@ function App() {
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      // Redirect admin to dashboard on login/refresh if not already there
+      if (parsedUser.role === 'admin' && currentPage !== 'admin') {
+        window.history.pushState({}, '', '/admin');
+        setCurrentPage('admin');
+      }
     }
   }, []);
 
@@ -37,6 +43,13 @@ function App() {
     if ((path === 'login' || path === 'register') && cookieAccepter !== 'accepte') {
       alert('Veuillez accepter les cookies pour accéder à cette fonctionnalité.');
       return;
+    }
+
+    if (user && user.role === 'admin' && path !== 'admin') {
+        alert('En tant qu\'administrateur, vous n\'avez accès qu\'au tableau de bord.');
+        window.history.pushState({}, '', '/admin');
+        setCurrentPage('admin');
+        return;
     }
 
     if (path === 'profile' && !user) {
@@ -59,6 +72,11 @@ function App() {
     if ((currentPage === 'login' || currentPage === 'register') && cookieAccepter !== 'accepte') {
       window.history.pushState({}, '', '/');
       return <Home />;
+    }
+
+    if (user && user.role === 'admin' && currentPage !== 'admin') {
+        window.history.pushState({}, '', '/admin');
+        return <AdminDashboard />;
     }
 
     if (currentPage === 'profile' && !user) {
