@@ -130,11 +130,28 @@
   gap: 1rem;
 }
 
+.profile-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.profile-button:hover {
+  transform: scale(1.1);
+}
+
 .profile-icon {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   object-fit: cover;
+  transition: filter 0.2s ease;
+}
+
+.profile-button:hover .profile-icon {
+  filter: brightness(0.9);
 }
 
 .welcome-text {

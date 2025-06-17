@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import '../styles/header.css'
 
-const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
+const Header = ({ onLoginClick, onRegisterClick, onHomeClick, onProfileClick }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -43,7 +43,9 @@ const Header = ({ onLoginClick, onRegisterClick, onHomeClick }) => {
                 <div className="header-right">
                     {user ? (
                         <div className="user-info">
-                            <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
+                            <button onClick={onProfileClick} className="profile-button">
+                                <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
+                            </button>
                             <span className="welcome-text">Bienvenue, {user.firstName}</span>
                             <button onClick={handleLogout} className="btn btn-logout">Déconnexion</button>
                         </div>

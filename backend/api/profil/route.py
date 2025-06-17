@@ -27,11 +27,8 @@ def car_spe(mdp):
 def verifier_token(data, token):
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
-    if token_decode['mail'] != data['mail'] and token_decode['role'] != data['role']:
-        return {'status': 403, 'message': 'Token KO'}
-    
-    if token_decode['role'] not in ['admin']:
-        return {'status': 403, 'message': 'Role KO'}
+    if token_decode['mail'] != data['mail']:
+        return {'status': 403, 'message': 'Token KO - User not authorized to modify this profile'}
     
     return {'status': 200, 'message': 'Token OK'}
 
