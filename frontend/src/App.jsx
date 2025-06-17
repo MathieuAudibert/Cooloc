@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
+import AdminDashboard from './pages/AdminDashboard';
 import CookieConsent from './components/CookieConsent';
 import Footer from './components/Footer';
 import APropos from './pages/APropos';
@@ -42,6 +43,11 @@ function App() {
       alert('Veuillez vous connecter pour accéder à votre profil.');
       return;
     }
+
+    if (path === 'admin' && (!user || user.role !== 'admin')) {
+      alert('Vous n\'avez pas les droits d\'accès à cette page.');
+      return;
+    }
     
     window.history.pushState({}, '', `/${path}`);
     setCurrentPage(path);
@@ -60,6 +66,11 @@ function App() {
       return <Home />;
     }
 
+    if (currentPage === 'admin' && (!user || user.role !== 'admin')) {
+      window.history.pushState({}, '', '/');
+      return <Home />;
+    }
+
     switch (currentPage) {
       case 'home':
         return <Home />;
@@ -69,6 +80,8 @@ function App() {
         return <Register onLoginClick={() => navigate('login')} />;
       case 'profile':
         return <Profile />;
+      case 'admin':
+        return <AdminDashboard />;
       case 'a-propos':
         return <APropos />;
       default:
@@ -83,6 +96,8 @@ function App() {
         onRegisterClick={() => navigate('register')}
         onHomeClick={() => navigate('home')}
         onProfileClick={() => navigate('profile')}
+        onAdminClick={() => navigate('admin')}
+        user={user}
       />
       {renderPage()}
       <CookieConsent />

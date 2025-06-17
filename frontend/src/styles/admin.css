@@ -1,0 +1,153 @@
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admin-dashboard h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--color-darkgreen);
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.admin-tabs button {
+  padding: 10px 20px;
+  border: none;
+  background-color: var(--color-lightgreen);
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.admin-tabs button.active {
+  background-color: var(--color-green);
+  color: white;
+}
+
+.logs-section, .users-section {
+  background-color: var(--color-palebeige);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logs-container {
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.log-entry {
+  padding: 15px;
+  border-bottom: 1px solid var(--color-beige);
+  margin-bottom: 10px;
+  background-color: var(--color-bg);
+  border-radius: 4px;
+}
+
+.log-timestamp {
+  color: var(--color-gray);
+  font-size: 0.9em;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.log-action {
+  font-weight: bold;
+  color: var(--color-orange);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.log-details {
+  background-color: white;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid var(--color-beige);
+}
+
+.log-details p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: var(--color-gray);
+}
+
+.create-user-form {
+  background-color: var(--color-palebeige);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.create-user-form h3 {
+  margin-bottom: 15px;
+}
+
+.create-user-form input,
+.create-user-form select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--color-beige);
+  border-radius: 4px;
+}
+
+.create-user-form button {
+  background-color: var(--color-green);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.create-user-form button:hover {
+  background-color: var(--color-darkgreen);
+}
+
+.users-list table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.users-list th,
+.users-list td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-beige);
+}
+
+.users-list th {
+  background-color: var(--color-palebeige);
+  font-weight: bold;
+}
+
+.users-list button {
+  padding: 6px 12px;
+  margin-right: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.users-list button:first-child {
+  background-color: var(--color-orange);
+  color: white;
+}
+
+.users-list button:last-child {
+  background-color: var(--color-red);
+  color: white;
+}
+
+.users-list button:hover {
+  opacity: 0.9;
+} 

@@ -7,3 +7,7 @@
     background-color: var(--color-bg);
     font-family: var(--font-montserrat);
 }
+
+.app {
+    padding-top: 120px; /* Espace pour le header fixe */
+}

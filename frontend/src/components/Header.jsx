@@ -1,19 +1,19 @@
 import { useState, useEffect } from 'react';
 import '../styles/header.css'
 
-const Header = ({ onLoginClick, onRegisterClick, onHomeClick, onProfileClick }) => {
-    const [user, setUser] = useState(null);
+const Header = ({ onLoginClick, onRegisterClick, onHomeClick, onProfileClick, onAdminClick, user }) => {
+    const [localUser, setLocalUser] = useState(null);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
-            setUser(JSON.parse(storedUser));
+            setLocalUser(JSON.parse(storedUser));
         }
-    }, []);
+    }, [user]);
 
     const handleLogout = () => {
         localStorage.removeItem('user');
-        setUser(null);
+        setLocalUser(null);
         window.location.href = '/';
     };
 
@@ -41,12 +41,17 @@ const Header = ({ onLoginClick, onRegisterClick, onHomeClick, onProfileClick }) 
                     <button className="nav-link">Contact</button>
                 </nav>
                 <div className="header-right">
-                    {user ? (
+                    {localUser ? (
                         <div className="user-info">
+                            {localUser.role === 'admin' && (
+                                <button onClick={onAdminClick} className="btn btn-admin">
+                                    Admin Dashboard
+                                </button>
+                            )}
                             <button onClick={onProfileClick} className="profile-button">
                                 <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
                             </button>
-                            <span className="welcome-text">Bienvenue, {user.firstName}</span>
+                            <span className="welcome-text">Bienvenue, {localUser.firstName}</span>
                             <button onClick={handleLogout} className="btn btn-logout">Déconnexion</button>
                         </div>
                     ) : (

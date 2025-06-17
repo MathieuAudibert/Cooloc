@@ -116,6 +116,22 @@
   color: white;
 }
 
+.btn-admin {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-admin:hover {
+  background-color: #5a6268;
+}
+
 .header-divider {
   width: 100%;
   height: 3px;
