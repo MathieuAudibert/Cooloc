@@ -38,6 +38,7 @@ from api.adm.utilisateurs.supprimer import supprimer_utilisateurs
 from api.roles.route import changer_role
 from api.profil.route import maj_profil
 from api.profil.voir import voir_profil
+from api.tel.route import changer_tel
 
 HOST = "localhost"
 PORT = 8000
@@ -308,6 +309,13 @@ class Serveur(BaseHTTPRequestHandler):
         
         elif self.path == '/role/maj':
             res = changer_role(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+
+        elif self.path == '/tel/maj':
+            res = changer_tel(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()
