@@ -5,7 +5,7 @@
   align-items: center;
   background-color: var(--color-cream);
   padding: 2rem;
-  padding-top: calc(2rem + 120px); /* Account for header height */
+  padding-top: calc(2rem + 120px); 
 }
 
 .profile-card {
