@@ -31,6 +31,9 @@ def recup_id(data):
 def voir_utilisateurs(data, token):
     con.connexion()
 
+    token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
+    data['mail'] = token_decode['mail']
+    
     id_utilisateur = recup_id(data)
     if not id_utilisateur:
         return {'status': 404, 'message': 'Utilisateur KO'}

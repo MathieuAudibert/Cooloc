@@ -3,7 +3,7 @@ import sys
 import json
 import mimetypes
 import urllib.parse
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from swagger import swagger_spec
 
 # inscription connexion 
@@ -342,7 +342,7 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b'{"erreur": "pas trouve"}')
 
-serveur = HTTPServer((HOST, PORT), Serveur)
+serveur = ThreadingHTTPServer((HOST, PORT), Serveur)
 print(f'le serveur ecoute sur http://{HOST}:{PORT}')
 serveur.serve_forever()
 serveur.server_close()
