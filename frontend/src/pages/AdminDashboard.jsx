@@ -150,8 +150,8 @@ function AdminDashboard() {
                     <td>{user.email}</td>
                     <td>{user.role}</td>
                     <td>
-                      <button onClick={() => {/* TODO: Implémenter l'édition */}}>Modifier</button>
-                      <button onClick={() => {/* TODO: Implémenter la suppression */}}>Supprimer</button>
+                      <button onClick={() => {}}>Modifier</button>
+                      <button onClick={() => {}}>Supprimer</button>
                     </td>
                   </tr>
                 ))}

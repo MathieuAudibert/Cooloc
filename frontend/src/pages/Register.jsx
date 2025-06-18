@@ -55,7 +55,6 @@ const Register = ({ onLoginClick }) => {
 
       if (response.ok) {
         setSuccess('Inscription réussie ! Vous pouvez maintenant vous connecter.');
-        // Clear form
         setEmail('');
         setConfirmEmail('');
         setLastName('');

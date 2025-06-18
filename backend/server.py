@@ -58,9 +58,9 @@ class Serveur(BaseHTTPRequestHandler):
         return path, parametres
 
     def end_headers(self):
-        self.send_header('Access-Control-Allow-Origin', '*')  # More permissive for development
+        self.send_header('Access-Control-Allow-Origin', '*')  
         self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', '*')  # Allow all headers
+        self.send_header('Access-Control-Allow-Headers', '*')  
         self.send_header('Access-Control-Allow-Credentials', 'true')
         self.send_header('Access-Control-Max-Age', '3600')
         super().end_headers()
