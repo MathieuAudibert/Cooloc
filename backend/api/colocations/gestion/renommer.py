@@ -58,6 +58,5 @@ def modifier_coloc(data, token):
     log = {'date': datetime.now(), 'action': 'modification coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': data['id_coloc'], 'nom': data['nom']}
     logs.db.collection('Logs').add(log)
 
-    con.conn.commit()
-    con.conn.close()
+    con.conn.commit()   
     return {'status': 200, 'message': 'Coloc modifiée avec succès'}

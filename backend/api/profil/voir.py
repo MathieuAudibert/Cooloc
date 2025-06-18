@@ -52,6 +52,5 @@ def voir_profil(data, token):
     ]
     
     con.conn.commit()
-    con.close()
     return {'status': 200, 'infos': utilisateurs}
 

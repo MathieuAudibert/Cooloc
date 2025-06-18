@@ -54,5 +54,5 @@ def login(data):
         return {'status': 400, 'message': 'Mot de passe incorrect'}
     
     token = create_token({'mail': utilisateur[0], 'role': utilisateur[2]})
-    con.conn.close()
+ 
     return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2], "prenom": utilisateur[3], "nom": utilisateur[4] }, 'token': token} 

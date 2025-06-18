@@ -55,6 +55,5 @@ def voir_utilisateurs(data, token):
     ]
     
     con.conn.commit()
-    con.close()
     return {'status': 200, 'utilisateurs': utilisateurs}
 

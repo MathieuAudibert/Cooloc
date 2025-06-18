@@ -56,5 +56,5 @@ def changer_tel(data, token):
     log = {'date': datetime.now(), 'action': 'changement telephone', 'id_utilisateur': id_utilisateur, 'tel': data['tel']}
     logs.db.collection('Logs').add(log)
 
-    con.conn.close()
+
     return {'status': 200, 'message': 'Numéro de tel changé'}

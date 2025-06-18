@@ -57,6 +57,5 @@ def supprimer_membres(data, token):
     log = {'date': datetime.now(), 'action': 'vire coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': data['id_coloc'], 'id_utilisateur_supprime': data['id_utilisateur_supprime']}
     logs.db.collection('Logs').add(log)
     
-    con.conn.commit()
-    con.conn.close()    
+    con.conn.commit()   
     return {'status': 200, 'message': 'Utilisateur viré avec succès'}

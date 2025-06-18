@@ -61,6 +61,5 @@ def ajouter_colocataires(data, token):
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
-    con.close()
     return {'status': 200, 'message': 'Utilisateur a été ajouté à la coloc.'}
 

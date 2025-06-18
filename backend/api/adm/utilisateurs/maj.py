@@ -101,6 +101,5 @@ def maj_utilisateurs(data, token):
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
-    con.close()
     return {'status': 200, 'message': 'MAJ Utilisateurs OK'}
 

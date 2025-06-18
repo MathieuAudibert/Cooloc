@@ -72,5 +72,4 @@ def creer_coloc(data, token):
     logs.db.collection('Logs').add(log)
     
     con.conn.commit()
-    con.conn.close()
     return {'status': 200, 'message': 'coloc crée'}

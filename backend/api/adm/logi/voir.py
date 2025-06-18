@@ -53,6 +53,5 @@ def voir_logs(data, token):
             }
         })
     con.conn.commit()
-    con.close()
     return {'status': 200, 'logs': log}
 

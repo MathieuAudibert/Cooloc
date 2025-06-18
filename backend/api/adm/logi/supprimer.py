@@ -56,5 +56,4 @@ def supprimer_logs(data, token):
 
     logs.db.collection('Logs').document(data['id_logs']).delete()
     con.conn.commit()
-    con.close()
     return {'status': 200, 'message': 'Logs supprimés avec succès'}

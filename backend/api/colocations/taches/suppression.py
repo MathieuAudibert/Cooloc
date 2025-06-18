@@ -69,5 +69,5 @@ def supprimer_tache(data, token):
     logs.db.collection('Logs').add(log)
     
     con.conn.commit()
-    con.conn.close()    
+        
     return {'status': 200, 'message': 'Tache supprimée avec succès'}

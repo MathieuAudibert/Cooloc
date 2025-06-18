@@ -98,6 +98,5 @@ def maj_profil(data, token):
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
-    con.close()
     return {'status': 200, 'message': 'Utilisateur mis à jour avec succès'}
 

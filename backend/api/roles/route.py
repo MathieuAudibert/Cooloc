@@ -56,5 +56,4 @@ def changer_role(data, token):
     log = {'date': datetime.now(), 'action': 'changement role', 'id_utilisateur': id_utilisateur, 'role': data['role']}
     logs.db.collection('Logs').add(log)
 
-    con.conn.close()
     return {'status': 200, 'message': 'Role changé'}

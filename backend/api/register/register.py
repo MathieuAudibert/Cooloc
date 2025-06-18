@@ -62,5 +62,4 @@ def register(data):
     log = {'date': datetime.now(), 'action': 'inscription', 'mail': data['mail']}
     logs.db.collection('Logs').add(log)
         
-    con.conn.close()
     return {'status': 200}
