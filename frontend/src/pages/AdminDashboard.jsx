@@ -19,7 +19,7 @@ function AdminDashboard() {
   const fetchLogs = async () => {
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      const response = await fetch(`http://localhost:8000/adm/logs?token=${user.token}&mail=${user.email}&role=${user.role}&csrf=cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y`);
+      const response = await fetch(`http://localhost:8000/adm/logs?token=${user.token}&role=${user.role}&mail=${user.email}`);
       const data = await response.json();
       if (data.status === 200) {
         setLogs(data.logs);
