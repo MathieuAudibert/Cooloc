@@ -4,8 +4,8 @@ import '../styles/auth.css';
 const Register = ({ onLoginClick }) => {
   const [email, setEmail] = useState('');
   const [confirmEmail, setConfirmEmail] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [firstName, setFirstName] = useState('');
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
@@ -44,8 +44,8 @@ const Register = ({ onLoginClick }) => {
         },
         body: JSON.stringify({
           mail: email,
-          nom: lastName,
-          prenom: firstName,
+          nom: nom,
+          prenom: prenom,
           mdp: password,
           csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y' 
         }),
@@ -57,8 +57,8 @@ const Register = ({ onLoginClick }) => {
         setSuccess('Inscription réussie ! Vous pouvez maintenant vous connecter.');
         setEmail('');
         setConfirmEmail('');
-        setLastName('');
-        setFirstName('');
+        setNom('');
+        setPrenom('');
         setPassword('');
         setConfirmPassword('');
       } else {
@@ -105,28 +105,28 @@ const Register = ({ onLoginClick }) => {
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="lastName">Nom <b class="etoile">*</b></label>
+            <label htmlFor="nom">Nom <b class="etoile">*</b></label>
             <div className="input-container">
               <img src="/img/icons/person.png" alt="User" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
               <input
                 type="text"
-                id="lastName"
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
+                id="nom"
+                value={nom}
+                onChange={(e) => setNom(e.target.value)}
                 required
                 style={{paddingLeft: '2.5rem'}}
               />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="firstName">Prenom <b class="etoile">*</b></label>
+            <label htmlFor="prenom">Prenom <b class="etoile">*</b></label>
             <div className="input-container">
               <img src="/img/icons/person.png" alt="User" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
               <input
                 type="text"
-                id="firstName"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
+                id="prenom"
+                value={prenom}
+                onChange={(e) => setPrenom(e.target.value)}
                 required
                 style={{paddingLeft: '2.5rem'}}
               />

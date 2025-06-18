@@ -8,8 +8,8 @@ const Profile = () => {
   const [success, setSuccess] = useState('');
   const [formData, setFormData] = useState({
     email: '',
-    firstName: '',
-    lastName: '',
+    prenom: '',
+    nom: '',
     phone: '',
     password: '',
     confirmPassword: ''
@@ -22,8 +22,8 @@ const Profile = () => {
       setUser(userData);
       setFormData({
         email: userData.email,
-        firstName: userData.firstName,
-        lastName: userData.lastName,
+        prenom: userData.prenom,
+        nom: userData.nom,
         phone: userData.phone || '',
         password: '',
         confirmPassword: ''
@@ -71,8 +71,8 @@ const Profile = () => {
         body: JSON.stringify({
           mail: user.email,
           mail_modifie: formData.email,
-          prenom: formData.firstName,
-          nom: formData.lastName,
+          prenom: formData.prenom,
+          nom: formData.nom,
           num_telephone: formData.phone,
           mdp: formData.password || undefined,
           token: user.token,
@@ -87,8 +87,8 @@ const Profile = () => {
         const updatedUser = {
           ...user,
           email: formData.email,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
+          prenom: formData.prenom,
+          nom: formData.nom,
           phone: formData.phone
         };
         localStorage.setItem('user', JSON.stringify(updatedUser));
@@ -146,14 +146,14 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="firstName">Prénom</label>
+                <label htmlFor="prenom">Prénom</label>
                 <div className="input-container">
                   <img src="/img/icons/person.png" alt="User" className="input-icon" />
                   <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
+                    id="prenom"
+                    name="prenom"
+                    value={formData.prenom}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required
@@ -162,14 +162,14 @@ const Profile = () => {
               </div>
 
               <div className="form-group">
-                <label htmlFor="lastName">Nom</label>
+                <label htmlFor="nom">Nom</label>
                 <div className="input-container">
                   <img src="/img/icons/person.png" alt="User" className="input-icon" />
                   <input
                     type="text"
-                    id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
+                    id="nom"
+                    name="nom"
+                    value={formData.nom}
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required

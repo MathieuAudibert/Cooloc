@@ -40,8 +40,8 @@ const Login = ({ onRegisterClick }) => {
         localStorage.setItem('user', JSON.stringify({
           email: data.data.mail,
           role: data.data.role,
-          firstName: data.data.prenom,
-          lastName: data.data.nom,
+          prenom: data.data.prenom,
+          nom: data.data.nom,
           token: data.token
         }));
         

@@ -59,7 +59,7 @@ const Header = ({ onLoginClick, onRegisterClick, onHomeClick, onProfileClick, on
                                     <img src="/img/icons/person.png" alt="Profile" className="profile-icon" />
                                 </button>
                             )}
-                            <span className="welcome-text">Bienvenue, {localUser.firstName}</span>
+                            <span className="welcome-text">Bienvenue, {localUser.prenom}</span>
                             <button onClick={handleLogout} className="btn btn-logout">Déconnexion</button>
                         </div>
                     ) : (
