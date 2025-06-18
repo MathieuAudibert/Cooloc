@@ -36,7 +36,7 @@
 - [ ] Diagrammes
   - [x] Use case
   - [ ] Classe (si on est pas sur a ne pas faire)
-  - [ ] Sequences (bonus)
+  - [x] Sequences (bonus)
   - [x] Activité
 - [x] Swagger
 - [x] Trello
@@ -80,14 +80,14 @@
     - [x] Delete
     - [x] S'attribuer
     - [x] cloturer
-- [ ] Mentions Légales
+- [x] Mentions Légales
 - [x] Logs
-- [ ] Interface adm
+- [x] Interface adm
   - [x] Back
-  - [ ] Front
-- [ ] Page profil
+  - [x] Front
+- [x] Page profil
   - [x] Back
-  - [ ] Front
+  - [x] Front
 - [x] Nosql
 
 # Securité
