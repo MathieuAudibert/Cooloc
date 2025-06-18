@@ -5,24 +5,34 @@ const Login = ({ onRegisterClick }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isLoading) return; 
+    
     setError('');
+    setIsLoading(true);
 
     try {
       const response = await fetch('http://localhost:8000/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json',
         },
         body: JSON.stringify({
           mail: email,
           mdp: password,
           csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
         }),
+        mode: 'cors',
         credentials: 'include'
       });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
       const data = await response.json();
 
@@ -41,6 +51,8 @@ const Login = ({ onRegisterClick }) => {
       }
     } catch (err) {
       setError('Erreur de connexion au serveur');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -60,6 +72,7 @@ const Login = ({ onRegisterClick }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
                 style={{paddingLeft: '2.5rem'}}
               />
             </div>
@@ -74,16 +87,17 @@ const Login = ({ onRegisterClick }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
                 style={{paddingLeft: '2.5rem'}}
               />
             </div>
           </div>
-          <button type="submit" className="submit-button">
-            Se connecter
+          <button type="submit" className="submit-button" disabled={isLoading}>
+            {isLoading ? 'Connexion en cours...' : 'Se connecter'}
           </button>
           <p className="auth-switch">
             Pas encore de compte ?{' '}
-            <button type="button" onClick={onRegisterClick} className="link-button">
+            <button type="button" onClick={onRegisterClick} className="link-button" disabled={isLoading}>
               S'inscrire
             </button>
           </p>
