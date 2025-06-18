@@ -73,7 +73,7 @@ def maj_profil(data, token):
         val.append(data['prenom'])
     if 'mail_modifie' in data:
         champs.append('mail')
-        val.append(data['mail'])
+        val.append(data['mail_modifie'])
     if 'mdp' in data:
         if not car_spe(data['mdp']):
             return {'status': 400, 'message': 'Car speciaux KO'}
@@ -82,16 +82,19 @@ def maj_profil(data, token):
         val.append(mdp_hashe)
     if 'role_modifie' in data:
         champs.append('role')
-        val.append(data['role'])
+        val.append(data['role_modifie'])
     if 'num_telephone' in data:
         champs.append('num_telephone')
         val.append(data['num_telephone'])
     
-    val.append(data['id_utilisateur'])
+    if not champs:
+        return {'status': 400, 'message': 'Aucun champ à mettre à jour'}
+    
+    val.append(id_utilisateur[0])  
     requete = f"""UPDATE Utilisateurs SET {', '.join([f"{champ} = %s" for champ in champs])} WHERE id = %s"""
     con.cursor.execute(requete, val)
 
-    log = {'date': datetime.now(), 'action': 'maj utilisateur', 'id_utilisateur': id_utilisateur, 'champs': val}
+    log = {'date': datetime.now(), 'action': 'maj utilisateur', 'id_utilisateur': id_utilisateur[0], 'champs': val}
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
