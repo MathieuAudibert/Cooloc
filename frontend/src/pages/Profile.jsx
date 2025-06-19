@@ -41,6 +41,7 @@ const Profile = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!isEditing) return;
     setError('');
     setSuccess('');
 
@@ -252,18 +253,21 @@ const Profile = () => {
                   Annuler
                 </button>
               </>
-            ) : (
-              <button
-                type="button"
-                className="edit-button"
-                onClick={() => setIsEditing(true)}
-              >
-                <img src="/img/icons/edit.png" alt="Edit" className="button-icon" />
-                Modifier
-              </button>
-            )}
+            ) : null}
           </div>
         </form>
+        {!isEditing && (
+          <div className="button-group">
+            <button
+              type="button"
+              className="edit-button"
+              onClick={() => setIsEditing(true)}
+            >
+              <img src="/img/icons/edit.png" alt="Edit" className="button-icon" />
+              Modifier
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
