@@ -6,11 +6,7 @@
 - [ ] Front a faire :
   - [ ] profil propre
   - [ ] formulaires login register pas de padding entre les labels
-  - [ ] Creation de coloc
-  - [ ] ajout des coloc
-  - [ ] affichage infos coloc
-  - [ ] modif infos coloc
-  - [ ] supprimer coloc
+  - [ ] crud coloc
   - [ ] crud tache
 - [x] commencer rapport 50 pages :
   - [ ] Introduction
