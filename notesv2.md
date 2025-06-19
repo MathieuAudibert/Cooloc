@@ -4,7 +4,6 @@
 - [x] CRUD tache(s)
 - [ ] wireframes/maquettes mobiles
 - [ ] Front a faire :
-  - [ ] profil propre
   - [ ] formulaires login register pas de padding entre les labels
   - [ ] crud coloc
   - [ ] crud tache
