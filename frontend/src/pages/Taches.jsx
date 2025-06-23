@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/creation-colocation.css';
+import editIcon from '/img/icons/edit.png';
+import cancelIcon from '/img/icons/cancel.png';
+import usersIcon from '/img/icons/users.png';
 
 const Taches = () => {
-  const [taches, setTaches] = useState([]);
+  const [tachesOuvertes, setTachesOuvertes] = useState([]);
+  const [tachesCloturees, setTachesCloturees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [newTache, setNewTache] = useState({
@@ -15,25 +19,41 @@ const Taches = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingTache, setEditingTache] = useState(null);
   const [members, setMembers] = useState([]);
+  const [showClosed, setShowClosed] = useState(false);
 
   const user = JSON.parse(localStorage.getItem('user'));
   const id_coloc = user?.id_coloc;
 
-  const fetchTaches = () => {
+  const fetchTachesOuvertes = () => {
     setLoading(true);
     fetch(`http://localhost:8000/coloc/taches/voir-disponibles?mail=${encodeURIComponent(user.email)}&role=${encodeURIComponent(user.role)}&token=${encodeURIComponent(user.token)}&id_coloc=${encodeURIComponent(id_coloc)}`)
       .then(res => res.json())
       .then(data => {
         if (data.status === 200 && Array.isArray(data.taches)) {
-          setTaches(data.taches);
+          setTachesOuvertes(data.taches);
         } else {
-          setError(data.message || 'Erreur lors de la récupération des tâches.');
+          setError(data.message || 'Erreur lors de la récupération des tâches ouvertes.');
         }
         setLoading(false);
       })
       .catch(() => {
-        setError('Erreur de connexion au serveur.');
+        setError('Erreur de connexion au serveur (ouvertes).');
         setLoading(false);
+      });
+  };
+
+  const fetchTachesCloturees = () => {
+    fetch(`http://localhost:8000/coloc/taches/voir-completes?mail=${encodeURIComponent(user.email)}&role=${encodeURIComponent(user.role)}&token=${encodeURIComponent(user.token)}&id_coloc=${encodeURIComponent(id_coloc)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 200 && Array.isArray(data.taches)) {
+          setTachesCloturees(data.taches);
+        } else {
+          setError(data.message || 'Erreur lors de la récupération des tâches clôturées.');
+        }
+      })
+      .catch(() => {
+        setError('Erreur de connexion au serveur (clôturées).');
       });
   };
 
@@ -49,7 +69,8 @@ const Taches = () => {
 
   useEffect(() => {
     if (id_coloc) {
-      fetchTaches();
+      fetchTachesOuvertes();
+      fetchTachesCloturees();
       fetchMembers();
     }
   }, [id_coloc]);
@@ -77,7 +98,7 @@ const Taches = () => {
       .then(data => {
         if (data.status === 200) {
           setNewTache({ nom: '', date_debut: '', date_fin: '', priorite: 'moyenne', atribue_a: '' });
-          fetchTaches();
+          fetchTachesOuvertes();
         } else {
           setError(data.message || 'Erreur lors de la création.');
         }
@@ -120,7 +141,7 @@ const Taches = () => {
         if (data.status === 200) {
           setEditingId(null);
           setEditingTache(null);
-          fetchTaches();
+          fetchTachesOuvertes();
         } else {
           setError(data.message || 'Erreur lors de la modification.');
         }
@@ -145,13 +166,29 @@ const Taches = () => {
       .then(res => res.json())
       .then(data => {
         if (data.status === 200) {
-          fetchTaches();
+          fetchTachesOuvertes();
         } else {
           setError(data.message || 'Erreur lors de la suppression.');
         }
       })
       .catch(() => setError('Erreur de connexion au serveur.'));
   };
+
+  const priorityColors = {
+    basse: '#8bc34a',
+    moyenne: '#ffc107',
+    haute: '#e53935',
+  };
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '-';
+    const d = new Date(dateStr);
+    return d.toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
+  }
+
+  function isCloturee(val) {
+    return val === true || val === 'true' || val === 1 || val === '1';
+  }
 
   if (!id_coloc) {
     return <div className="creation-colocation"><div className="creation-form">Vous n'êtes dans aucune colocation.</div></div>;
@@ -161,7 +198,8 @@ const Taches = () => {
     <div className="creation-colocation">
       <h1>Gestion des tâches</h1>
       <div className="creation-form">
-        <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 16 }}>
+        <h2 style={{marginBottom: 8}}>Créer une tâche</h2>
+        <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
           <input
             type="text"
             value={newTache.nom}
@@ -215,85 +253,158 @@ const Taches = () => {
           </div>
           <button type="submit">Ajouter</button>
         </form>
+        <h2 style={{margin:'2rem 0 1rem 0', textAlign:'left'}}>Liste des tâches</h2>
         {error && <div className="error-message">{error}</div>}
         {loading ? (
           <div>Chargement...</div>
         ) : (
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {taches.length === 0 ? (
-              <li>Aucune tâche trouvée.</li>
-            ) : (
-              taches.map(tache => (
-                <li key={tache.id} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                  {editingId === tache.id ? (
-                    <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 8, flex: 1 }}>
-                      <input
-                        type="text"
-                        value={editingTache.nom}
-                        onChange={e => setEditingTache({ ...editingTache, nom: e.target.value })}
-                        required
-                        placeholder="Nom de la tâche"
-                      />
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        <div style={{ flex: 1 }}>
-                          <label style={{ fontSize: 13 }}>Date de début</label>
+          <>
+            <div className="taches-list" style={{display:'grid', gap: '1.5rem'}}>
+              {tachesOuvertes.length === 0 ? (
+                <div>Aucune tâche ouverte trouvée.</div>
+              ) : (
+                tachesOuvertes.map(tache => {
+                  const assigned = members.find(m => m.id === tache.attribue_a);
+                  return (
+                    <div key={tache.id} className="tache-card" style={{background:'#f8f8f8', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative'}}>
+                      {editingId === tache.id ? (
+                        <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                           <input
-                            type="datetime-local"
-                            value={editingTache.date_debut}
-                            onChange={e => setEditingTache({ ...editingTache, date_debut: e.target.value })}
-                          />
-                        </div>
-                        <div style={{ flex: 1 }}>
-                          <label style={{ fontSize: 13 }}>Date de fin</label>
-                          <input
-                            type="datetime-local"
-                            value={editingTache.date_fin}
-                            onChange={e => setEditingTache({ ...editingTache, date_fin: e.target.value })}
-                          />
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        <div style={{ flex: 1 }}>
-                          <label style={{ fontSize: 13 }}>Priorité</label>
-                          <select
-                            value={editingTache.priorite}
-                            onChange={e => setEditingTache({ ...editingTache, priorite: e.target.value })}
+                            type="text"
+                            value={editingTache.nom}
+                            onChange={e => setEditingTache({ ...editingTache, nom: e.target.value })}
                             required
-                          >
-                            <option value="basse">Basse</option>
-                            <option value="moyenne">Moyenne</option>
-                            <option value="haute">Haute</option>
-                          </select>
-                        </div>
-                        <div style={{ flex: 1 }}>
-                          <label style={{ fontSize: 13 }}>Attribuer à</label>
-                          <select
-                            value={editingTache.atribue_a}
-                            onChange={e => setEditingTache({ ...editingTache, atribue_a: e.target.value })}
-                          >
-                            <option value="">Non attribuée</option>
-                            {members.map((m, i) => (
-                              <option key={i} value={m.id}>{m.prenom} {m.nom}</option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
-                      <div style={{ display: 'flex', gap: 8 }}>
-                        <button type="submit">Valider</button>
-                        <button type="button" onClick={() => { setEditingId(null); setEditingTache(null); }}>Annuler</button>
-                      </div>
-                    </form>
+                            placeholder="Nom de la tâche"
+                          />
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <div style={{ flex: 1 }}>
+                              <label style={{ fontSize: 13 }}>Date de début</label>
+                              <input
+                                type="datetime-local"
+                                value={editingTache.date_debut}
+                                onChange={e => setEditingTache({ ...editingTache, date_debut: e.target.value })}
+                              />
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <label style={{ fontSize: 13 }}>Date de fin</label>
+                              <input
+                                type="datetime-local"
+                                value={editingTache.date_fin}
+                                onChange={e => setEditingTache({ ...editingTache, date_fin: e.target.value })}
+                              />
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <div style={{ flex: 1 }}>
+                              <label style={{ fontSize: 13 }}>Priorité</label>
+                              <select
+                                value={editingTache.priorite}
+                                onChange={e => setEditingTache({ ...editingTache, priorite: e.target.value })}
+                                required
+                              >
+                                <option value="basse">Basse</option>
+                                <option value="moyenne">Moyenne</option>
+                                <option value="haute">Haute</option>
+                              </select>
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <label style={{ fontSize: 13 }}>Attribuer à</label>
+                              <select
+                                value={editingTache.atribue_a}
+                                onChange={e => setEditingTache({ ...editingTache, atribue_a: e.target.value })}
+                              >
+                                <option value="">Non attribuée</option>
+                                {members.map((m, i) => (
+                                  <option key={i} value={m.id}>{m.prenom} {m.nom}</option>
+                                ))}
+                              </select>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: 8 }}>
+                            <button type="submit">Valider</button>
+                            <button type="button" onClick={() => { setEditingId(null); setEditingTache(null); }}>Annuler</button>
+                          </div>
+                        </form>
+                      ) : (
+                        <>
+                          <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:4}}>
+                            <span style={{fontWeight:600, fontSize:'1.1rem', flex:1}}>{tache.nom}</span>
+                            <span className="priority-badge" style={{background:priorityColors[tache.priorite], color:'#fff', borderRadius:8, padding:'2px 10px', fontSize:13, fontWeight:500}}>{tache.priorite}</span>
+                          </div>
+                          <div style={{display:'flex', gap:16, fontSize:13, color:'#555', flexWrap:'wrap'}}>
+                            <div><b>Début:</b> {formatDate(tache.date_debut)}</div>
+                            <div><b>Fin:</b> {formatDate(tache.date_fin)}</div>
+                            <div><b>Créée:</b> {formatDate(tache.date_crea)}</div>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center', gap:8, fontSize:13, color:'#555'}}>
+                            <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
+                            <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
+                            <span style={{fontSize:12, color:tache.cloture ? '#388e3c' : '#e53935', fontWeight:600}}>
+                              {tache.cloture ? 'Clôturée' : 'Ouverte'}
+                            </span>
+                            <button onClick={() => handleEdit(tache)} style={{background:'none', border:'none', cursor:'pointer'}} title="Modifier">
+                              <img src={editIcon} alt="edit" style={{width:20, height:20}} />
+                            </button>
+                            <button onClick={() => handleDelete(tache.id)} style={{background:'none', border:'none', cursor:'pointer'}} title="Supprimer">
+                              <img src={cancelIcon} alt="delete" style={{width:20, height:20}} />
+                            </button>
+                            {!tache.cloture && (
+                              <button style={{marginLeft:12, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}} onClick={() => {/* TODO: cloture logic */}}>Clôturer</button>
+                            )}
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+            {/* Menu déroulant pour tâches clôturées */}
+            <div style={{marginTop: '2rem'}}>
+              <button
+                type="button"
+                onClick={() => setShowClosed(v => !v)}
+                style={{background:'#eee', border:'1px solid #ccc', borderRadius:8, padding:'8px 16px', cursor:'pointer', fontWeight:600, fontSize:15}}
+              >
+                {showClosed ? '▼' : '►'} Tâches clôturées ({tachesCloturees.length})
+              </button>
+              {showClosed && (
+                <div className="taches-list" style={{display:'grid', gap: '1.5rem', marginTop:12}}>
+                  {tachesCloturees.length === 0 ? (
+                    <div>Aucune tâche clôturée.</div>
                   ) : (
-                    <>
-                      <span style={{ flex: 1 }}>{tache.nom}</span>
-                      <button onClick={() => handleEdit(tache)}>Modifier</button>
-                      <button onClick={() => handleDelete(tache.id)}>Supprimer</button>
-                    </>
+                    tachesCloturees.map(tache => {
+                      const assigned = members.find(m => m.id === tache.attribue_a);
+                      return (
+                        <div key={tache.id} className="tache-card" style={{background:'#f0f0f0', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative', opacity:0.7}}>
+                          <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:4}}>
+                            <span style={{fontWeight:600, fontSize:'1.1rem', flex:1}}>{tache.nom}</span>
+                            <span className="priority-badge" style={{background:priorityColors[tache.priorite], color:'#fff', borderRadius:8, padding:'2px 10px', fontSize:13, fontWeight:500}}>{tache.priorite}</span>
+                          </div>
+                          <div style={{display:'flex', gap:16, fontSize:13, color:'#555', flexWrap:'wrap'}}>
+                            <div><b>Début:</b> {formatDate(tache.date_debut)}</div>
+                            <div><b>Fin:</b> {formatDate(tache.date_fin)}</div>
+                            <div><b>Créée:</b> {formatDate(tache.date_crea)}</div>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center', gap:8, fontSize:13, color:'#555'}}>
+                            <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
+                            <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
+                            <span style={{fontSize:12, color:'#388e3c', fontWeight:600}}>
+                              Clôturée
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })
                   )}
-                </li>
-              ))
-            )}
-          </ul>
+                </div>
+              )}
+            </div>
+          </>
         )}
       </div>
     </div>
