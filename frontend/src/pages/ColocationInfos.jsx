@@ -202,30 +202,40 @@ const ColocationInfos = () => {
     <div className="creation-colocation">
       <h1>Ma colocation</h1>
       <div className="creation-form">
-        <p><strong>Nom :</strong> {infos.nom}</p>
-        <p><strong>Date de création :</strong> {infos.date_crea}</p>
-        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', marginBottom: '1rem' }}>
-          <button onClick={handleEdit} className="edit-btn">Modifier</button>
-          <button onClick={handleDelete} className="delete-btn">Supprimer</button>
+        <div className="coloc-section">
+          <div className="coloc-info-row">
+            <span className="coloc-label">Nom :</span>
+            <span className="coloc-value">{infos.nom}</span>
+          </div>
+          <div className="coloc-info-row">
+            <span className="coloc-label">Date de création :</span>
+            <span className="coloc-value">{infos.date_crea}</span>
+          </div>
+          <div className="coloc-actions">
+            <button onClick={handleEdit} className="edit-btn">Modifier</button>
+            <button onClick={handleDelete} className="delete-btn">Supprimer</button>
+          </div>
+          {showEdit && (
+            <form onSubmit={handleEditSubmit} className="coloc-edit-form">
+              <input
+                type="text"
+                className="form-input"
+                value={newName}
+                onChange={e => setNewName(e.target.value)}
+                placeholder="Nouveau nom de la colocation"
+                required
+              />
+              <button type="submit" className="form-submit-btn">Valider</button>
+              <button type="button" className="delete-btn" onClick={() => setShowEdit(false)}>Annuler</button>
+            </form>
+          )}
         </div>
-        {showEdit && (
-          <form onSubmit={handleEditSubmit} style={{ marginBottom: '1rem' }}>
-            <input
-              type="text"
-              value={newName}
-              onChange={e => setNewName(e.target.value)}
-              placeholder="Nouveau nom de la colocation"
-              required
-            />
-            <button type="submit">Valider</button>
-            <button type="button" onClick={() => setShowEdit(false)}>Annuler</button>
-          </form>
-        )}
-        <div style={{marginTop: '2rem'}}>
+        <div className="coloc-section" style={{marginTop: '2.5rem'}}>
           <h2>Membres de la colocation</h2>
-          <form onSubmit={handleAddMember} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', alignItems: 'center' }}>
+          <form onSubmit={handleAddMember} className="coloc-add-member-form">
             <input
               type="email"
+              className="form-input"
               value={addEmail}
               onChange={e => setAddEmail(e.target.value)}
               placeholder="Email du membre à ajouter"
@@ -233,7 +243,7 @@ const ColocationInfos = () => {
               disabled={actionLoading}
               style={{ minWidth: 220 }}
             />
-            <button type="submit" disabled={actionLoading || !addEmail}>Ajouter</button>
+            <button type="submit" className="form-submit-btn" disabled={actionLoading || !addEmail}>Ajouter</button>
           </form>
           {addError && <div className="error-message">{addError}</div>}
           {addSuccess && <div className="success-message">{addSuccess}</div>}
