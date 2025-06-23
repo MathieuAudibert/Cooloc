@@ -107,7 +107,7 @@ const Home = () => {
             <div className="coloc-feature-card" onClick={() => handleNavigate('depenses')}>
               <img src="/img/icons/save.png" alt="Mes dépenses" className="coloc-feature-icon" />
               <h3>Mes dépenses</h3>
-              <p>Gère et visualise tes dépenses de colocation.<br /><span style={{color:'#888', fontSize:'0.9em'}}>Fonctionnalité à venir</span></p>
+              <p>Gère et visualise tes dépenses de colocation.<br /><span style={{color:'#888', fontSize:'0.9em'}}>A FAIRE</span></p>
             </div>
             <div className="coloc-feature-card" onClick={() => handleNavigate('colocation')}>
               <img src="/img/icons/users.png" alt="Ma colocation" className="coloc-feature-icon" />
