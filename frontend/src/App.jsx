@@ -10,6 +10,7 @@ import Footer from './components/Footer';
 import APropos from './pages/APropos';
 import CreationColocation from './pages/CreationColocation';
 import RoleSelectionModal from './components/RoleSelectionModal';
+import ColocationInfos from './pages/ColocationInfos';
 import './styles/auth.css';
 
 function App() {
@@ -154,6 +155,8 @@ function App() {
         return <APropos />;
       case 'creation-colocation':
         return <CreationColocation />;
+      case 'colocation':
+        return <ColocationInfos />;
       default:
         return <Home />;
     }

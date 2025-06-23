@@ -159,4 +159,48 @@ section {
   .feature-block p {
     font-size: 1rem;
   }
+}
+
+.coloc-features-section {
+  background: var(--color-cream, #f8f8e7);
+  padding: 2rem 0 1rem 0;
+}
+.coloc-features-grid {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  align-items: stretch;
+  margin-bottom: 1.5rem;
+}
+.coloc-feature-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.5rem 1.2rem;
+  min-width: 220px;
+  max-width: 260px;
+  flex: 1 1 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.coloc-feature-card:hover {
+  box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+  transform: translateY(-4px) scale(1.03);
+}
+.coloc-feature-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 0.7rem;
+}
+.coloc-feature-card h3 {
+  margin: 0.2rem 0 0.5rem 0;
+  color: var(--color-darkgreen, #2e4d3a);
+}
+.coloc-feature-card p {
+  color: #444;
+  font-size: 1rem;
+  text-align: center;
 } 

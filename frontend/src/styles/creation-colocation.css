@@ -23,4 +23,50 @@
 .creation-form p {
   color: var(--color-gray);
   font-size: 1.2rem;
+}
+
+.member-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.member-card {
+  background: #f8f8f8;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 1.5rem 2rem;
+  min-width: 180px;
+  max-width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s;
+}
+.member-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.member-avatar {
+  background: var(--color-darkgreen, #2e7d32);
+  color: #fff;
+  font-size: 2rem;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.member-info {
+  text-align: center;
+}
+.member-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #222;
 } 

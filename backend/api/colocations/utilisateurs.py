@@ -40,10 +40,10 @@ def recup_infos_responsable(data):
     coloc = data['id_colocs']
     if data['role'] not in ['coloc', 'responsable', 'proprietaire', 'admin']:
         requete = """SELECT u.nom, u.prenom, u.mail FROM Utilisateurs AS u JOIN Colocs AS c ON c.responsable = u.id AND c.id = %s"""
-        con.cursor.execute(requete, (coloc))
+        con.cursor.execute(requete, (coloc,))
     else:
         requete = """SELECT u.nom, u.prenom, u.mail, u.num_telephone FROM Utilisateurs AS u JOIN Colocs AS c ON c.responsable = u.id AND c.id = %s"""
-        con.cursor.execute(requete, (coloc))
+        con.cursor.execute(requete, (coloc,))
     infos_responsable = con.cursor.fetchone()
     return infos_responsable
 
@@ -51,7 +51,10 @@ def recup_infos(data):
     coloc = data['id_colocs']
     requete = """SELECT u.nom, u.prenom FROM Utilisateurs AS u JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s"""
     con.cursor.execute(requete, (coloc,))
-    infos = con.cursor.fetchall()
+    infos = [
+        {'nom': row[0], 'prenom': row[1]}
+        for row in con.cursor.fetchall()
+    ]
     return infos
 
 def details_colocs(data, token):
