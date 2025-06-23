@@ -62,6 +62,16 @@ const CreationColocation = () => {
       if (response.ok && data.status === 200) {
         setSuccess('Colocation créée avec succès !');
         setNom('');
+        const storedUser = JSON.parse(localStorage.getItem('user'));
+        if (data.id_coloc) {
+          localStorage.setItem('user', JSON.stringify({
+            ...storedUser,
+            id_coloc: data.id_coloc
+          }));
+        }
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
       } else {
         setError(data.message || 'Erreur lors de la création de la colocation.');
       }

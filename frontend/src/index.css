@@ -8,6 +8,23 @@
     font-family: var(--font-montserrat);
 }
 
+html, body, #root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .app {
-    padding-top: 120px; /* Espace pour le header fixe */
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 120px; 
+}
+
+.app > *:not(.footer) {
+    flex-shrink: 0;
+}
+
+.footer {
+    margin-top: auto;
 }

@@ -72,4 +72,4 @@ def creer_coloc(data, token):
     logs.db.collection('Logs').add(log)
     
     con.conn.commit()
-    return {'status': 200, 'message': 'coloc crée'}
+    return {'status': 200, 'message': 'coloc créée', 'id_coloc': id_coloc[0] if isinstance(id_coloc, (list, tuple)) else id_coloc}

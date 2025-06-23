@@ -18,6 +18,31 @@ const Home = () => {
 
   const showColocFeatures = user && (user.role === 'responsable' || user.role === 'colocataire');
 
+  const noColoc = user && !user.id_coloc;
+
+  if (noColoc) {
+    return (
+      <div className="home">
+        <div className="no-coloc-message" style={{margin:'2rem auto', maxWidth:400, textAlign:'center', background:'#fffbe6', border:'1px solid #ffe58f', borderRadius:8, padding:'1.5rem 1rem'}}>
+          <div style={{fontWeight:'bold', fontSize:'1.1rem', marginBottom:4}}>Vous n'avez pas de colocations</div>
+          <div style={{fontSize:'0.95rem', color:'#888', marginBottom:8}}>
+            {user.role === 'colocataire' && (
+              <>Demandez au responsable de colocation de vous ajouter</>
+            )}
+            {user.role === 'responsable' && (
+              <>
+                Creez votre colocation et ajoutez vos coloc ici :<br/>
+                <button style={{marginTop:8, padding:'0.4rem 1.2rem', fontSize:'0.95rem', borderRadius:5, border:'1px solid #d4b106', background:'#fffbe6', cursor:'pointer'}} onClick={() => handleNavigate('creation-colocation')}>
+                  Créer une colocation
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="home">
       {showColocFeatures && (
