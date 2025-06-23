@@ -25,8 +25,10 @@ def recup_id(data):
     mail = data['mail']
     requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (mail,))
-    id_utilisateur = con.cursor.fetchone()
-    return id_utilisateur
+    result = con.cursor.fetchone()
+    if result is None:
+        return None
+    return result[0]
 
 def voir_tache_completer(data, token):
     con.connexion()
