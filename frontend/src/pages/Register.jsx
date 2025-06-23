@@ -77,86 +77,92 @@ const Register = ({ onLoginClick }) => {
         {success && <div className="success-message">{success}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="email">Email <b class="etoile">*</b></label>
+            <label htmlFor="email">Email <b className="etoile">*</b></label>
             <div className="input-container">
-              <img src="/img/icons/mail.png" alt="Email" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
+              <img src="/img/icons/mail.png" alt="Email" className="input-icon" />
               <input
                 type="email"
                 id="email"
+                className="form-input"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                style={{paddingLeft: '2.5rem'}}
+                autoComplete="username"
               />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="confirmEmail">Confirmez l'email <b class="etoile">*</b></label>
+            <label htmlFor="confirmEmail">Confirmez l'email <b className="etoile">*</b></label>
             <div className="input-container">
-              <img src="/img/icons/mail.png" alt="Email" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
+              <img src="/img/icons/mail.png" alt="Email" className="input-icon" />
               <input
                 type="email"
                 id="confirmEmail"
+                className="form-input"
                 value={confirmEmail}
                 onChange={(e) => setConfirmEmail(e.target.value)}
                 required
-                style={{paddingLeft: '2.5rem'}}
+                autoComplete="username"
               />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="nom">Nom <b class="etoile">*</b></label>
+            <label htmlFor="nom">Nom <b className="etoile">*</b></label>
             <div className="input-container">
-              <img src="/img/icons/person.png" alt="User" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
+              <img src="/img/icons/person.png" alt="User" className="input-icon" />
               <input
                 type="text"
                 id="nom"
+                className="form-input"
                 value={nom}
                 onChange={(e) => setNom(e.target.value)}
                 required
-                style={{paddingLeft: '2.5rem'}}
+                autoComplete="family-name"
               />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="prenom">Prenom <b class="etoile">*</b></label>
+            <label htmlFor="prenom">Prenom <b className="etoile">*</b></label>
             <div className="input-container">
-              <img src="/img/icons/person.png" alt="User" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
+              <img src="/img/icons/person.png" alt="User" className="input-icon" />
               <input
                 type="text"
                 id="prenom"
+                className="form-input"
                 value={prenom}
                 onChange={(e) => setPrenom(e.target.value)}
                 required
-                style={{paddingLeft: '2.5rem'}}
+                autoComplete="given-name"
               />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="password">Mot de passe <b class="etoile">*</b></label>
+            <label htmlFor="password">Mot de passe <b className="etoile">*</b></label>
             <div className="input-container">
-              <img src="/img/icons/lock.png" alt="Password" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
+              <img src="/img/icons/lock.png" alt="Password" className="input-icon" />
               <input
                 type="password"
                 id="password"
+                className="form-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                style={{paddingLeft: '2.5rem'}}
+                autoComplete="new-password"
               />
             </div>
           </div>
           <div className="form-group">
-            <label htmlFor="confirmPassword">Confirmez le mot de passe <b class="etoile">*</b></label>
+            <label htmlFor="confirmPassword">Confirmez le mot de passe <b className="etoile">*</b></label>
             <div className="input-container">
-              <img src="/img/icons/lock.png" alt="Password" className="input-icon" style={{left: '0.75rem', right: 'auto'}} />
+              <img src="/img/icons/lock.png" alt="Password" className="input-icon" />
               <input
                 type="password"
                 id="confirmPassword"
+                className="form-input"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                style={{paddingLeft: '2.5rem'}}
+                autoComplete="new-password"
               />
             </div>
           </div>

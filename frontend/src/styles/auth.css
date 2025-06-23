@@ -46,7 +46,10 @@
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .form-group label {
@@ -56,6 +59,7 @@
   font-size: 1rem;
   font-weight: 500;
   padding-left: 0.5rem;
+  text-align: center;
 }
 
 .etoile {
@@ -63,6 +67,9 @@
 }
 
 .input-container {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
   position: relative;
   background-color: #E8F0E3;
   border-radius: 15px;
@@ -76,7 +83,8 @@
 }
 
 .input-container:focus-within {
-  border-color: var(--color-darkgreen);
+  background-color: #E8F0E3 !important;
+  border-color: #d6d6b1;
   box-shadow: 0 4px 12px rgba(92, 115, 70, 0.15);
   transform: translateY(-1px);
 }
@@ -134,7 +142,20 @@
   top: 15%;
 }
 
+.form-input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  background: transparent !important;
+  outline: none;
+  box-shadow: none;
+}
+
 .submit-button {
+  display: block;
+  margin: 2rem auto 0 auto;
   width: 100%;
   padding: 1rem;
   background-color: var(--color-darkgreen);
@@ -145,7 +166,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1.5rem;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 12px rgba(92, 115, 70, 0.2);
 }
