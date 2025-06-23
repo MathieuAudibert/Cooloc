@@ -49,6 +49,7 @@ def creer_tache(data, token):
     id_utilisateur = recup_id(data)
     if not id_utilisateur:
         return {'status': 404, 'message': 'Utilisateur KO'}
+    id_utilisateur = id_utilisateur[0]
     
     token_verif = verifier_token(data, token)
     if token_verif['status'] != 200:
@@ -61,6 +62,7 @@ def creer_tache(data, token):
     id_coloc = recup_id_coloc(data)
     if not id_coloc:
         return {'status': 404, 'message': 'Coloc KO'}
+    id_coloc = id_coloc[0]
 
     date_deb = data.get('date_debut', None)
     date_fin = data.get('date_fin', None)

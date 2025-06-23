@@ -87,7 +87,7 @@ const Taches = () => {
         date_debut: newTache.date_debut || null,
         date_fin: newTache.date_fin || null,
         priorite: newTache.priorite,
-        atribue_a: newTache.atribue_a ? parseInt(newTache.atribue_a, 10) : null,
+        atribue_a: newTache.atribue_a !== '' && newTache.atribue_a !== null ? parseInt(newTache.atribue_a, 10) : null,
         mail: user.email,
         role: user.role,
         token: user.token,
@@ -156,7 +156,7 @@ const Taches = () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        id_tache: id,
+        id_tache: parseInt(id, 10),
         mail: user.email,
         role: user.role,
         token: user.token,
@@ -274,10 +274,11 @@ const Taches = () => {
               <select
                 value={newTache.atribue_a}
                 onChange={e => setNewTache({ ...newTache, atribue_a: e.target.value })}
+                required
               >
                 <option value="">Non attribuée</option>
-                {members.map((m, i) => (
-                  <option key={i} value={m.id}>{m.prenom} {m.nom}</option>
+                {members && members.length > 0 && members.map((m, i) => (
+                  <option key={m.id || i} value={m.id}>{m.prenom} {m.nom}</option>
                 ))}
               </select>
             </div>
@@ -296,6 +297,7 @@ const Taches = () => {
               ) : (
                 tachesOuvertes.map(tache => {
                   const assigned = members.find(m => m.id === tache.attribue_a);
+                  const createur = members.find(m => m.id === tache.createur);
                   return (
                     <div key={tache.id} className="tache-card" style={{background:'#f8f8f8', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative'}}>
                       {editingId === tache.id ? (
@@ -370,6 +372,9 @@ const Taches = () => {
                           <div style={{display:'flex', alignItems:'center', gap:8, fontSize:13, color:'#555'}}>
                             <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
+                            <span style={{marginLeft:12, fontStyle:'italic', color:'#888'}}>
+                              Créateur : {createur ? `${createur.prenom} ${createur.nom}` : tache.createur}
+                            </span>
                           </div>
                           <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
                             <select
@@ -388,6 +393,13 @@ const Taches = () => {
                               Sauvegarder
                             </button>
                           </div>
+                          <button
+                            onClick={() => handleDelete(tache.id)}
+                            style={{background:'none', border:'none', cursor:'pointer'}}
+                            title="Supprimer"
+                          >
+                            <img src={cancelIcon} alt="delete" style={{width:20, height:20}} />
+                          </button>
                         </>
                       )}
                     </div>
@@ -411,6 +423,7 @@ const Taches = () => {
                   ) : (
                     tachesCloturees.map(tache => {
                       const assigned = members.find(m => m.id === tache.attribue_a);
+                      const createur = members.find(m => m.id === tache.createur);
                       return (
                         <div key={tache.id} className="tache-card" style={{background:'#f0f0f0', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative', opacity:0.7}}>
                           <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:4}}>
@@ -425,6 +438,9 @@ const Taches = () => {
                           <div style={{display:'flex', alignItems:'center', gap:8, fontSize:13, color:'#555'}}>
                             <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
+                            <span style={{marginLeft:12, fontStyle:'italic', color:'#888'}}>
+                              Créateur : {createur ? `${createur.prenom} ${createur.nom}` : tache.createur}
+                            </span>
                           </div>
                           <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
                             <select
@@ -443,6 +459,13 @@ const Taches = () => {
                               Sauvegarder
                             </button>
                           </div>
+                          <button
+                            onClick={() => handleDelete(tache.id)}
+                            style={{background:'none', border:'none', cursor:'pointer'}}
+                            title="Supprimer"
+                          >
+                            <img src={cancelIcon} alt="delete" style={{width:20, height:20}} />
+                          </button>
                         </div>
                       );
                     })
