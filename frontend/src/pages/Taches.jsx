@@ -20,6 +20,7 @@ const Taches = () => {
   const [editingTache, setEditingTache] = useState(null);
   const [members, setMembers] = useState([]);
   const [showClosed, setShowClosed] = useState(false);
+  const [clotureEdit, setClotureEdit] = useState({});
 
   const user = JSON.parse(localStorage.getItem('user'));
   const id_coloc = user?.id_coloc;
@@ -169,6 +170,36 @@ const Taches = () => {
           fetchTachesOuvertes();
         } else {
           setError(data.message || 'Erreur lors de la suppression.');
+        }
+      })
+      .catch(() => setError('Erreur de connexion au serveur.'));
+  };
+
+  const handleClotureChange = (id, value) => {
+    setClotureEdit(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleClotureSave = (tache) => {
+    fetch('http://localhost:8000/coloc/taches/cloturer', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_tache: tache.id,
+        cloture: clotureEdit[tache.id] ?? tache.cloture,
+        mail: user.email,
+        role: user.role,
+        token: user.token,
+        id_coloc,
+        csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 200) {
+          fetchTachesOuvertes();
+          fetchTachesCloturees();
+        } else {
+          setError(data.message || 'Erreur lors de la modification de la clôture.');
         }
       })
       .catch(() => setError('Erreur de connexion au serveur.'));
@@ -341,18 +372,21 @@ const Taches = () => {
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
                           </div>
                           <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
-                            <span style={{fontSize:12, color:tache.cloture ? '#388e3c' : '#e53935', fontWeight:600}}>
-                              {tache.cloture ? 'Clôturée' : 'Ouverte'}
-                            </span>
-                            <button onClick={() => handleEdit(tache)} style={{background:'none', border:'none', cursor:'pointer'}} title="Modifier">
-                              <img src={editIcon} alt="edit" style={{width:20, height:20}} />
+                            <select
+                              value={clotureEdit[tache.id] ?? tache.cloture}
+                              onChange={e => handleClotureChange(tache.id, e.target.value)}
+                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
+                            >
+                              <option value="false">Ouverte</option>
+                              <option value="en cours">En cours</option>
+                              <option value="true">Clôturée</option>
+                            </select>
+                            <button
+                              style={{marginLeft:8, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
+                              onClick={() => handleClotureSave(tache)}
+                            >
+                              Sauvegarder
                             </button>
-                            <button onClick={() => handleDelete(tache.id)} style={{background:'none', border:'none', cursor:'pointer'}} title="Supprimer">
-                              <img src={cancelIcon} alt="delete" style={{width:20, height:20}} />
-                            </button>
-                            {!tache.cloture && (
-                              <button style={{marginLeft:12, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}} onClick={() => {/* TODO: cloture logic */}}>Clôturer</button>
-                            )}
                           </div>
                         </>
                       )}
@@ -393,9 +427,21 @@ const Taches = () => {
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
                           </div>
                           <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
-                            <span style={{fontSize:12, color:'#388e3c', fontWeight:600}}>
-                              Clôturée
-                            </span>
+                            <select
+                              value={clotureEdit[tache.id] ?? tache.cloture}
+                              onChange={e => handleClotureChange(tache.id, e.target.value)}
+                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
+                            >
+                              <option value="false">Ouverte</option>
+                              <option value="en cours">En cours</option>
+                              <option value="true">Clôturée</option>
+                            </select>
+                            <button
+                              style={{marginLeft:8, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
+                              onClick={() => handleClotureSave(tache)}
+                            >
+                              Sauvegarder
+                            </button>
                           </div>
                         </div>
                       );

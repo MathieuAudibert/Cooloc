@@ -51,13 +51,14 @@ def cloturer_tache(data, token):
     if csrf_verif['status'] != 200:
         return csrf_verif
 
+    cloture_value = data.get('cloture', 'false')
     requete = """UPDATE Taches SET cloture = %s WHERE id = %s"""
-    param = ('true', data['id_tache'])
+    param = (cloture_value, data['id_tache'])
     con.cursor.execute(requete, param)
     
-    log = {'date': datetime.now(), 'action': 'cloture tache', 'id_utilisateur': id_utilisateur, 'id_tache': data['id_tache']}
+    log = {'date': datetime.now(), 'action': f'modification cloture tache ({cloture_value})', 'id_utilisateur': id_utilisateur, 'id_tache': data['id_tache']}
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
     
-    return {'status': 200, 'message': 'Tache cloturée avec succès'}
+    return {'status': 200, 'message': f'Tache cloture modifiée: {cloture_value}'}
