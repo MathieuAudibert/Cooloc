@@ -11,6 +11,7 @@ import APropos from './pages/APropos';
 import CreationColocation from './pages/CreationColocation';
 import RoleSelectionModal from './components/RoleSelectionModal';
 import ColocationInfos from './pages/ColocationInfos';
+import Taches from './pages/Taches';
 import './styles/auth.css';
 
 function App() {
@@ -157,6 +158,8 @@ function App() {
         return <CreationColocation />;
       case 'colocation':
         return <ColocationInfos />;
+      case 'taches':
+        return <Taches />;
       default:
         return <Home />;
     }

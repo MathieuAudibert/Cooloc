@@ -1,8 +1,21 @@
 import '../styles/home.css';
 import { useEffect, useState } from 'react';
 
+const fetchMesTaches = async (user, id_coloc) => {
+  const res = await fetch(`http://localhost:8000/coloc/taches/voir-miennes?mail=${encodeURIComponent(user.email)}&role=${encodeURIComponent(user.role)}&token=${encodeURIComponent(user.token)}&id_coloc=${encodeURIComponent(id_coloc)}&csrf=cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y`);
+  return res.json();
+};
+
+const fetchTachesDisponibles = async (user, id_coloc) => {
+  const res = await fetch(`http://localhost:8000/coloc/taches/voir-disponibles?mail=${encodeURIComponent(user.email)}&role=${encodeURIComponent(user.role)}&token=${encodeURIComponent(user.token)}&id_coloc=${encodeURIComponent(id_coloc)}`);
+  return res.json();
+};
+
 const Home = () => {
   const [user, setUser] = useState(null);
+  const [mesTaches, setMesTaches] = useState([]);
+  const [tachesDisponibles, setTachesDisponibles] = useState([]);
+  const [tachesLoading, setTachesLoading] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -10,6 +23,20 @@ const Home = () => {
       setUser(JSON.parse(storedUser));
     }
   }, []);
+
+  useEffect(() => {
+    if (user && user.id_coloc) {
+      setTachesLoading(true);
+      Promise.all([
+        fetchMesTaches(user, user.id_coloc),
+        fetchTachesDisponibles(user, user.id_coloc)
+      ]).then(([mes, dispo]) => {
+        setMesTaches(Array.isArray(mes.taches) ? mes.taches : []);
+        setTachesDisponibles(Array.isArray(dispo.taches) ? dispo.taches.filter(t => !t.attribue_a) : []);
+        setTachesLoading(false);
+      });
+    }
+  }, [user]);
 
   const handleNavigate = (page) => {
     window.history.pushState({}, '', '/' + page);
@@ -43,8 +70,32 @@ const Home = () => {
     );
   }
 
+  const showTasks = user && user.id_coloc;
+
   return (
     <div className="home">
+      {showTasks && (
+        <div style={{maxWidth: 600, margin: '2rem auto 2.5rem auto', background: '#fff', borderRadius: 10, boxShadow: '0 2px 8px #0001', padding: '1.5rem'}}>
+          <h2 style={{marginTop:0, marginBottom: '1rem', fontSize:'1.3rem'}}>Mes tâches</h2>
+          {tachesLoading ? <div>Chargement...</div> : (
+            <ul style={{paddingLeft: 0, listStyle: 'none', marginBottom: '1.5rem'}}>
+              {mesTaches.length === 0 ? <li>Aucune tâche assignée.</li> : mesTaches.map(t => (
+                <li key={t.id} style={{marginBottom: 6}}>{t.nom}</li>
+              ))}
+            </ul>
+          )}
+          <hr style={{margin: '1.2rem 0'}} />
+          <h2 style={{marginTop:0, marginBottom: '1rem', fontSize:'1.15rem'}}>Tâches disponibles</h2>
+          {tachesLoading ? <div>Chargement...</div> : (
+            <ul style={{paddingLeft: 0, listStyle: 'none'}}>
+              {tachesDisponibles.length === 0 ? <li>Aucune tâche disponible.</li> : tachesDisponibles.map(t => (
+                <li key={t.id} style={{marginBottom: 6}}>{t.nom}</li>
+              ))}
+            </ul>
+          )}
+        </div>
+      )}
+
       {showColocFeatures && (
         <section className="coloc-features-section">
           <div className="content-container coloc-features-grid">
