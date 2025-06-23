@@ -10,7 +10,7 @@ const Footer = () => {
           <a href="https://www.cnil.fr/fr/cookies-et-autres-traceurs/que-dit-la-loi" className="footer-link" target="_blank" rel="noopener noreferrer">Gestion des cookies</a>
           <a href="/a-propos" className="footer-link">Mentions légales &amp; CGU</a>
           <a href="http://localhost:8000/docs" className="footer-link" target="_blank" rel="noopener noreferrer">Documentation technique</a>
-          <a href="#aide" className="footer-link">Aide</a>
+          <a href="/a-propos" className="footer-link">Aide</a>
         </nav>
         <hr className="footer-divider" />
       </div>
