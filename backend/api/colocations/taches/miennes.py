@@ -33,14 +33,16 @@ def recup_id(data):
     mail = data['mail']
     requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (mail,))
-    id_utilisateur = con.cursor.fetchone()
-    return id_utilisateur
+    result = con.cursor.fetchone()
+    if result is None:
+        return None
+    return result[0]
 
 def voir_tache_miennes(data, token):
     con.connexion()
 
     id_utilisateur = recup_id(data)
-    if not id_utilisateur:
+    if id_utilisateur is None:
         return {'status': 404, 'message': 'Utilisateur KO'}
     
     token_verif = verifier_token(data, token)
