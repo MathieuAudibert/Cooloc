@@ -35,7 +35,7 @@ def login(data):
     
     con.connexion()
     
-    requete = """SELECT mail, mdp, role, prenom, nom FROM Utilisateurs WHERE mail = %s LIMIT 1"""
+    requete = """SELECT mail, mdp, role, prenom, nom, id_coloc FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (data['mail'],))
     utilisateur = con.cursor.fetchone()
     
@@ -55,4 +55,4 @@ def login(data):
     
     token = create_token({'mail': utilisateur[0], 'role': utilisateur[2]})
  
-    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2], "prenom": utilisateur[3], "nom": utilisateur[4] }, 'token': token} 
+    return {'status': 200, 'data': {"mail": utilisateur[0], "role": utilisateur[2], "prenom": utilisateur[3], "nom": utilisateur[4], "id_coloc": utilisateur[5]}, 'token': token} 

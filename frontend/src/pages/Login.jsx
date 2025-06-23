@@ -42,7 +42,8 @@ const Login = ({ onRegisterClick }) => {
           role: data.data.role,
           prenom: data.data.prenom,
           nom: data.data.nom,
-          token: data.token
+          token: data.token,
+          id_coloc: data.data.id_coloc
         }));
         
         window.location.href = '/';
