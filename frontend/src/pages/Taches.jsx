@@ -262,37 +262,43 @@ const Taches = () => {
     <div className="creation-colocation">
       <h1>Gestion des tâches</h1>
       <div className="creation-form">
-        <h2 style={{marginBottom: 8}}>Créer une tâche</h2>
-        <form onSubmit={handleCreate} style={{ display: 'flex', flexDirection: 'column', gap: 12, marginBottom: 24 }}>
-          <input
-            type="text"
-            value={newTache.nom}
-            onChange={e => setNewTache({ ...newTache, nom: e.target.value })}
-            placeholder="Nom de la tâche"
-            required
-          />
-          <div style={{ display: 'flex', gap: 8 }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 13 }}>Date de début</label>
+        <h2 className="form-title">Créer une tâche</h2>
+        <form onSubmit={handleCreate} className="tache-form">
+          <div className="form-group">
+            <input
+              type="text"
+              className="form-input"
+              value={newTache.nom}
+              onChange={e => setNewTache({ ...newTache, nom: e.target.value })}
+              placeholder="Nom de la tâche"
+              required
+            />
+          </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">Date de début</label>
               <input
                 type="datetime-local"
+                className="form-input"
                 value={newTache.date_debut}
                 onChange={e => setNewTache({ ...newTache, date_debut: e.target.value })}
               />
             </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 13 }}>Date de fin</label>
+            <div className="form-group">
+              <label className="form-label">Date de fin</label>
               <input
                 type="datetime-local"
+                className="form-input"
                 value={newTache.date_fin}
                 onChange={e => setNewTache({ ...newTache, date_fin: e.target.value })}
               />
             </div>
           </div>
-          <div style={{ display: 'flex', gap: 8 }}>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 13 }}>Priorité</label>
+          <div className="form-row">
+            <div className="form-group">
+              <label className="form-label">Priorité</label>
               <select
+                className="form-input"
                 value={newTache.priorite}
                 onChange={e => setNewTache({ ...newTache, priorite: e.target.value })}
                 required
@@ -302,9 +308,10 @@ const Taches = () => {
                 <option value="haute">Haute</option>
               </select>
             </div>
-            <div style={{ flex: 1 }}>
-              <label style={{ fontSize: 13 }}>Attribuer à</label>
+            <div className="form-group">
+              <label className="form-label">Attribuer à</label>
               <select
+                className="form-input"
                 value={newTache.atribue_a}
                 onChange={e => setNewTache({ ...newTache, atribue_a: e.target.value })}
                 required
@@ -316,7 +323,7 @@ const Taches = () => {
               </select>
             </div>
           </div>
-          <button type="submit">Ajouter</button>
+          <button type="submit" className="form-submit-btn">Ajouter</button>
         </form>
         <h2 style={{margin:'2rem 0 1rem 0', textAlign:'left'}}>Liste des tâches</h2>
         {error && <div className="error-message">{error}</div>}
