@@ -29,12 +29,14 @@ def verifier_csrf(data):
 
     return {'status': 200, 'message': 'CSRF OK'}
 
-def recup_id(data) :
+def recup_id(data):
     mail = data['mail']
     requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (mail,))
-    id_utilisateur = con.cursor.fetchone()
-    return id_utilisateur
+    result = con.cursor.fetchone()
+    if result is None:
+        return None
+    return result[0]
 
 def recup_id_coloc(data):
     mail = data['mail']
@@ -62,13 +64,23 @@ def attribuer_tache(data, token):
     if not id_coloc:
         return {'status': 404, 'message': 'Coloc KO'}
 
+    id_attribue_a = data.get('attribue_a', None)
+    if not id_attribue_a:
+        return {'status': 400, 'message': 'utilisateur attribuer ko'}
+
+    requete_check = """SELECT id FROM Utilisateurs WHERE id = %s LIMIT 1"""
+    con.cursor.execute(requete_check, (id_attribue_a,))
+    result_check = con.cursor.fetchone()
+    if result_check is None:
+        return {'status': 400, 'message': 'utilisateur attribué inexistant'}
+
     requete = """UPDATE Taches SET atribue_a = %s WHERE id = %s"""
-    param = (id_utilisateur, data['id_tache'])
+    param = (id_attribue_a, data['id_tache'])
     con.cursor.execute(requete, param)
     
-    log = {'date': datetime.now(), 'action': 'attribuer tache', 'id_utilisateur': id_utilisateur, 'id_coloc': id_coloc, 'id_tache': data['id_tache']}
+    log = {'date': datetime.now(), 'action': 'attribuer tache', 'id_utilisateur': id_utilisateur, 'id_coloc': id_coloc, 'id_tache': data['id_tache'], 'attribue_a': id_attribue_a}
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
     
-    return {'status': 200, 'message': 'Tache attrivuer avec succès'}
+    return {'status': 200, 'message': 'Tache attribuée avec succès'}

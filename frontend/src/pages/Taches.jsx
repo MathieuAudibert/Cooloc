@@ -21,6 +21,7 @@ const Taches = () => {
   const [members, setMembers] = useState([]);
   const [showClosed, setShowClosed] = useState(false);
   const [clotureEdit, setClotureEdit] = useState({});
+  const [attribueEdit, setAttribueEdit] = useState({});
 
   const user = JSON.parse(localStorage.getItem('user'));
   const id_coloc = user?.id_coloc;
@@ -205,6 +206,38 @@ const Taches = () => {
       .catch(() => setError('Erreur de connexion au serveur.'));
   };
 
+  const handleAttribueChange = (id, value) => {
+    setAttribueEdit(prev => ({ ...prev, [id]: value }));
+  };
+
+  const handleAttribueSave = (tache) => {
+    fetch('http://localhost:8000/coloc/taches/attribuer', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        id_tache: tache.id,
+        attribue_a: attribueEdit[tache.id] !== undefined && attribueEdit[tache.id] !== ''
+          ? parseInt(attribueEdit[tache.id], 10)
+          : (tache.attribue_a !== undefined && tache.attribue_a !== '' ? parseInt(tache.attribue_a, 10) : null),
+        mail: user.email,
+        role: user.role,
+        token: user.token,
+        id_coloc,
+        csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 200) {
+          fetchTachesOuvertes();
+          fetchTachesCloturees();
+        } else {
+          setError(data.message || 'Erreur lors de la modification de l\'attribution.');
+        }
+      })
+      .catch(() => setError('Erreur de connexion au serveur.'));
+  };
+
   const priorityColors = {
     basse: '#8bc34a',
     moyenne: '#ffc107',
@@ -297,7 +330,7 @@ const Taches = () => {
               ) : (
                 tachesOuvertes.map(tache => {
                   const assigned = members.find(m => m.id === tache.attribue_a);
-                  const createur = members.find(m => m.id === tache.createur);
+                  const createur = members.find(m => String(m.id) === String(tache.createur));
                   return (
                     <div key={tache.id} className="tache-card" style={{background:'#f8f8f8', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative'}}>
                       {editingId === tache.id ? (
@@ -373,7 +406,7 @@ const Taches = () => {
                             <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
                             <span style={{marginLeft:12, fontStyle:'italic', color:'#888'}}>
-                              Créateur : {createur ? `${createur.prenom} ${createur.nom}` : tache.createur}
+                              Créateur : {createur ? `${createur.prenom} ${createur.nom}` : `ID ${tache.createur}`}
                             </span>
                           </div>
                           <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
@@ -389,6 +422,24 @@ const Taches = () => {
                             <button
                               style={{marginLeft:8, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
                               onClick={() => handleClotureSave(tache)}
+                            >
+                              Sauvegarder
+                            </button>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
+                            <select
+                              value={attribueEdit[tache.id] ?? tache.attribue_a ?? ''}
+                              onChange={e => handleAttribueChange(tache.id, e.target.value)}
+                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
+                            >
+                              <option value="">Non attribuée</option>
+                              {members && members.length > 0 && members.map((m, i) => (
+                                <option key={m.id || i} value={m.id}>{m.prenom} {m.nom}</option>
+                              ))}
+                            </select>
+                            <button
+                              style={{marginLeft:8, background:'#1976d2', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
+                              onClick={() => handleAttribueSave(tache)}
                             >
                               Sauvegarder
                             </button>
@@ -423,7 +474,7 @@ const Taches = () => {
                   ) : (
                     tachesCloturees.map(tache => {
                       const assigned = members.find(m => m.id === tache.attribue_a);
-                      const createur = members.find(m => m.id === tache.createur);
+                      const createur = members.find(m => String(m.id) === String(tache.createur));
                       return (
                         <div key={tache.id} className="tache-card" style={{background:'#f0f0f0', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative', opacity:0.7}}>
                           <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:4}}>
@@ -439,7 +490,7 @@ const Taches = () => {
                             <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
                             <span style={{marginLeft:12, fontStyle:'italic', color:'#888'}}>
-                              Créateur : {createur ? `${createur.prenom} ${createur.nom}` : tache.createur}
+                              Créateur : {createur ? `${createur.prenom} ${createur.nom}` : `ID ${tache.createur}`}
                             </span>
                           </div>
                           <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
@@ -455,6 +506,24 @@ const Taches = () => {
                             <button
                               style={{marginLeft:8, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
                               onClick={() => handleClotureSave(tache)}
+                            >
+                              Sauvegarder
+                            </button>
+                          </div>
+                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
+                            <select
+                              value={attribueEdit[tache.id] ?? tache.attribue_a ?? ''}
+                              onChange={e => handleAttribueChange(tache.id, e.target.value)}
+                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
+                            >
+                              <option value="">Non attribuée</option>
+                              {members && members.length > 0 && members.map((m, i) => (
+                                <option key={m.id || i} value={m.id}>{m.prenom} {m.nom}</option>
+                              ))}
+                            </select>
+                            <button
+                              style={{marginLeft:8, background:'#1976d2', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
+                              onClick={() => handleAttribueSave(tache)}
                             >
                               Sauvegarder
                             </button>

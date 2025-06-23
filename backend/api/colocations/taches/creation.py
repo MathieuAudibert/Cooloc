@@ -67,6 +67,10 @@ def creer_tache(data, token):
     date_deb = data.get('date_debut', None)
     date_fin = data.get('date_fin', None)
     atribue_a = data.get('atribue_a', None)
+    if atribue_a in ['', None, 'null']:
+        atribue_a = None
+    else:
+        atribue_a = int(atribue_a)
 
     requete = """INSERT INTO Taches (nom, date_debut, date_fin, date_crea, priorite, cloture, createur, atribue_a) VALUES (%s, %s, %s, %s, %s, %s, %s, %s) RETURNING id"""
     con.cursor.execute(requete, (data['nom'], date_deb, date_fin, datetime.now(), data['priorite'], False, id_utilisateur, atribue_a))

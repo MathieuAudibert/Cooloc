@@ -43,19 +43,20 @@ def voir_tache(data, token):
 
     requete = """SELECT t.* FROM Taches AS t JOIN Utilisateurs AS u ON t.createur = u.id JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s AND t.cloture <> 'true' ORDER BY t.date_crea DESC;"""
     con.cursor.execute(requete, (data['id_coloc'],))
-    taches = [
-        {
+    rows = con.cursor.fetchall()
+    taches = []
+    for row in rows:
+        taches.append({
             'id': row[0],
             'nom': row[1],
-            'date_debut': row[2].strftime('%Y-%m-%d %H:%M:%S'),
-            'date_fin': row[3].strftime('%Y-%m-%d %H:%M:%S'),
-            'date_crea': row[4].strftime('%Y-%m-%d %H:%M:%S'),
+            'date_debut': row[2].strftime('%Y-%m-%d %H:%M:%S') if row[2] else None,
+            'date_fin': row[3].strftime('%Y-%m-%d %H:%M:%S') if row[3] else None,
+            'date_crea': row[4].strftime('%Y-%m-%d %H:%M:%S') if row[4] else None,
             'priorite': row[5],
             'cloture': row[6],
             'createur': row[7],
             'attribue_a': row[8],
-        } for row in con.cursor.fetchall()
-    ]
+        })
     
     con.conn.commit()
     con.close()

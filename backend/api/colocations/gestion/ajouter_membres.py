@@ -53,11 +53,20 @@ def ajouter_colocataires(data, token):
     csrf_verif = verifier_csrf(data)
     if csrf_verif['status'] != 200:
         return csrf_verif
-    
-    requete = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
-    con.cursor.execute(requete, (data['id_coloc'], data['id_utilisateur_ajoute']))
 
-    log = {'date': datetime.now(), 'action': 'ajout utilisateur coloc', 'id_utilisateur': id_utilisateur, 'id_utilisateur_ajoute': data['id_utilisateur_ajoute'], 'id_coloc': data['id_coloc']}
+    id_utilisateur_ajoute = data['id_utilisateur_ajoute']
+    if isinstance(id_utilisateur_ajoute, str) and '@' in id_utilisateur_ajoute:
+        requete_id = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
+        con.cursor.execute(requete_id, (id_utilisateur_ajoute,))
+        result = con.cursor.fetchone()
+        if not result:
+            return {'status': 404, 'message': 'Utilisateur à ajouter non trouvé'}
+        id_utilisateur_ajoute = result[0]
+
+    requete = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
+    con.cursor.execute(requete, (data['id_coloc'], id_utilisateur_ajoute))
+
+    log = {'date': datetime.now(), 'action': 'ajout utilisateur coloc', 'id_utilisateur': id_utilisateur, 'id_utilisateur_ajoute': id_utilisateur_ajoute, 'id_coloc': data['id_coloc']}
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()

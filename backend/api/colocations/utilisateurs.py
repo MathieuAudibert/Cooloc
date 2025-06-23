@@ -49,10 +49,10 @@ def recup_infos_responsable(data):
 
 def recup_infos(data): 
     coloc = data['id_colocs']
-    requete = """SELECT u.nom, u.prenom FROM Utilisateurs AS u JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s"""
+    requete = """SELECT u.id, u.nom, u.prenom, u.mail FROM Utilisateurs AS u JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s"""
     con.cursor.execute(requete, (coloc,))
     infos = [
-        {'nom': row[0], 'prenom': row[1]}
+        {'id': row[0], 'nom': row[1], 'prenom': row[2], 'mail': row[3]}
         for row in con.cursor.fetchall()
     ]
     return infos

@@ -8,6 +8,10 @@ const ColocationInfos = () => {
   const [loading, setLoading] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
   const [newName, setNewName] = useState('');
+  const [addEmail, setAddEmail] = useState("");
+  const [addError, setAddError] = useState("");
+  const [addSuccess, setAddSuccess] = useState("");
+  const [actionLoading, setActionLoading] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -117,6 +121,80 @@ const ColocationInfos = () => {
     }
   };
 
+  const handleAddMember = (e) => {
+    e.preventDefault();
+    setAddError("");
+    setAddSuccess("");
+    setActionLoading(true);
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    fetch('http://localhost:8000/coloc/utilisateurs/ajouter', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        mail: storedUser.email,
+        role: storedUser.role,
+        token: storedUser.token,
+        id_coloc: infos.id_coloc || storedUser.id_coloc,
+        id_utilisateur_ajoute: addEmail,
+        csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+      })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 200) {
+          setAddSuccess('Membre ajouté !');
+          setAddEmail("");
+          setLoading(true);
+          window.location.reload();
+        } else {
+          setAddError(data.message || 'Erreur lors de l\'ajout.');
+        }
+        setActionLoading(false);
+      })
+      .catch(() => {
+        setAddError('Erreur de connexion au serveur.');
+        setActionLoading(false);
+      });
+  };
+
+  const handleRemoveMember = (id_utilisateur) => {
+    if (!window.confirm('Voulez-vous vraiment retirer ce membre de la colocation ?')) return;
+    setActionLoading(true);
+    setAddError("");
+    setAddSuccess("");
+    const storedUser = JSON.parse(localStorage.getItem('user'));
+    console.log('Suppression membre', { id_utilisateur });
+    const body = {
+      mail: storedUser.email,
+      role: storedUser.role,
+      token: storedUser.token,
+      id_coloc: infos.id_coloc || storedUser.id_coloc,
+      id_utilisateur_supprime: id_utilisateur,
+      csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+    };
+    console.log('Body envoyé', body);
+    fetch('http://localhost:8000/coloc/utilisateurs/supprimer', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === 200) {
+          setAddSuccess('Membre retiré !');
+          setLoading(true);
+          window.location.reload();
+        } else {
+          setAddError(data.message || 'Erreur lors du retrait.');
+        }
+        setActionLoading(false);
+      })
+      .catch(() => {
+        setAddError('Erreur de connexion au serveur.');
+        setActionLoading(false);
+      });
+  };
+
   if (loading) return <div className="creation-colocation"><div className="creation-form">Chargement...</div></div>;
   if (error) return <div className="creation-colocation"><div className="creation-form error-message">{error}</div></div>;
 
@@ -145,6 +223,20 @@ const ColocationInfos = () => {
         )}
         <div style={{marginTop: '2rem'}}>
           <h2>Membres de la colocation</h2>
+          <form onSubmit={handleAddMember} style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', alignItems: 'center' }}>
+            <input
+              type="email"
+              value={addEmail}
+              onChange={e => setAddEmail(e.target.value)}
+              placeholder="Email du membre à ajouter"
+              required
+              disabled={actionLoading}
+              style={{ minWidth: 220 }}
+            />
+            <button type="submit" disabled={actionLoading || !addEmail}>Ajouter</button>
+          </form>
+          {addError && <div className="error-message">{addError}</div>}
+          {addSuccess && <div className="success-message">{addSuccess}</div>}
           {users.length === 0 ? (
             <p>Aucun membre trouvé.</p>
           ) : (
@@ -152,12 +244,19 @@ const ColocationInfos = () => {
               {users.map((u, i) => {
                 const nom = u.nom || u[0] || '';
                 const prenom = u.prenom || u[1] || '';
+                const id_utilisateur = u.id;
+                const storedUser = JSON.parse(localStorage.getItem('user'));
+                const isSelf = storedUser && (storedUser.email === u.mail);
                 return (
                   <div className="member-card" key={i}>
                     <div className="member-avatar">{prenom ? prenom[0] : ''}{nom ? nom[0] : ''}</div>
                     <div className="member-info">
                       <div className="member-name">{prenom ? `${prenom} ${nom}` : nom}</div>
+                      {u.mail && <div className="member-mail">{u.mail}</div>}
                     </div>
+                    {!isSelf && (
+                      <button className="delete-btn" style={{marginLeft: '1rem'}} onClick={() => handleRemoveMember(id_utilisateur)} disabled={actionLoading}>Retirer de la colocation</button>
+                    )}
                   </div>
                 );
               })}
