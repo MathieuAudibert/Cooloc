@@ -67,7 +67,8 @@ function App() {
       if (response.ok) {
         const updatedUser = {
           ...user,
-          role: role
+          role: role,
+          token: data.token || user.token
         };
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);

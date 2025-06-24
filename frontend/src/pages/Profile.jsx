@@ -99,6 +99,31 @@ const Profile = () => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    if (!window.confirm('Voulez-vous vraiment supprimer votre compte ? Cette action est irréversible.')) return;
+    try {
+      const response = await fetch('http://localhost:8000/profil/supprimer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          mail: user.email || user.mail,
+          token: user.token,
+          role: user.role,
+          csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+        })
+      });
+      const data = await response.json();
+      if (response.ok && data.status === 200) {
+        localStorage.removeItem('user');
+        window.location.href = '/';
+      } else {
+        setError(data.message || 'Erreur lors de la suppression du compte.');
+      }
+    } catch (err) {
+      setError('Erreur de connexion au serveur.');
+    }
+  };
+
   if (!user) {
     return <div className="profile-container">Chargement...</div>;
   }
@@ -249,6 +274,11 @@ const Profile = () => {
             </button>
           </div>
         )}
+        <div style={{ marginTop: '2rem', textAlign: 'center' }}>
+          <button onClick={handleDeleteAccount} className="delete-btn" style={{ background: '#c62828', color: 'white', padding: '0.8rem 2rem', borderRadius: '8px', border: 'none', fontWeight: 600, fontSize: '1rem', cursor: 'pointer' }}>
+            Supprimer le compte
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -98,5 +98,14 @@ def maj_profil(data, token):
     logs.db.collection('Logs').add(log)
 
     con.conn.commit()
-    return {'status': 200, 'message': 'Utilisateur mis à jour avec succès'}
+
+    requete_user = "SELECT mail, role FROM Utilisateurs WHERE id = %s LIMIT 1"
+    con.cursor.execute(requete_user, (id_utilisateur[0],))
+    user = con.cursor.fetchone()
+    if user:
+        mail, role = user[0], user[1]
+        new_token = jwt.encode({'mail': mail, 'role': role}, jwt_secret, algorithm=jwt_algo)
+        return {'status': 200, 'message': 'Utilisateur mis à jour avec succès', 'token': new_token}
+    else:
+        return {'status': 200, 'message': 'Utilisateur mis à jour avec succès'}
 

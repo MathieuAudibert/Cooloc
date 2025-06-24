@@ -38,6 +38,7 @@ from api.adm.utilisateurs.supprimer import supprimer_utilisateurs
 from api.roles.route import changer_role
 from api.profil.route import maj_profil
 from api.profil.voir import voir_profil
+from api.profil.supprimer import supprimer_profil
 from api.tel.route import changer_tel
 
 HOST = "localhost"
@@ -251,6 +252,13 @@ class Serveur(BaseHTTPRequestHandler):
 
         elif self.path == '/adm/utilisateurs/supprimer':
             res = supprimer_utilisateurs(data, data['token'])
+            self.send_response(res['status'])
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(json.dumps(res).encode('utf-8'))
+        
+        elif self.path == '/profil/supprimer':
+            res = supprimer_profil(data, data['token'])
             self.send_response(res['status'])
             self.send_header('Content-type', 'application/json')
             self.end_headers()

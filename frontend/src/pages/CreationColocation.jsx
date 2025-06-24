@@ -52,7 +52,7 @@ const CreationColocation = () => {
         },
         body: JSON.stringify({
           nom,
-          mail: user.email,
+          mail: user.mail || user.email,
           role: user.role,
           token: user.token,
           csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y',
