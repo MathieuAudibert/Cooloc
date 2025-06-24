@@ -851,6 +851,254 @@ swagger_spec = {
                     }
                 }
             }
+        },
+        "/coloc/taches/voir": {
+            "get": {
+                "tags": ["Taches"],
+                "summary": "Voir toutes les tâches de la colocation (non clôturées)",
+                "parameters": [
+                    {"name": "id_coloc", "in": "query", "required": true, "schema": {"type": "integer"}},
+                    {"name": "mail", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "token", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "csrf", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "role", "in": "query", "required": true, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des tâches récupérée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {"type": "integer"},
+                                        "message": {"type": "string"},
+                                        "taches": {"type": "array", "items": {"$ref": "#/components/schemas/Tache"}}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"},
+                    "404": {"description": "Colocation ou utilisateur non trouvé"}
+                }
+            }
+        },
+        "/coloc/taches/miennes": {
+            "get": {
+                "tags": ["Taches"],
+                "summary": "Voir les tâches attribuées à l'utilisateur connecté",
+                "parameters": [
+                    {"name": "id_coloc", "in": "query", "required": true, "schema": {"type": "integer"}},
+                    {"name": "mail", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "token", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "csrf", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "role", "in": "query", "required": true, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des tâches récupérée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {"type": "integer"},
+                                        "message": {"type": "string"},
+                                        "taches": {"type": "array", "items": {"$ref": "#/components/schemas/Tache"}}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"},
+                    "404": {"description": "Colocation ou utilisateur non trouvé"}
+                }
+            }
+        },
+        "/coloc/taches/voir_complete": {
+            "get": {
+                "tags": ["Taches"],
+                "summary": "Voir les tâches clôturées (4 dernières)",
+                "parameters": [
+                    {"name": "id_coloc", "in": "query", "required": true, "schema": {"type": "integer"}},
+                    {"name": "mail", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "token", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "csrf", "in": "query", "required": true, "schema": {"type": "string"}},
+                    {"name": "role", "in": "query", "required": true, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Liste des tâches clôturées récupérée",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "status": {"type": "integer"},
+                                        "message": {"type": "string"},
+                                        "taches": {"type": "array", "items": {"$ref": "#/components/schemas/Tache"}}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"},
+                    "404": {"description": "Colocation ou utilisateur non trouvé"}
+                }
+            }
+        },
+        "/coloc/taches/creation": {
+            "post": {
+                "tags": ["Taches"],
+                "summary": "Créer une tâche",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "nom": {"type": "string"},
+                                    "date_debut": {"type": "string", "format": "date-time"},
+                                    "date_fin": {"type": "string", "format": "date-time"},
+                                    "priorite": {"type": "string"},
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["colocataire", "responsable", "admin"]},
+                                    "atribue_a": {"type": ["integer", "null"]}
+                                },
+                                "required": ["nom", "priorite", "mail", "token", "csrf", "role"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {"description": "Tâche créée avec succès"},
+                    "400": {"description": "Champs manquants ou erreur"},
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"}
+                }
+            }
+        },
+        "/coloc/taches/attribuer": {
+            "put": {
+                "tags": ["Taches"],
+                "summary": "Attribuer une tâche à un utilisateur",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_tache": {"type": "integer"},
+                                    "attribue_a": {"type": "integer"},
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["responsable", "admin"]}
+                                },
+                                "required": ["id_tache", "attribue_a", "mail", "token", "csrf", "role"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {"description": "Tâche attribuée avec succès"},
+                    "400": {"description": "Champs manquants ou utilisateur inexistant"},
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"}
+                }
+            }
+        },
+        "/coloc/taches/cloturer": {
+            "put": {
+                "tags": ["Taches"],
+                "summary": "Clôturer une tâche",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_tache": {"type": "integer"},
+                                    "cloture": {"type": "string"},
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["responsable", "admin"]}
+                                },
+                                "required": ["id_tache", "cloture", "mail", "token", "csrf", "role"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {"description": "Tâche clôturée/modifiée avec succès"},
+                    "400": {"description": "Champs manquants ou erreur"},
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"}
+                }
+            }
+        },
+        "/coloc/taches/modifier": {
+            "put": {
+                "tags": ["Taches"],
+                "summary": "Modifier une tâche (nom)",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_tache": {"type": "integer"},
+                                    "nom": {"type": "string"},
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["responsable", "admin"]}
+                                },
+                                "required": ["id_tache", "nom", "mail", "token", "csrf", "role"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {"description": "Tâche modifiée avec succès"},
+                    "400": {"description": "Champs manquants ou erreur"},
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"}
+                }
+            }
+        },
+        "/coloc/taches/supprimer": {
+            "post": {
+                "tags": ["Taches"],
+                "summary": "Supprimer une tâche",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id_tache": {"type": "integer"},
+                                    "mail": {"type": "string"},
+                                    "token": {"type": "string"},
+                                    "csrf": {"type": "string"},
+                                    "role": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}
+                                },
+                                "required": ["id_tache", "mail", "token", "csrf", "role"]
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {"description": "Tâche supprimée avec succès"},
+                    "400": {"description": "Champs manquants ou erreur"},
+                    "403": {"description": "Token ou CSRF invalide ou rôle insuffisant"}
+                }
+            }
         }
     },
     "components": {
@@ -893,6 +1141,20 @@ swagger_spec = {
                     "id_utilisateur": {"type": "integer"},
                     "champs": {"type": "object", "additionalProperties": True},
                     "id_utilisateur_modifie": {"type": "integer", "nullable": True}
+                }
+            },
+            "Tache": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "integer"},
+                    "nom": {"type": "string"},
+                    "date_debut": {"type": ["string", "null"], "format": "date-time"},
+                    "date_fin": {"type": ["string", "null"], "format": "date-time"},
+                    "date_crea": {"type": ["string", "null"], "format": "date-time"},
+                    "priorite": {"type": "string"},
+                    "cloture": {"type": "boolean"},
+                    "createur": {"type": "integer"},
+                    "attribue_a": {"type": ["integer", "null"]}
                 }
             }
         }
