@@ -8,8 +8,8 @@ const RoleSelectionModal = ({ onRoleSelect }) => {
 
   const handlePhoneSubmit = (e) => {
     e.preventDefault();
-    if (!phoneNumber || phoneNumber.length < 10) {
-      setError('Veuillez entrer un numéro de téléphone valide');
+    if (!phoneNumber || phoneNumber.length < 10 || phoneNumber.length > 10) {
+      setError('Veuillez entrer un numéro de téléphone valide (10 chiffres)');
       return;
     }
     setStep(2);
@@ -25,16 +25,17 @@ const RoleSelectionModal = ({ onRoleSelect }) => {
         {step === 1 ? (
           <div className="phone-step">
             <h2>Complétez votre profil</h2>
-            <p>Veuillez entrer votre numéro de téléphone pour continuer</p>
+            <p>Veuillez entrer votre numéro de téléphone pour continuer (format: 0612345678)</p>
             <form onSubmit={handlePhoneSubmit}>
               <div className="input-container">
                 <img src="/img/icons/phone.png" alt="Phone" className="input-icon" />
                 <input
                   type="tel"
                   value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  onChange={(e) => setPhoneNumber(e.target.value.slice(0, 10))}
                   placeholder="Numéro de téléphone"
                   required
+                  maxLength={10}
                 />
               </div>
               {error && <div className="error-message">{error}</div>}

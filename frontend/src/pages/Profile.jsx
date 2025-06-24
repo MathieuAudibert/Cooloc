@@ -10,7 +10,6 @@ const Profile = () => {
     email: '',
     prenom: '',
     nom: '',
-    phone: '',
     password: '',
     confirmPassword: ''
   });
@@ -24,7 +23,6 @@ const Profile = () => {
         email: userData.email,
         prenom: userData.prenom,
         nom: userData.nom,
-        phone: userData.phone || '',
         password: '',
         confirmPassword: ''
       });
@@ -74,7 +72,6 @@ const Profile = () => {
           mail_modifie: formData.email,
           prenom: formData.prenom,
           nom: formData.nom,
-          num_telephone: formData.phone,
           mdp: formData.password || undefined,
           token: user.token,
           csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
@@ -89,8 +86,7 @@ const Profile = () => {
           ...user,
           email: formData.email,
           prenom: formData.prenom,
-          nom: formData.nom,
-          phone: formData.phone
+          nom: formData.nom
         };
         localStorage.setItem('user', JSON.stringify(updatedUser));
         setUser(updatedUser);
@@ -174,21 +170,6 @@ const Profile = () => {
                     onChange={handleInputChange}
                     disabled={!isEditing}
                     required
-                  />
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="phone">Téléphone</label>
-                <div className="input-container">
-                  <img src="/img/icons/phone.png" alt="Phone" className="input-icon" />
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    disabled={!isEditing}
                   />
                 </div>
               </div>
