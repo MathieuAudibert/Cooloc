@@ -98,6 +98,7 @@ const Home = () => {
 
       {showColocFeatures && (
         <section className="coloc-features-section">
+          <div className="coloc-features-title">Accès rapide</div>
           <div className="content-container coloc-features-grid">
             <div className="coloc-feature-card" onClick={() => handleNavigate('taches')}>
               <img src="/img/icons/edit.png" alt="Mes tâches" className="coloc-feature-icon" />

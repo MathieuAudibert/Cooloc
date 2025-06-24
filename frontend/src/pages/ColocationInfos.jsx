@@ -195,6 +195,9 @@ const ColocationInfos = () => {
       });
   };
 
+  const storedUser = JSON.parse(localStorage.getItem('user'));
+  const isResponsable = storedUser && storedUser.role === 'responsable';
+
   if (loading) return <div className="creation-colocation"><div className="creation-form">Chargement...</div></div>;
   if (error) return <div className="creation-colocation"><div className="creation-form error-message">{error}</div></div>;
 
@@ -212,38 +215,46 @@ const ColocationInfos = () => {
             <span className="coloc-value">{infos.date_crea}</span>
           </div>
           <div className="coloc-actions">
-            <button onClick={handleEdit} className="edit-btn">Modifier</button>
-            <button onClick={handleDelete} className="delete-btn">Supprimer</button>
+            {isResponsable && (
+              <>
+                <button onClick={handleEdit} className="edit-btn">Modifier</button>
+                <button onClick={handleDelete} className="delete-btn">Supprimer</button>
+              </>
+            )}
           </div>
           {showEdit && (
-            <form onSubmit={handleEditSubmit} className="coloc-edit-form">
-              <input
-                type="text"
-                className="form-input"
-                value={newName}
-                onChange={e => setNewName(e.target.value)}
-                placeholder="Nouveau nom de la colocation"
-                required
-              />
-              <button type="submit" className="form-submit-btn">Valider</button>
-              <button type="button" className="delete-btn" onClick={() => setShowEdit(false)}>Annuler</button>
-            </form>
+            isResponsable && (
+              <form onSubmit={handleEditSubmit} className="coloc-edit-form">
+                <input
+                  type="text"
+                  className="form-input"
+                  value={newName}
+                  onChange={e => setNewName(e.target.value)}
+                  placeholder="Nouveau nom de la colocation"
+                  required
+                />
+                <button type="submit" className="form-submit-btn">Valider</button>
+                <button type="button" className="delete-btn" onClick={() => setShowEdit(false)}>Annuler</button>
+              </form>
+            )
           )}
         </div>
         <div className="coloc-section coloc-section-margin-top">
           <h2>Membres de la colocation</h2>
-          <form onSubmit={handleAddMember} className="coloc-add-member-form">
-            <input
-              type="email"
-              className="form-input add-member-input"
-              value={addEmail}
-              onChange={e => setAddEmail(e.target.value)}
-              placeholder="Email du membre à ajouter"
-              required
-              disabled={actionLoading}
-            />
-            <button type="submit" className="form-submit-btn" disabled={actionLoading || !addEmail}>Ajouter</button>
-          </form>
+          {isResponsable && (
+            <form onSubmit={handleAddMember} className="coloc-add-member-form">
+              <input
+                type="email"
+                className="form-input add-member-input"
+                value={addEmail}
+                onChange={e => setAddEmail(e.target.value)}
+                placeholder="Email du membre à ajouter"
+                required
+                disabled={actionLoading}
+              />
+              <button type="submit" className="form-submit-btn" disabled={actionLoading || !addEmail}>Ajouter</button>
+            </form>
+          )}
           {addError && <div className="error-message">{addError}</div>}
           {addSuccess && <div className="success-message">{addSuccess}</div>}
           {users.length === 0 ? (
@@ -256,6 +267,7 @@ const ColocationInfos = () => {
                 const id_utilisateur = u.id;
                 const storedUser = JSON.parse(localStorage.getItem('user'));
                 const isSelf = storedUser && (storedUser.email === u.mail);
+                const isResponsable = storedUser && storedUser.role === 'responsable';
                 return (
                   <div className="member-card" key={i}>
                     <div className="member-avatar">{prenom ? prenom[0] : ''}{nom ? nom[0] : ''}</div>
@@ -263,7 +275,7 @@ const ColocationInfos = () => {
                       <div className="member-name">{prenom ? `${prenom} ${nom}` : nom}</div>
                       {u.mail && <div className="member-mail">{u.mail}</div>}
                     </div>
-                    {!isSelf && (
+                    {!isSelf && isResponsable && (
                       <button className="delete-btn" style={{marginLeft: '1rem'}} onClick={() => handleRemoveMember(id_utilisateur)} disabled={actionLoading}>Retirer de la colocation</button>
                     )}
                   </div>

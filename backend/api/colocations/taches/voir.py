@@ -25,7 +25,10 @@ def recup_id(data):
     mail = data['mail']
     requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (mail,))
-    result = con.cursor.fetchone()
+    try:
+        result = con.cursor.fetchone()
+    except Exception:
+        result = None
     if result is None:
         return None
     return result[0]
@@ -43,7 +46,10 @@ def voir_tache(data, token):
 
     requete = """SELECT t.* FROM Taches AS t JOIN Utilisateurs AS u ON t.createur = u.id JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s AND t.cloture <> 'true' ORDER BY t.date_crea DESC;"""
     con.cursor.execute(requete, (data['id_coloc'],))
-    rows = con.cursor.fetchall()
+    try:
+        rows = con.cursor.fetchall()
+    except Exception:
+        rows = []
     taches = []
     for row in rows:
         taches.append({

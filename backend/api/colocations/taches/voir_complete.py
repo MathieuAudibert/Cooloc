@@ -43,7 +43,10 @@ def voir_tache_completer(data, token):
 
     requete = """SELECT t.* FROM Taches AS t JOIN Utilisateurs AS u ON t.createur = u.id JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s AND t.cloture = 'true' ORDER BY t.date_crea DESC LIMIT 4;"""
     con.cursor.execute(requete, (data['id_coloc'],))
-    rows = con.cursor.fetchall()
+    try:
+        rows = con.cursor.fetchall()
+    except Exception:
+        rows = []
     taches = []
     for row in rows:
         taches.append({
