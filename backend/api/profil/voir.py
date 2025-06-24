@@ -14,7 +14,7 @@ def verifier_token(data, token):
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail']:
-        return {'status': 403, 'message': 'Token KO - User not authorized to view this profile'}
+        return {'status': 403, 'message': 'Token KO'}
     
     return {'status': 200, 'message': 'Token OK'}
 
