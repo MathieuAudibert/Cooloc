@@ -170,6 +170,59 @@ section {
     width: 100%;
     max-width: 350px;
   }
+
+  .tasks-container {
+    max-width: 98vw;
+    margin: 1rem auto 0.5rem auto;
+    padding: 1rem 0.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0001;
+  }
+
+  .tasks-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0;
+  }
+
+  .tasks-list-item {
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 0.8rem 1rem;
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-shadow: 0 1px 4px #0001;
+    font-size: 1rem;
+  }
+
+  .tasks-list-item button {
+    margin-top: 0.5rem;
+    align-self: flex-start;
+    padding: 0.3rem 1.1rem;
+    border-radius: 6px;
+    border: none;
+    background: var(--color-darkgreen, #2e4d3a);
+    color: #fff;
+    font-size: 0.98rem;
+    cursor: pointer;
+    transition: background 0.18s;
+  }
+
+  .tasks-list-item button:hover {
+    background: var(--color-green, #388e3c);
+  }
+
+  .tasks-title, .tasks-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .tasks-divider {
+    margin: 0.8rem 0;
+  }
 }
 
 .coloc-features-section {

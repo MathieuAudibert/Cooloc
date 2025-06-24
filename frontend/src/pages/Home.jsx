@@ -11,8 +11,53 @@ const fetchTachesDisponibles = async (user, id_coloc) => {
   return res.json();
 };
 
+const fetchUserId = async (email, token) => {
+  const res = await fetch(`http://localhost:8000/profil/voir?mail=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`);
+  const data = await res.json();
+  if (data.status === 200 && data.infos && data.infos[0] && data.infos[0].id) {
+    return data.infos[0].id;
+  }
+  return null;
+};
+
+const assignTaskToMe = async (user, tacheId, id_coloc, refresh) => {
+  if (!userId) return;
+  await fetch('http://localhost:8000/coloc/taches/attribuer', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      mail: user.email,
+      role: user.role,
+      token: user.token,
+      id_coloc: id_coloc,
+      id_tache: tacheId,
+      attribue_a: userId,
+      csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+    })
+  });
+  refresh();
+};
+
+const cloturerTask = async (user, tacheId, id_coloc, refresh) => {
+  await fetch('http://localhost:8000/coloc/taches/cloturer', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      mail: user.email,
+      role: user.role,
+      token: user.token,
+      id_coloc: id_coloc,
+      id_tache: tacheId,
+      cloture: 'true',
+      csrf: 'cz6hyCmAUIU7D1htACJKe2HwfE6bqAiksEOYJABM3-Y'
+    })
+  });
+  refresh();
+};
+
 const Home = () => {
   const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null);
   const [mesTaches, setMesTaches] = useState([]);
   const [tachesDisponibles, setTachesDisponibles] = useState([]);
   const [tachesLoading, setTachesLoading] = useState(false);
@@ -25,6 +70,16 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    if (user && user.email && user.token) {
+      fetchUserId(user.email, user.token).then(id => setUserId(id));
+    }
+  }, [user]);
+
+  useEffect(() => {
+    refreshTasks();
+  }, [user]);
+
+  const refreshTasks = () => {
     if (user && user.id_coloc) {
       setTachesLoading(true);
       Promise.all([
@@ -36,7 +91,7 @@ const Home = () => {
         setTachesLoading(false);
       });
     }
-  }, [user]);
+  };
 
   const handleNavigate = (page) => {
     window.history.pushState({}, '', '/' + page);
@@ -80,7 +135,12 @@ const Home = () => {
           {tachesLoading ? <div>Chargement...</div> : (
             <ul className="tasks-list">
               {mesTaches.length === 0 ? <li>Aucune tâche assignée.</li> : mesTaches.map(t => (
-                <li key={t.id} className="tasks-list-item">{t.nom}</li>
+                <li key={t.id} className="tasks-list-item">
+                  {t.nom}
+                  <button style={{marginLeft:8}} onClick={() => cloturerTask(user, t.id, user.id_coloc, refreshTasks)}>
+                    Clôturer
+                  </button>
+                </li>
               ))}
             </ul>
           )}
@@ -89,7 +149,12 @@ const Home = () => {
           {tachesLoading ? <div>Chargement...</div> : (
             <ul className="tasks-list">
               {tachesDisponibles.length === 0 ? <li>Aucune tâche disponible.</li> : tachesDisponibles.map(t => (
-                <li key={t.id} className="tasks-list-item">{t.nom}</li>
+                <li key={t.id} className="tasks-list-item">
+                  {t.nom}
+                  <button style={{marginLeft:8}} onClick={() => assignTaskToMe(user, t.id, user.id_coloc, refreshTasks)}>
+                    Me l'attribuer
+                  </button>
+                </li>
               ))}
             </ul>
           )}
