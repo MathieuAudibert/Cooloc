@@ -50,16 +50,16 @@ const Home = () => {
   if (noColoc) {
     return (
       <div className="home">
-        <div className="no-coloc-message" style={{margin:'2rem auto', maxWidth:400, textAlign:'center', background:'#fffbe6', border:'1px solid #ffe58f', borderRadius:8, padding:'1.5rem 1rem'}}>
-          <div style={{fontWeight:'bold', fontSize:'1.1rem', marginBottom:4}}>Vous n'avez pas de colocations</div>
-          <div style={{fontSize:'0.95rem', color:'#888', marginBottom:8}}>
+        <div className="no-coloc-message">
+          <div className="no-coloc-title">Vous n'avez pas de colocations</div>
+          <div className="no-coloc-text">
             {user.role === 'colocataire' && (
               <>Demandez au responsable de colocation de vous ajouter</>
             )}
             {user.role === 'responsable' && (
               <>
                 Creez votre colocation et ajoutez vos coloc ici :<br/>
-                <button style={{marginTop:8, padding:'0.4rem 1.2rem', fontSize:'0.95rem', borderRadius:5, border:'1px solid #d4b106', background:'#fffbe6', cursor:'pointer'}} onClick={() => handleNavigate('creation-colocation')}>
+                <button className="create-coloc-button" onClick={() => handleNavigate('creation-colocation')}>
                   Créer une colocation
                 </button>
               </>
@@ -75,21 +75,21 @@ const Home = () => {
   return (
     <div className="home">
       {showTasks && (
-        <div style={{maxWidth: 600, margin: '2rem auto 2.5rem auto', background: '#fff', borderRadius: 10, boxShadow: '0 2px 8px #0001', padding: '1.5rem'}}>
-          <h2 style={{marginTop:0, marginBottom: '1rem', fontSize:'1.3rem'}}>Mes tâches</h2>
+        <div className="tasks-container">
+          <h2 className="tasks-title">Mes tâches</h2>
           {tachesLoading ? <div>Chargement...</div> : (
-            <ul style={{paddingLeft: 0, listStyle: 'none', marginBottom: '1.5rem'}}>
+            <ul className="tasks-list">
               {mesTaches.length === 0 ? <li>Aucune tâche assignée.</li> : mesTaches.map(t => (
-                <li key={t.id} style={{marginBottom: 6}}>{t.nom}</li>
+                <li key={t.id} className="tasks-list-item">{t.nom}</li>
               ))}
             </ul>
           )}
-          <hr style={{margin: '1.2rem 0'}} />
-          <h2 style={{marginTop:0, marginBottom: '1rem', fontSize:'1.15rem'}}>Tâches disponibles</h2>
+          <hr className="tasks-divider" />
+          <h2 className="tasks-subtitle">Tâches disponibles</h2>
           {tachesLoading ? <div>Chargement...</div> : (
-            <ul style={{paddingLeft: 0, listStyle: 'none'}}>
+            <ul className="tasks-list">
               {tachesDisponibles.length === 0 ? <li>Aucune tâche disponible.</li> : tachesDisponibles.map(t => (
-                <li key={t.id} style={{marginBottom: 6}}>{t.nom}</li>
+                <li key={t.id} className="tasks-list-item">{t.nom}</li>
               ))}
             </ul>
           )}
@@ -107,7 +107,7 @@ const Home = () => {
             <div className="coloc-feature-card" onClick={() => handleNavigate('depenses')}>
               <img src="/img/icons/save.png" alt="Mes dépenses" className="coloc-feature-icon" />
               <h3>Mes dépenses</h3>
-              <p>Gère et visualise tes dépenses de colocation.<br /><span style={{color:'#888', fontSize:'0.9em'}}>A FAIRE</span></p>
+              <p>Gère et visualise tes dépenses de colocation.<br /><span className="task-todo">A FAIRE</span></p>
             </div>
             <div className="coloc-feature-card" onClick={() => handleNavigate('colocation')}>
               <img src="/img/icons/users.png" alt="Ma colocation" className="coloc-feature-icon" />

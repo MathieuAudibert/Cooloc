@@ -5,7 +5,7 @@ const APropos = () => (
   <div className="apropos-container">
     <section id="donnees-personnelles">
       <div className="section-header">
-        <i className="fas fa-shield-alt" style={{ fontSize: '14px', color: '#4b5e2e' }}></i>
+        <i className="fas fa-shield-alt"></i>
         <h2>Données personnelles</h2>
       </div>
       <p>
@@ -17,7 +17,7 @@ const APropos = () => (
 
     <section id="mentions-legales">
       <div className="section-header">
-        <i className="fas fa-file-contract" style={{ fontSize: '14px', color: '#4b5e2e' }}></i>
+        <i className="fas fa-file-contract"></i>
         <h2>Mentions légales &amp; CGU</h2>
       </div>
       <p>
@@ -29,7 +29,7 @@ const APropos = () => (
 
     <section id="aide">
       <div className="section-header">
-        <i className="fas fa-question-circle" style={{ fontSize: '14px', color: '#4b5e2e' }}></i>
+        <i className="fas fa-question-circle"></i>
         <h2>Aide</h2>
       </div>
       <p>

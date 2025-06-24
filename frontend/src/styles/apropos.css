@@ -63,6 +63,11 @@
   margin: 0;
 }
 
+.section-header i {
+  font-size: 14px;
+  color: #4b5e2e;
+}
+
 @media (max-width: 900px) {
   .apropos-container {
     flex-direction: column;

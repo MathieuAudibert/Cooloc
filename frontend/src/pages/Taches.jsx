@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/creation-colocation.css';
+import '../styles/taches.css';
 import editIcon from '/img/icons/edit.png';
 import cancelIcon from '/img/icons/cancel.png';
 import usersIcon from '/img/icons/users.png';
@@ -238,12 +239,6 @@ const Taches = () => {
       .catch(() => setError('Erreur de connexion au serveur.'));
   };
 
-  const priorityColors = {
-    basse: '#8bc34a',
-    moyenne: '#ffc107',
-    haute: '#e53935',
-  };
-
   function formatDate(dateStr) {
     if (!dateStr) return '-';
     const d = new Date(dateStr);
@@ -325,13 +320,13 @@ const Taches = () => {
           </div>
           <button type="submit" className="form-submit-btn">Ajouter</button>
         </form>
-        <h2 style={{margin:'2rem 0 1rem 0', textAlign:'left'}}>Liste des tâches</h2>
+        <h2 className="form-title-margin">Liste des tâches</h2>
         {error && <div className="error-message">{error}</div>}
         {loading ? (
           <div>Chargement...</div>
         ) : (
           <>
-            <div className="taches-list" style={{display:'grid', gap: '1.5rem'}}>
+            <div className="taches-list">
               {tachesOuvertes.length === 0 ? (
                 <div>Aucune tâche ouverte trouvée.</div>
               ) : (
@@ -339,9 +334,9 @@ const Taches = () => {
                   const assigned = members.find(m => m.id === tache.attribue_a);
                   const createur = members.find(m => String(m.id) === String(tache.createur));
                   return (
-                    <div key={tache.id} className="tache-card" style={{background:'#f8f8f8', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative'}}>
+                    <div key={tache.id} className="tache-card">
                       {editingId === tache.id ? (
-                        <form onSubmit={handleEditSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <form onSubmit={handleEditSubmit} className="tache-form-edit">
                           <input
                             type="text"
                             value={editingTache.nom}
@@ -349,17 +344,17 @@ const Taches = () => {
                             required
                             placeholder="Nom de la tâche"
                           />
-                          <div style={{ display: 'flex', gap: 8 }}>
-                            <div style={{ flex: 1 }}>
-                              <label style={{ fontSize: 13 }}>Date de début</label>
+                          <div className="form-row">
+                            <div className="form-group">
+                              <label>Date de début</label>
                               <input
                                 type="datetime-local"
                                 value={editingTache.date_debut}
                                 onChange={e => setEditingTache({ ...editingTache, date_debut: e.target.value })}
                               />
                             </div>
-                            <div style={{ flex: 1 }}>
-                              <label style={{ fontSize: 13 }}>Date de fin</label>
+                            <div className="form-group">
+                              <label>Date de fin</label>
                               <input
                                 type="datetime-local"
                                 value={editingTache.date_fin}
@@ -367,9 +362,9 @@ const Taches = () => {
                               />
                             </div>
                           </div>
-                          <div style={{ display: 'flex', gap: 8 }}>
-                            <div style={{ flex: 1 }}>
-                              <label style={{ fontSize: 13 }}>Priorité</label>
+                          <div className="form-row">
+                            <div className="form-group">
+                              <label>Priorité</label>
                               <select
                                 value={editingTache.priorite}
                                 onChange={e => setEditingTache({ ...editingTache, priorite: e.target.value })}
@@ -380,8 +375,8 @@ const Taches = () => {
                                 <option value="haute">Haute</option>
                               </select>
                             </div>
-                            <div style={{ flex: 1 }}>
-                              <label style={{ fontSize: 13 }}>Attribuer à</label>
+                            <div className="form-group">
+                              <label>Attribuer à</label>
                               <select
                                 value={editingTache.atribue_a}
                                 onChange={e => setEditingTache({ ...editingTache, atribue_a: e.target.value })}
@@ -393,51 +388,49 @@ const Taches = () => {
                               </select>
                             </div>
                           </div>
-                          <div style={{ display: 'flex', gap: 8 }}>
+                          <div className="form-actions">
                             <button type="submit">Valider</button>
                             <button type="button" onClick={() => { setEditingId(null); setEditingTache(null); }}>Annuler</button>
                           </div>
                         </form>
                       ) : (
                         <>
-                          <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:4}}>
-                            <span style={{fontWeight:600, fontSize:'1.1rem', flex:1}}>{tache.nom}</span>
-                            <span className="priority-badge" style={{background:priorityColors[tache.priorite], color:'#fff', borderRadius:8, padding:'2px 10px', fontSize:13, fontWeight:500}}>{tache.priorite}</span>
+                          <div className="tache-header">
+                            <span className="tache-name">{tache.nom}</span>
+                            <span className={`priority-badge priority-${tache.priorite}`}>{tache.priorite}</span>
                           </div>
-                          <div style={{display:'flex', gap:16, fontSize:13, color:'#555', flexWrap:'wrap'}}>
+                          <div className="tache-details">
                             <div><b>Début:</b> {formatDate(tache.date_debut)}</div>
                             <div><b>Fin:</b> {formatDate(tache.date_fin)}</div>
                             <div><b>Créée:</b> {formatDate(tache.date_crea)}</div>
                           </div>
-                          <div style={{display:'flex', alignItems:'center', gap:8, fontSize:13, color:'#555'}}>
-                            <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
+                          <div className="tache-attribution">
+                            <img src={usersIcon} alt="user" />
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
-                            <span style={{marginLeft:12, fontStyle:'italic', color:'#888'}}>
+                            <span className="tache-creator">
                               Créateur : {createur ? `${createur.prenom} ${createur.nom}` : `ID ${tache.createur}`}
                             </span>
                           </div>
-                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
+                          <div className="tache-actions">
                             <select
                               value={clotureEdit[tache.id] ?? tache.cloture}
                               onChange={e => handleClotureChange(tache.id, e.target.value)}
-                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
                             >
                               <option value="false">Ouverte</option>
                               <option value="en cours">En cours</option>
                               <option value="true">Clôturée</option>
                             </select>
                             <button
-                              style={{marginLeft:8, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
+                              className="save-button save-cloture-button"
                               onClick={() => handleClotureSave(tache)}
                             >
                               Sauvegarder
                             </button>
                           </div>
-                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
+                          <div className="tache-actions">
                             <select
                               value={attribueEdit[tache.id] ?? tache.attribue_a ?? ''}
                               onChange={e => handleAttribueChange(tache.id, e.target.value)}
-                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
                             >
                               <option value="">Non attribuée</option>
                               {members && members.length > 0 && members.map((m, i) => (
@@ -445,7 +438,7 @@ const Taches = () => {
                               ))}
                             </select>
                             <button
-                              style={{marginLeft:8, background:'#1976d2', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
+                              className="save-button save-attribue-button"
                               onClick={() => handleAttribueSave(tache)}
                             >
                               Sauvegarder
@@ -453,10 +446,10 @@ const Taches = () => {
                           </div>
                           <button
                             onClick={() => handleDelete(tache.id)}
-                            style={{background:'none', border:'none', cursor:'pointer'}}
+                            className="delete-button"
                             title="Supprimer"
                           >
-                            <img src={cancelIcon} alt="delete" style={{width:20, height:20}} />
+                            <img src={cancelIcon} alt="delete" />
                           </button>
                         </>
                       )}
@@ -466,16 +459,16 @@ const Taches = () => {
               )}
             </div>
             {/* Menu déroulant pour tâches clôturées */}
-            <div style={{marginTop: '2rem'}}>
+            <div className="closed-tasks-container">
               <button
                 type="button"
                 onClick={() => setShowClosed(v => !v)}
-                style={{background:'#eee', border:'1px solid #ccc', borderRadius:8, padding:'8px 16px', cursor:'pointer', fontWeight:600, fontSize:15}}
+                className="closed-tasks-toggle"
               >
                 {showClosed ? '▼' : '►'} Tâches clôturées ({tachesCloturees.length})
               </button>
               {showClosed && (
-                <div className="taches-list" style={{display:'grid', gap: '1.5rem', marginTop:12}}>
+                <div className="taches-list">
                   {tachesCloturees.length === 0 ? (
                     <div>Aucune tâche clôturée.</div>
                   ) : (
@@ -483,64 +476,36 @@ const Taches = () => {
                       const assigned = members.find(m => m.id === tache.attribue_a);
                       const createur = members.find(m => String(m.id) === String(tache.createur));
                       return (
-                        <div key={tache.id} className="tache-card" style={{background:'#f0f0f0', borderRadius:16, boxShadow:'0 2px 8px #0001', padding:'1.2rem 1.5rem', display:'flex', flexDirection:'column', gap:8, position:'relative', opacity:0.7}}>
-                          <div style={{display:'flex', alignItems:'center', gap:12, marginBottom:4}}>
-                            <span style={{fontWeight:600, fontSize:'1.1rem', flex:1}}>{tache.nom}</span>
-                            <span className="priority-badge" style={{background:priorityColors[tache.priorite], color:'#fff', borderRadius:8, padding:'2px 10px', fontSize:13, fontWeight:500}}>{tache.priorite}</span>
+                        <div key={tache.id} className="tache-card tache-card-closed">
+                          <div className="tache-header">
+                            <span className="tache-name">{tache.nom}</span>
+                            <span className={`priority-badge priority-${tache.priorite}`}>{tache.priorite}</span>
                           </div>
-                          <div style={{display:'flex', gap:16, fontSize:13, color:'#555', flexWrap:'wrap'}}>
+                          <div className="tache-details">
                             <div><b>Début:</b> {formatDate(tache.date_debut)}</div>
                             <div><b>Fin:</b> {formatDate(tache.date_fin)}</div>
                             <div><b>Créée:</b> {formatDate(tache.date_crea)}</div>
                           </div>
-                          <div style={{display:'flex', alignItems:'center', gap:8, fontSize:13, color:'#555'}}>
-                            <img src={usersIcon} alt="user" style={{width:18, height:18, opacity:0.7}} />
+                          <div className="tache-attribution">
+                            <img src={usersIcon} alt="user" />
                             <span>{assigned ? `${assigned.prenom} ${assigned.nom}` : 'Non attribuée'}</span>
-                            <span style={{marginLeft:12, fontStyle:'italic', color:'#888'}}>
+                            <span className="tache-creator">
                               Créateur : {createur ? `${createur.prenom} ${createur.nom}` : `ID ${tache.createur}`}
                             </span>
                           </div>
-                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
-                            <select
-                              value={clotureEdit[tache.id] ?? tache.cloture}
-                              onChange={e => handleClotureChange(tache.id, e.target.value)}
-                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
-                            >
-                              <option value="false">Ouverte</option>
-                              <option value="en cours">En cours</option>
-                              <option value="true">Clôturée</option>
-                            </select>
-                            <button
-                              style={{marginLeft:8, background:'#388e3c', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
-                              onClick={() => handleClotureSave(tache)}
-                            >
-                              Sauvegarder
-                            </button>
-                          </div>
-                          <div style={{display:'flex', alignItems:'center', gap:8, marginTop:8}}>
-                            <select
-                              value={attribueEdit[tache.id] ?? tache.attribue_a ?? ''}
-                              onChange={e => handleAttribueChange(tache.id, e.target.value)}
-                              style={{fontSize:13, borderRadius:6, padding:'2px 8px'}}
-                            >
-                              <option value="">Non attribuée</option>
-                              {members && members.length > 0 && members.map((m, i) => (
-                                <option key={m.id || i} value={m.id}>{m.prenom} {m.nom}</option>
-                              ))}
-                            </select>
-                            <button
-                              style={{marginLeft:8, background:'#1976d2', color:'#fff', border:'none', borderRadius:6, padding:'2px 10px', fontSize:13, cursor:'pointer'}}
-                              onClick={() => handleAttribueSave(tache)}
-                            >
-                              Sauvegarder
-                            </button>
-                          </div>
+                          <button
+                            onClick={() => handleEdit(tache)}
+                            className="edit-button"
+                            title="Modifier"
+                          >
+                            <img src={editIcon} alt="edit" />
+                          </button>
                           <button
                             onClick={() => handleDelete(tache.id)}
-                            style={{background:'none', border:'none', cursor:'pointer'}}
+                            className="delete-button"
                             title="Supprimer"
                           >
-                            <img src={cancelIcon} alt="delete" style={{width:20, height:20}} />
+                            <img src={cancelIcon} alt="delete" />
                           </button>
                         </div>
                       );

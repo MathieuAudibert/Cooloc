@@ -230,18 +230,17 @@ const ColocationInfos = () => {
             </form>
           )}
         </div>
-        <div className="coloc-section" style={{marginTop: '2.5rem'}}>
+        <div className="coloc-section coloc-section-margin-top">
           <h2>Membres de la colocation</h2>
           <form onSubmit={handleAddMember} className="coloc-add-member-form">
             <input
               type="email"
-              className="form-input"
+              className="form-input add-member-input"
               value={addEmail}
               onChange={e => setAddEmail(e.target.value)}
               placeholder="Email du membre à ajouter"
               required
               disabled={actionLoading}
-              style={{ minWidth: 220 }}
             />
             <button type="submit" className="form-submit-btn" disabled={actionLoading || !addEmail}>Ajouter</button>
           </form>

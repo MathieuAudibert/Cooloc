@@ -251,15 +251,51 @@
 .delete-btn:hover {
   background: var(--color-red);
   color: #fff;
-  border: 1px solid var(--color-red);
+}
+.members-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 1.5rem 0 0.5rem 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+  justify-items: start;
+}
+.member-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: #f4f4f4;
+  padding: 0.8rem 1.2rem;
+  border-radius: 12px;
+}
+.remove-member-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.2rem;
+  line-height: 1;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+.remove-member-btn:hover {
+  background: #e0e0e0;
 }
 .success-message {
-  color: #388e3c;
+  color: #2e7d32;
   background: #e8f5e9;
-  border: 1px solid #b2dfdb;
+  border: 1px solid #c8e6c9;
   border-radius: 8px;
   padding: 0.7rem 1rem;
   margin-bottom: 1rem;
   font-size: 1rem;
   text-align: left;
+}
+
+.coloc-section-margin-top {
+  margin-top: 2.5rem;
+}
+
+.add-member-input {
+  min-width: 220px;
 } 
