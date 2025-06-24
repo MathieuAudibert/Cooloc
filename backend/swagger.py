@@ -857,11 +857,11 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Voir toutes les tâches de la colocation (non clôturées)",
                 "parameters": [
-                    {"name": "id_coloc", "in": "query", "required": true, "schema": {"type": "integer"}},
-                    {"name": "mail", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "token", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "csrf", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "role", "in": "query", "required": true, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
+                    {"name": "id_coloc", "in": "query", "required": True, "schema": {"type": "integer"}},
+                    {"name": "mail", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "token", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "csrf", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "role", "in": "query", "required": True, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
                 ],
                 "responses": {
                     "200": {
@@ -889,11 +889,11 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Voir les tâches attribuées à l'utilisateur connecté",
                 "parameters": [
-                    {"name": "id_coloc", "in": "query", "required": true, "schema": {"type": "integer"}},
-                    {"name": "mail", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "token", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "csrf", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "role", "in": "query", "required": true, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
+                    {"name": "id_coloc", "in": "query", "required": True, "schema": {"type": "integer"}},
+                    {"name": "mail", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "token", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "csrf", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "role", "in": "query", "required": True, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
                 ],
                 "responses": {
                     "200": {
@@ -921,11 +921,11 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Voir les tâches clôturées (4 dernières)",
                 "parameters": [
-                    {"name": "id_coloc", "in": "query", "required": true, "schema": {"type": "integer"}},
-                    {"name": "mail", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "token", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "csrf", "in": "query", "required": true, "schema": {"type": "string"}},
-                    {"name": "role", "in": "query", "required": true, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
+                    {"name": "id_coloc", "in": "query", "required": True, "schema": {"type": "integer"}},
+                    {"name": "mail", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "token", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "csrf", "in": "query", "required": True, "schema": {"type": "string"}},
+                    {"name": "role", "in": "query", "required": True, "schema": {"type": "string", "enum": ["colocataire", "responsable", "admin"]}}
                 ],
                 "responses": {
                     "200": {
@@ -953,7 +953,7 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Créer une tâche",
                 "requestBody": {
-                    "required": true,
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -986,7 +986,7 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Attribuer une tâche à un utilisateur",
                 "requestBody": {
-                    "required": true,
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1016,7 +1016,7 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Clôturer une tâche",
                 "requestBody": {
-                    "required": true,
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1046,7 +1046,7 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Modifier une tâche (nom)",
                 "requestBody": {
-                    "required": true,
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
@@ -1076,7 +1076,7 @@ swagger_spec = {
                 "tags": ["Taches"],
                 "summary": "Supprimer une tâche",
                 "requestBody": {
-                    "required": true,
+                    "required": True,
                     "content": {
                         "application/json": {
                             "schema": {
