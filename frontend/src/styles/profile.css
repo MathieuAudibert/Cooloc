@@ -298,6 +298,10 @@
     grid-template-columns: 1fr;
   }
 
+  .button-group {
+    flex-direction: column;
+  }
+
   .profile-avatar {
     width: 100px;
     height: 100px;

@@ -279,12 +279,13 @@
   transition: background 0.2s;
 }
 .remove-member-btn:hover {
-  background: #e0e0e0;
+  background: #c62828;
+  color: #fff;
 }
 .success-message {
-  color: #2e7d32;
-  background: #e8f5e9;
-  border: 1px solid #c8e6c9;
+  color: var(--color-darkgreen);
+  background: #f0fff0;
+  border: 1px solid #d6ffd6;
   border-radius: 8px;
   padding: 0.7rem 1rem;
   margin-bottom: 1rem;
@@ -293,9 +294,33 @@
 }
 
 .coloc-section-margin-top {
-  margin-top: 2.5rem;
+  margin-top: 2rem;
 }
 
 .add-member-input {
-  min-width: 220px;
+  flex-grow: 1;
+}
+
+@media (max-width: 768px) {
+  .creation-form {
+    padding: 1.5rem;
+  }
+
+  .form-row,
+  .coloc-info-row,
+  .coloc-actions,
+  .coloc-edit-form,
+  .coloc-add-member-form {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .coloc-label {
+    min-width: unset;
+  }
+
+  .form-row .form-group:not(:last-child) {
+    margin-right: 0;
+  }
 } 

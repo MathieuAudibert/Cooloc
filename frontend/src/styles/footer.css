@@ -97,4 +97,33 @@
     align-items: center;
     gap: 18px;
   }
+}
+
+@media (max-width: 768px) {
+  .footer-nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .footer-divider {
+    width: 90%;
+  }
+
+  .footer-address {
+    margin-top: 8px;
+  }
+
+  .footer-icons {
+    margin-left: 0;
+    margin-bottom: 16px;
+  }
 } 

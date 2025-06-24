@@ -147,9 +147,9 @@ function AdminDashboard() {
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
-                    <td>{user.email}</td>
-                    <td>{user.role}</td>
-                    <td>
+                    <td data-label="Email">{user.email}</td>
+                    <td data-label="Rôle">{user.role}</td>
+                    <td data-label="Actions">
                       <button onClick={() => {}}>Modifier</button>
                       <button onClick={() => {}}>Supprimer</button>
                     </td>

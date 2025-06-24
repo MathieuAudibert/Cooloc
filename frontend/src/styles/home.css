@@ -159,6 +159,17 @@ section {
   .feature-block p {
     font-size: 1rem;
   }
+
+  .coloc-features-grid {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .coloc-feature-card {
+    width: 100%;
+    max-width: 350px;
+  }
 }
 
 .coloc-features-section {

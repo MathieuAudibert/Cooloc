@@ -150,4 +150,58 @@
 
 .users-list button:hover {
   opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .admin-tabs {
+    flex-wrap: wrap;
+  }
+
+  .users-list table,
+  .users-list thead,
+  .users-list tbody,
+  .users-list th,
+  .users-list td,
+  .users-list tr {
+    display: block;
+  }
+
+  .users-list thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  .users-list tr {
+    border: 1px solid var(--color-beige);
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+
+  .users-list td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+    text-align: right;
+  }
+
+  .users-list td:before {
+    position: absolute;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+    content: attr(data-label);
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .users-list td:last-child {
+    border-bottom: 0;
+  }
+
+  .create-user-form {
+    padding: 15px;
+  }
 } 

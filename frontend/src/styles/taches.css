@@ -162,4 +162,22 @@
 .form-title-margin {
     margin: 2rem 0 1rem 0;
     text-align: left;
+}
+
+@media (max-width: 768px) {
+    .tache-header {
+        flex-wrap: wrap;
+    }
+
+    .tache-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .tache-form-edit .form-row,
+    .tache-form-edit .form-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 } 
