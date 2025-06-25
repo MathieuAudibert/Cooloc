@@ -494,13 +494,6 @@ const Taches = () => {
                             </span>
                           </div>
                           <button
-                            onClick={() => handleEdit(tache)}
-                            className="edit-button"
-                            title="Modifier"
-                          >
-                            <img src={editIcon} alt="edit" />
-                          </button>
-                          <button
                             onClick={() => handleDelete(tache.id)}
                             className="delete-button"
                             title="Supprimer"
