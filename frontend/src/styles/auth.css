@@ -45,10 +45,12 @@
 }
 
 .form-group {
-  margin-bottom: 2.2rem;
+  margin-bottom: 2.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-left: 20px;
+  padding-bottom: 10px;
 }
 
 .form-group label {
@@ -84,7 +86,7 @@
 .input-container:focus-within {
   background-color: #E8F0E3 !important;
   border-color: #d6d6b1;
-  box-shadow: 0 4px 12px rgba(92, 115, 70, 0.15);
+  box-shadow: none;
   transform: translateY(-1px);
 }
 
