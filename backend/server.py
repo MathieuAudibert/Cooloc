@@ -45,8 +45,16 @@ HOST = "localhost"
 PORT = 8000
 
 class Serveur(BaseHTTPRequestHandler):
-    # FIX: elif ==> match case?
+    """
+    classe du serveur
+    """
+    # FIXME: elif ==> match case?
     def recuperer_parametres(self):
+        """
+        recupere les params de la requete
+        
+        :return: tuple, (path, parametres)
+        """
         url = urllib.parse.urlparse(self.path)
         path = url.path
 
@@ -59,18 +67,33 @@ class Serveur(BaseHTTPRequestHandler):
         return path, parametres
 
     def end_headers(self):
-        self.send_header('Access-Control-Allow-Origin', 'http://localhost:3000')  
-        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization')  
-        self.send_header('Access-Control-Allow-Credentials', 'true')
-        self.send_header('Access-Control-Max-Age', '3600')
+        """
+        ajoute les headers CORS (accessible pour le front)
+
+        :return: None
+        """
+        self.send_header('Access-Control-Allow-Origin', 'http://localhost:3000')  # front a le droit de faire des reqs
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS') # les methodes autorisée
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type, Authorization') # les headers autorisés
+        self.send_header('Access-Control-Allow-Credentials', 'true') # autorise les cookies
+        self.send_header('Access-Control-Max-Age', '3600') # durée d'1heure
         super().end_headers()
 
     def do_OPTIONS(self):
+        """
+        traite les req options
+
+        :return: None
+        """
         self.send_response(200)
         self.end_headers()
 
     def do_GET(self):
+        """
+        traite les req GET
+
+        :return: None
+        """
         path, parametres = self.recuperer_parametres()
 
         if self.path == '/':
@@ -350,8 +373,9 @@ class Serveur(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(b'{"erreur": "pas trouve"}')
 
-serveur = ThreadingHTTPServer((HOST, PORT), Serveur)
+serveur = ThreadingHTTPServer((HOST, PORT), Serveur) # Threading pcq sinon il galere quand ya plusieurs reqs
 print(f'le serveur ecoute sur http://{HOST}:{PORT}')
-serveur.serve_forever()
-serveur.server_close()
+# lance le serveur
+serveur.serve_forever() # tourne en continu
+serveur.server_close() # ferme le serveur si ya une action de l'utilisateur
 print('stop')
