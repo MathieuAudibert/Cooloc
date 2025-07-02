@@ -11,6 +11,14 @@ jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
 
 def verifier_token(data, token):
+    """
+    verifie le token JWT fourni par l'user
+
+    :param data: dict, infos infos envoyées par le serveur
+    :param token: str, token JWT de l'user
+
+    :return: dict, status et message de la verification du token
+    """
     token_decode = jwt.decode(token, jwt_secret, algorithms=[jwt_algo])
     
     if token_decode['mail'] != data['mail']:

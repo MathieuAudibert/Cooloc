@@ -14,13 +14,20 @@ def create_token(data):
     """
     encode avec l'ago HS256 un token jwt avec le mail & role de l'user
 
-    :param data: dict, infos de l'user
+    :param data: dict, infos envoyées par le serveur
 
     :return: str, token JWT
     """
     return jwt.encode({'mail': data['mail'], 'role': data['role']}, jwt_secret, algorithm=jwt_algo)
 
 def verifier_csrf(data):
+    """
+    verifie le token CSRF
+
+    :param data: dict, infos envoyées par le serveur
+
+    :return: dict, status et message de la verification du token CSRF
+    """
     csrf = data['csrf']
 
     if not csrf:
