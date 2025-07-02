@@ -58,6 +58,7 @@ def creer_coloc(data, token):
         return {'status': 403, 'message': 'Utilisateur déjà dans une coloc'}
 
     requete = """INSERT INTO Colocs (nom, date_crea, responsable) VALUES (%s, %s, %s) RETURNING id"""
+    # RETURNING id ==> recup l'id de la coloc cree
     param = (data['nom'], datetime.now(), id_utilisateur)
     con.cursor.execute(requete, param)
     id_coloc = con.cursor.fetchone()
@@ -67,9 +68,11 @@ def creer_coloc(data, token):
     
     requete2 = """UPDATE Utilisateurs SET id_coloc = %s WHERE id = %s"""
     con.cursor.execute(requete2, (id_coloc, id_utilisateur))
+    # lorsque l'user cree une coloc, il en devient responsable 
 
     log = {'date': datetime.now(), 'action': 'creation coloc', 'id_utilisateur': id_utilisateur, 'id_coloc': id_coloc}
     logs.db.collection('Logs').add(log)
     
+    # FIXME: verifier si les actions passent avant et en fonction commit/rollback ?
     con.conn.commit()
     return {'status': 200, 'message': 'coloc créée', 'id_coloc': id_coloc[0] if isinstance(id_coloc, (list, tuple)) else id_coloc}
