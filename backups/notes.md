@@ -25,7 +25,7 @@
     - [x] Footer
     - [x] Login/Register
     - [ ] Admin
-  - [ ] Wireframes
+  - [x] Wireframes
   - [x] Zone
   - [x] Chartre graphique
 - [x] Merise
@@ -33,31 +33,31 @@
   - [x] MLD
   - [x] MPD
   - [ ] Dictionnaire de données (optionnel)
-- [ ] Diagrammes
+- [x] Diagrammes
   - [x] Use case
   - [ ] Classe (si on est pas sur a ne pas faire)
   - [x] Sequences (bonus)
   - [x] Activité
 - [x] Swagger
 - [x] Trello
-- [ ] Document technique (50 pages mini sans images)
-- [ ] Document professionnel (Document rose)
+- [x] Document technique (50 pages mini sans images)
+- [x] Document professionnel (Document rose)
 - [ ] PowerPoint
 
 # DevOps
 
 - [ ] Tests
   - [x] API (collections postman)
-  - [ ] Unitaires
+  - [x] Unitaires
   - [ ] End-to-End (test d'une fonctionnalité du Login jusqu'a la fin de la feature)
 - [x] Docker
 - [ ] Virtual Env (facultatif)
-- [ ] Sonarqube
+- [x] Sonarqube
 - [x] Github actions
 
 # Dev
 
-- [ ] Front
+- [x] Front
 - [x] Back
 - [x] Apis
   - [x] Login
