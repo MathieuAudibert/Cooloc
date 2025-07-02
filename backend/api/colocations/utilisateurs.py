@@ -48,11 +48,23 @@ def recup_infos_responsable(data):
     return infos_responsable
 
 def recup_infos(data): 
+    """
+    recupere les informations des colocataires d'une coloc
+
+    :param data: dict, infos envoyées par le serveur
+
+    :return: list, infos des colocataires
+    """
     coloc = data['id_colocs']
     requete = """SELECT u.id, u.nom, u.prenom, u.mail FROM Utilisateurs AS u JOIN Colocs AS c ON c.id = u.id_coloc WHERE c.id = %s"""
     con.cursor.execute(requete, (coloc,))
     infos = [
-        {'id': row[0], 'nom': row[1], 'prenom': row[2], 'mail': row[3]}
+        {
+            'id': row[0],
+            'nom': row[1], 
+            'prenom': row[2], 
+            'mail': row[3]
+        }
         for row in con.cursor.fetchall()
     ]
     return infos
