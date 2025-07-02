@@ -7,6 +7,13 @@ sys.path.append(str(projet_root))
 from bdd.connexion import con, logs
 
 def mdp_hash(mdp):
+    """
+    hashe le mot de passe de l'utilisateur avec bcrypt
+
+    :param mdp: str, mot de passe de l'utilisateur
+
+    :return: str, mot de passe hashe
+    """
     mdp_propre = mdp.encode('utf-8')
     salt = bcrypt.gensalt(12) # 12 --> eviter bruteforce ralentir l'algo
     mdp_hashe = bcrypt.hashpw(mdp_propre, salt)
@@ -21,6 +28,13 @@ def verifier_csrf(data):
     return {'status': 200, 'message': 'CSRF OK'}
 
 def car_spe(mdp):
+    """
+    verifie que les mdp on au moins 1 caractere special
+
+    :param mdp: str, mot de passe de l'utilisateur
+
+    :return: bool, True si le mot de passe contient au moins un caractere special, False sinon
+    """
     caracteres = "!@#$%^&*(),.?\":{}|<>"
     for c in caracteres:
         if c in mdp:
