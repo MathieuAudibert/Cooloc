@@ -40,11 +40,12 @@ def voir_logs(data, token):
         return token_verif
 
     logs_bdd = logs.db.collection('Logs').stream()
+    # recupere TOUTEs les logs
     log = []
     for l in logs_bdd:
         log.append({
             'id': l.id,
-            'date': l.to_dict().get('date').strftime('%Y-%m-%d %H:%M:%S'),
+            'date': l.to_dict().get('date').strftime('%Y-%m-%d %H:%M:%S'), # mets au bon format
             'action': l.to_dict().get('action'),
             'infos': {
                 'id_coloc': l.to_dict().get('id_coloc'),
@@ -52,6 +53,7 @@ def voir_logs(data, token):
                 'id_logs': l.to_dict().get('id_logs')
             }
         })
+    # transforme les objets de firebase en dict
     con.conn.commit()
     return {'status': 200, 'logs': log}
 
