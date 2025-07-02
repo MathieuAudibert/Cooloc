@@ -11,6 +11,13 @@ jwt_secret = os.getenv("JWT")
 jwt_algo = 'HS256'
 
 def create_token(data):
+    """
+    encode avec l'ago HS256 un token jwt avec le mail & role de l'user
+
+    :param data: dict, infos de l'user
+
+    :return: str, token JWT
+    """
     return jwt.encode({'mail': data['mail'], 'role': data['role']}, jwt_secret, algorithm=jwt_algo)
 
 def verifier_csrf(data):
