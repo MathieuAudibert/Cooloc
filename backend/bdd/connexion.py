@@ -6,6 +6,9 @@ from firebase_admin import firestore
 from firebase_admin import credentials
 
 class Bdd:
+    """
+    classe de connexion a la bdd pgsql
+    """
     def __init__(self, user, mdp, nom, host, port):
         self.user = user
         self.mdp = mdp
@@ -14,6 +17,11 @@ class Bdd:
         self.port = port
 
     def connexion(self):
+        """
+        connexion a la bdd pgsql
+
+        :return: None
+        """
         try:
             self.conn = psycopg2.connect(
                 database=self.nom,
@@ -33,6 +41,9 @@ class Bdd:
         print("[INFO]: Bdd close")
 
 class Logs: 
+    """
+    classe de connexion a la bdd firebase 
+    """
     def __init__(self, cle):
         self.cle = credentials.Certificate(cle)
         self.app = firebase_admin.initialize_app(self.cle)
