@@ -21,17 +21,12 @@ def verifier_token(data, token):
     
     return {'status': 200, 'message': 'Token OK'}
 
-def recup_id(data):
+def recup_id(data) :
     mail = data['mail']
     requete = """SELECT id FROM Utilisateurs WHERE mail = %s LIMIT 1"""
     con.cursor.execute(requete, (mail,))
-    try:
-        result = con.cursor.fetchone()
-    except Exception:
-        result = None
-    if result is None:
-        return None
-    return result[0]
+    id_utilisateur = con.cursor.fetchone()
+    return id_utilisateur
 
 def voir_tache(data, token):
     con.connexion()
