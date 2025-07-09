@@ -192,9 +192,7 @@ const Home = () => {
                 Grace a <span className="highlight">Cooloc</span>, rendez vos colocations plus facilement gérables !
               </h1>
               <div className="preview-container">
-                <div className="preview-placeholder">
-                  GIF AVEC UNE PREVIEW DE L'APPLICATION
-                </div>
+                <img src="/img/previews/gif_preview.gif" alt="Aperçu Cooloc" className="preview-image" style={{maxWidth: '100%', borderRadius: '16px', boxShadow: '0 2px 16px #0002'}} />
               </div>
               <p className="description">
                 Rencontrez Cooloc, votre plateforme de gestion de colocation intéractive ;
@@ -228,7 +226,7 @@ const Home = () => {
                   </div>
                 </div>
                 <div className="preview-grid">
-                  <div className="preview-box tasks">Taches</div>
+                  <img src="/img/previews/taches.png" alt="Aperçu tâches" className="preview-image" style={{width: '100%', borderRadius: '12px', marginBottom: '1rem'}} />
                   <div className="preview-box events">Evenements</div>
                 </div>
               </div>
@@ -240,7 +238,7 @@ const Home = () => {
               <div className="section-grid">
                 <div className="preview-grid">
                   <div className="preview-box finances">Finances</div>
-                  <div className="preview-box members">Gestion des membres</div>
+                  <img src="/img/previews/gestion_coloc.png" alt="Aperçu membres" className="preview-image" style={{width: '100%', borderRadius: '12px'}} />
                 </div>
                 <div className="text-content">
                   <h2>Gestion</h2>

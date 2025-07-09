@@ -98,9 +98,17 @@ section {
 }
 
 .preview-grid {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-  grid-template-rows: repeat(2, 1fr);
+}
+
+.preview-box,
+.preview-image {
+  width: 100%;
+  min-height: 220px;
+  max-width: 100%;
+  object-fit: cover;
 }
 
 .preview-box {
